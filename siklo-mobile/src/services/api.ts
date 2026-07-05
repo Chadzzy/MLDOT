@@ -8,7 +8,7 @@
  * - POST /api/translate  JSON { text, source, target } -> SSE stream:
  *     event: token  data: {"t": "..."}      (repeated)
  *     event: done   data: { translation, romanization, register_note }
- *     event: error  data: { detail }        (in-band, HTTP stays 200)
+ *     event: error  data: { message }       (in-band, HTTP stays 200)
  * - GET/POST /api/tts    { text, lang: "yue"|"cmn", voice? } -> audio/mpeg
  * - GET /api/destinations?q= -> POI search results
  *
@@ -88,6 +88,7 @@ export function translateStream(
       const reader = res.body.getReader();
       const decoder = new TextDecoder();
       let buffer = '';
+      let settled = false; // saw a terminal `done`/`error` frame
 
       while (true) {
         const { done, value } = await reader.read();
@@ -111,11 +112,21 @@ export function translateStream(
           if (event === 'token') {
             cb.onToken(JSON.parse(data).t as string);
           } else if (event === 'done') {
+            settled = true;
             cb.onDone(JSON.parse(data) as TranslateResult);
           } else if (event === 'error') {
-            cb.onError((JSON.parse(data).detail as string) ?? 'Translation error');
+            // Server emits `{ message }`; tolerate `{ detail }` too for safety.
+            settled = true;
+            const parsed = JSON.parse(data);
+            cb.onError((parsed.message ?? parsed.detail) as string ?? 'Translation error');
           }
         }
+      }
+
+      // Stream closed without a terminal frame (e.g. dropped connection mid-
+      // stream): surface an error so the caller never hangs on "Translating…".
+      if (!settled && !controller.signal.aborted) {
+        cb.onError('Translation stopped early. Try again.');
       }
     } catch (e) {
       if (!controller.signal.aborted) {

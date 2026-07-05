@@ -16,13 +16,45 @@ export interface WaveformProps {
   levels?: number[];
 }
 
-export default function Waveform({ color = colors.accentPrimary, height = 32 }: WaveformProps) {
+export default function Waveform({ color = colors.accentPrimary, height = 32, levels }: WaveformProps) {
+  // When real metering levels are supplied (P3), render controlled bars driven
+  // by amplitude; otherwise fall back to the staggered idle-loop animation
+  // (also the graceful fallback when metering is unavailable on a platform).
+  const controlled = Array.isArray(levels) && levels.length > 0;
   return (
     <View style={[styles.row, { height }]}>
-      {Array.from({ length: BAR_COUNT }).map((_, i) => (
-        <Bar key={i} index={i} color={color} maxHeight={height} />
-      ))}
+      {Array.from({ length: BAR_COUNT }).map((_, i) =>
+        controlled ? (
+          <LevelBar key={i} level={levels![i % levels!.length] ?? 0} color={color} maxHeight={height} />
+        ) : (
+          <Bar key={i} index={i} color={color} maxHeight={height} />
+        )
+      )}
     </View>
+  );
+}
+
+/** Bar whose height tracks a live 0..1 metering level, smoothed briefly. */
+function LevelBar({ level, color, maxHeight }: { level: number; color: string; maxHeight: number }) {
+  const progress = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    const clamped = Math.max(0, Math.min(1, level));
+    Animated.timing(progress, {
+      toValue: clamped,
+      duration: 90,
+      easing: Easing.out(Easing.ease),
+      useNativeDriver: false,
+    }).start();
+  }, [level, progress]);
+
+  const barHeight = progress.interpolate({
+    inputRange: [0, 1],
+    outputRange: [MIN_HEIGHT, maxHeight],
+  });
+
+  return (
+    <Animated.View style={[styles.bar, { backgroundColor: color, height: barHeight }]} />
   );
 }
 
