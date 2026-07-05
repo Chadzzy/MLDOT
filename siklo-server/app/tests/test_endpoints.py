@@ -106,6 +106,14 @@ def test_tts_empty_text(client):
     assert r.status_code == 400
 
 
+def test_tts_get(client):
+    # GET variant lets mobile audio players stream straight from a URL.
+    r = client.get("/api/tts", params={"text": "你好", "lang": "cmn"})
+    assert r.status_code == 200
+    assert r.headers["content-type"].startswith("audio/mpeg")
+    assert r.content[:2] == b"\xff\xfb"
+
+
 def test_go_search_substring(client):
     r = client.get("/api/destinations", params={"q": "Mong Kok"})
     assert r.status_code == 200
