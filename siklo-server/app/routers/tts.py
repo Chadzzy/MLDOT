@@ -24,10 +24,15 @@ class TTSRequest(BaseModel):
 
 
 def _backend():
-    if get_settings().TTS_BACKEND == "edge":
+    backend = get_settings().TTS_BACKEND
+    if backend == "edge":
         from ..services import tts_edge
 
         return tts_edge
+    if backend == "cosyvoice":
+        from ..services import tts_cosyvoice
+
+        return tts_cosyvoice
     from ..services import tts_mock
 
     return tts_mock

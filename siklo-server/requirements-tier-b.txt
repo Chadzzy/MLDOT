@@ -1,0 +1,29 @@
+# Tier B (single 16 GB GPU) extras — Qwen3-ASR STT + CosyVoice2 TTS.
+# HEAVY and GPU-oriented. Install only on the GPU host that runs
+# STT_BACKEND=qwen3asr and/or TTS_BACKEND=cosyvoice. MT (vLLM Qwen3-8B) is a
+# separate service (see docker-compose.yml `vllm`), reached over HTTP, so it
+# needs nothing here.
+#
+#   pip install -r requirements.txt -r requirements-tier-b.txt
+#
+# Qwen3-ASR — transformers-native. Needs a recent transformers with the
+# Qwen3-ASR / AutoModelForMultimodalLM support. Weights (~3.5 GB) download on
+# first /api/stt call.
+torch>=2.1
+torchaudio>=2.1
+transformers>=4.57
+accelerate>=0.30
+soundfile>=0.12
+librosa>=0.10
+
+# CosyVoice2 TTS is NOT on PyPI. Clone the framework and put it on PYTHONPATH:
+#
+#   git clone --recursive https://github.com/FunAudioLLM/CosyVoice.git
+#   pip install -r CosyVoice/requirements.txt
+#   export PYTHONPATH=$PYTHONPATH:/path/to/CosyVoice:/path/to/CosyVoice/third_party/Matcha-TTS
+#
+# Then download the weights into the dirs COSYVOICE_YUE_DIR / COSYVOICE_CMN_DIR:
+#   ASLP-lab/Cosyvoice2-Yue (yue, Apache-2.0), FunAudioLLM/CosyVoice2-0.5B (cmn),
+# and provide COSYVOICE_PROMPT_WAV (a short 16 kHz reference voice clip).
+# opencc-python-reimplemented is used by the CosyVoice-Yue flow for s2t.
+opencc>=1.1

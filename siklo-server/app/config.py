@@ -20,13 +20,18 @@ class Settings(BaseSettings):
 
     # ---- Backend selection --------------------------------------------------
     # Default to "mock" everywhere so the app runs with zero weights/network.
-    STT_BACKEND: Literal["mock", "sensevoice"] = "mock"
+    STT_BACKEND: Literal["mock", "sensevoice", "qwen3asr"] = "mock"
     MT_BACKEND: Literal["mock", "qwen"] = "mock"
-    TTS_BACKEND: Literal["mock", "edge"] = "mock"
+    TTS_BACKEND: Literal["mock", "edge", "cosyvoice"] = "mock"
 
     # ---- STT (SenseVoice-Small via funasr) ---------------------------------
     SENSEVOICE_MODEL: str = "iic/SenseVoiceSmall"
     SENSEVOICE_DEVICE: str = "cpu"  # "cpu" or "cuda:0"
+
+    # ---- STT (Qwen3-ASR-1.7B via transformers — Tier B) --------------------
+    # Apache-2.0. Use the transformers-native -hf checkpoint.
+    QWEN3ASR_MODEL: str = "Qwen/Qwen3-ASR-1.7B-hf"
+    QWEN3ASR_DEVICE_MAP: str = "auto"  # "auto" | "cuda:0" | "cpu"
 
     # ---- MT (Qwen via Ollama or a vLLM OpenAI-compatible endpoint) ----------
     # api_style "ollama"  -> POST {OLLAMA_URL}/api/chat
@@ -42,6 +47,14 @@ class Settings(BaseSettings):
     # ---- TTS (edge-tts) -----------------------------------------------------
     EDGE_VOICE_YUE: str = "zh-HK-HiuGaaiNeural"
     EDGE_VOICE_CMN: str = "zh-CN-XiaoxiaoNeural"
+
+    # ---- TTS (CosyVoice2 — Tier B) -----------------------------------------
+    # yue -> ASLP-lab/Cosyvoice2-Yue (Apache-2.0); cmn -> base CosyVoice2-0.5B.
+    # Point these at local model dirs (or HF ids the framework resolves).
+    COSYVOICE_YUE_DIR: str = "pretrained_models/Cosyvoice2-Yue"
+    COSYVOICE_CMN_DIR: str = "pretrained_models/CosyVoice2-0.5B"
+    # Short (3-10 s) 16 kHz mono reference clip for CosyVoice's zero-shot voice.
+    COSYVOICE_PROMPT_WAV: str = "pretrained_models/prompt.wav"
 
     # ---- Audio decode -------------------------------------------------------
     FFMPEG_BIN: str = "ffmpeg"

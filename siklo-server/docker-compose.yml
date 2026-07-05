@@ -1,13 +1,19 @@
-# SikLo backend — Tier A (laptop/demo) compose.
+# SikLo backend compose — Tier A (laptop/demo) and Tier B (single GPU).
 #
+# Tier A (default, no GPU):
 #   docker compose up                      # api only (mock/edge; qwen if you
 #                                          #   point OLLAMA_URL at a host Ollama)
 #   docker compose --profile tier-a-llm up # api + a local Ollama for MT
 #
-# The phone connects to the api service over the LAN. Set EXPO_PUBLIC_API_URL in
-# the mobile app to http://<this-machine-lan-ip>:8000.
+# Tier B (single 16 GB GPU — Qwen3-ASR + vLLM Qwen3-8B + CosyVoice2-Yue):
+#   docker compose --profile tier-b up api-tier-b vllm
+#   (naming the services keeps the default `api` from also binding :8000)
+#
+# The phone connects to whichever api service is up, over the LAN. Set
+# EXPO_PUBLIC_API_URL in the mobile app to http://<this-machine-lan-ip>:8000.
 
 services:
+  # ---- Tier A / default api (mock + edge + Ollama-over-HTTP) ----------------
   api:
     build:
       context: .
@@ -33,5 +39,67 @@ services:
       - ollama:/root/.ollama
     restart: unless-stopped
 
+  # ---- Tier B: vLLM serving Qwen3-8B-Instruct (OpenAI-compatible) -----------
+  vllm:
+    image: vllm/vllm-openai:latest
+    profiles: ["tier-b"]
+    command:
+      - "--model"
+      - "Qwen/Qwen3-8B-Instruct"
+      - "--served-model-name"
+      - "qwen3-8b"
+      - "--max-model-len"
+      - "8192"
+    ports:
+      - "8001:8000"  # vLLM listens on :8000 inside the container
+    volumes:
+      - hf-cache:/root/.cache/huggingface  # cache Qwen3-8B weights across runs
+    environment:
+      HUGGING_FACE_HUB_TOKEN: ${HUGGING_FACE_HUB_TOKEN:-}
+    ipc: host
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: ["gpu"]
+    restart: unless-stopped
+
+  # ---- Tier B api: Qwen3-ASR (STT) + vLLM Qwen3-8B (MT) + CosyVoice2 (TTS) --
+  # Needs the heavy image (torch + transformers + CosyVoice). Build it with the
+  # tier-b Dockerfile stage / requirements-tier-b.txt (see README §Tier B).
+  api-tier-b:
+    build:
+      context: .
+    profiles: ["tier-b"]
+    depends_on:
+      - vllm
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      # Tier B backend overrides (win over .env).
+      STT_BACKEND: qwen3asr
+      MT_BACKEND: qwen
+      MT_API_STYLE: openai            # vLLM speaks the OpenAI chat API
+      OLLAMA_URL: http://vllm:8000    # base URL; mt_qwen appends /v1/chat/completions
+      MT_MODEL: qwen3-8b              # matches --served-model-name above
+      TTS_BACKEND: cosyvoice
+    volumes:
+      - hf-cache:/root/.cache/huggingface  # Qwen3-ASR weights
+      - pretrained-models:/app/pretrained_models  # CosyVoice2 dirs + prompt.wav
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: ["gpu"]
+    restart: unless-stopped
+
 volumes:
   ollama:
+  hf-cache:
+  pretrained-models:

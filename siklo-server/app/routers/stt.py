@@ -10,10 +10,15 @@ router = APIRouter(prefix="/api", tags=["stt"])
 
 
 def _backend():
-    if get_settings().STT_BACKEND == "sensevoice":
+    backend = get_settings().STT_BACKEND
+    if backend == "sensevoice":
         from ..services import stt_sensevoice
 
         return stt_sensevoice
+    if backend == "qwen3asr":
+        from ..services import stt_qwen3asr
+
+        return stt_qwen3asr
     from ..services import stt_mock
 
     return stt_mock

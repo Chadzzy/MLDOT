@@ -23,6 +23,33 @@ export type TargetLang = Exclude<Lang, never>;
 export const API_BASE =
   process.env.EXPO_PUBLIC_API_URL ?? 'http://localhost:8000';
 
+/** Network calls that can otherwise hang forever abort after this long. */
+const REQUEST_TIMEOUT_MS = 15000;
+
+/**
+ * fetch with a hard timeout so a stalled network can't strand the Talk state
+ * machine in `transcribing` (or Go in a pending search). Aborts after
+ * `timeoutMs` and rethrows a friendly, actionable error.
+ */
+async function fetchWithTimeout(
+  input: string,
+  init: RequestInit = {},
+  timeoutMs = REQUEST_TIMEOUT_MS,
+): Promise<Response> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    return await fetch(input, { ...init, signal: controller.signal });
+  } catch (e) {
+    if (controller.signal.aborted) {
+      throw new Error('Request timed out. Check your connection and try again.');
+    }
+    throw e;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
 export interface SttResult {
   text: string;
   lang: Lang;
@@ -51,7 +78,7 @@ export async function transcribe(fileUri: string): Promise<SttResult> {
     type: 'audio/mp4',
   } as unknown as Blob);
 
-  const res = await fetch(`${API_BASE}/api/stt`, {
+  const res = await fetchWithTimeout(`${API_BASE}/api/stt`, {
     method: 'POST',
     body: form,
   });
@@ -160,7 +187,7 @@ export interface Destination {
 
 /** Server-side POI search (fallback to bundled data lives in features/go). */
 export async function searchDestinations(q: string): Promise<Destination[]> {
-  const res = await fetch(
+  const res = await fetchWithTimeout(
     `${API_BASE}/api/destinations?q=${encodeURIComponent(q)}`,
   );
   if (!res.ok) throw new Error(`Destination search failed (${res.status})`);

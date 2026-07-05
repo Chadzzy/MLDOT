@@ -64,9 +64,9 @@ no network**. See `.env.example`.
 
 | Var | Options | Default | Notes |
 |---|---|---|---|
-| `STT_BACKEND` | `mock` \| `sensevoice` | `mock` | SenseVoice-Small via funasr |
+| `STT_BACKEND` | `mock` \| `sensevoice` \| `qwen3asr` | `mock` | SenseVoice-Small (Tier A, CPU) / Qwen3-ASR-1.7B (Tier B, GPU) |
 | `MT_BACKEND`  | `mock` \| `qwen` | `mock` | Qwen over Ollama or vLLM (HTTP) |
-| `TTS_BACKEND` | `mock` \| `edge` | `mock` | edge-tts neural voices |
+| `TTS_BACKEND` | `mock` \| `edge` \| `cosyvoice` | `mock` | edge-tts (Tier A) / CosyVoice2 (Tier B) |
 
 Models are **lazy-loaded on first request**, never at startup.
 
@@ -123,15 +123,46 @@ Runs against mock (canned output) if Ollama isn't configured, and prints a
 clear message if the backend is unreachable. Use this to judge colloquial
 quality and decide whether to swap in YueTung (plan §8).
 
-## Tier B (P5 — not built here)
+## Tier B (single GPU) — built in P5
 
-Env switches are in place; the heavier backends land in P5:
-- **STT:** `Qwen/Qwen3-ASR-1.7B` (verify HF license) — add a `stt_qwen3asr.py`
-  behind a new `STT_BACKEND=qwen3asr`.
-- **MT:** vLLM serving `Qwen3-8B-Instruct` — already supported today via
-  `MT_API_STYLE=openai` pointing `OLLAMA_URL` at the vLLM OpenAI endpoint.
-- **TTS:** `ASLP-lab/CosyVoice2-Yue` — add a `tts_cosyvoice.py` behind
-  `TTS_BACKEND=cosyvoice`.
+The heavier backends are wired in behind env switches. Install
+`requirements-tier-b.txt` (GPU host) and use the `tier-b` compose profile
+(`docker compose --profile tier-b up api-tier-b vllm`). See the top-level
+`../siklo/README.md` for full setup.
+
+- **STT — `STT_BACKEND=qwen3asr`** (`app/services/stt_qwen3asr.py`).
+  `Qwen/Qwen3-ASR-1.7B` via transformers (`AutoModelForMultimodalLM` +
+  `processor.apply_transcription_request(..., language=None)` for auto
+  language ID → parsed `{language, transcription}`). Language mapped to
+  en/yue/cmn; an unmappable language falls back best-effort with **lowered
+  confidence** (0.45) so the client can offer "↻ Try again".
+  **LICENSE: Apache-2.0** — verified on the model card (plan §8 risk). No
+  distribution restriction; SenseVoice-Small remains the *default* only because
+  it is tiny and CPU-viable, **not** for licensing reasons. If a future
+  checkpoint ships under a restrictive Qwen license, keep SenseVoice as default.
+- **MT — `MT_BACKEND=qwen`** against vLLM serving `Qwen3-8B-Instruct`: set
+  `MT_API_STYLE=openai` and point `OLLAMA_URL` at the vLLM base URL
+  (`http://vllm:8000`), `MT_MODEL=qwen3-8b`. No new code — the existing
+  OpenAI-compatible path handles it.
+- **TTS — `TTS_BACKEND=cosyvoice`** (`app/services/tts_cosyvoice.py`).
+  `ASLP-lab/Cosyvoice2-Yue` (**Apache-2.0**, Cantonese fine-tune of
+  CosyVoice2-0.5B) for yue; base `CosyVoice2-0.5B` for cmn. Driven via
+  `CosyVoice2(...).inference_instruct2(text, "用粤语说这句话"|"用普通话说这句话",
+  prompt_speech_16k, stream=True)`. CosyVoice emits float PCM tensors at
+  `sample_rate` (24 kHz); each chunk is transcoded to MP3 via an ffmpeg pipe to
+  match the `audio/mpeg` router contract. Needs the CosyVoice framework on
+  PYTHONPATH (not on PyPI), model dirs (`COSYVOICE_YUE_DIR`/`COSYVOICE_CMN_DIR`),
+  and a short 16 kHz reference clip (`COSYVOICE_PROMPT_WAV`) for the zero-shot
+  voice.
+
+### Latency instrumentation
+
+Every response carries an `X-Duration-Ms` header and a `siklo.timing` log line
+(time-to-first-byte for streaming endpoints). `scripts/measure_latency.py` hits
+stt/translate/tts N times and prints p50/p95 per stage plus the summed
+speech→first-audio estimate vs the 3.5 s budget (plan §3). On-device latency
+verification against a real Tier B GPU server is the remaining manual step
+(see `../siklo/README.md` checklist).
 
 ## Environment notes
 
