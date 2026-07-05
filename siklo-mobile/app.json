@@ -10,12 +10,20 @@
     "backgroundColor": "#1A1208",
     "plugins": [
       "expo-router",
-      "expo-font"
+      "expo-font",
+      [
+        "expo-audio",
+        {
+          "microphonePermission": "Allow SikLo to use your microphone so it can translate what you say."
+        }
+      ]
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.siklo.mobile"
     },
     "android": {
+      "package": "com.siklo.mobile",
       "adaptiveIcon": {
         "backgroundColor": "#1A1208",
         "foregroundImage": "./assets/android-icon-foreground.png",
