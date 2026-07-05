@@ -1,0 +1,13 @@
+# Tier A local STT — SenseVoice-Small via funasr (CPU-viable).
+# HEAVY: pulls torch + torchaudio (multi-GB). Install only when you intend to
+# run STT_BACKEND=sensevoice on a real host. Weights download on first request.
+#
+#   pip install -r requirements.txt -r requirements-tier-a.txt
+
+-r requirements.txt
+
+funasr>=1.1.0
+torch>=2.1
+torchaudio>=2.1
+# funasr also uses soundfile / librosa transitively for some models.
+soundfile>=0.12

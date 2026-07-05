@@ -1,0 +1,37 @@
+# SikLo backend — Tier A (laptop/demo) compose.
+#
+#   docker compose up                      # api only (mock/edge; qwen if you
+#                                          #   point OLLAMA_URL at a host Ollama)
+#   docker compose --profile tier-a-llm up # api + a local Ollama for MT
+#
+# The phone connects to the api service over the LAN. Set EXPO_PUBLIC_API_URL in
+# the mobile app to http://<this-machine-lan-ip>:8000.
+
+services:
+  api:
+    build:
+      context: .
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      # When the ollama profile is up, talk to it by service name.
+      OLLAMA_URL: ${OLLAMA_URL:-http://ollama:11434}
+    restart: unless-stopped
+
+  # Optional local LLM for MT_BACKEND=qwen. Enable with:
+  #   docker compose --profile tier-a-llm up
+  # Then pull a model once:
+  #   docker compose exec ollama ollama pull qwen3:8b   (or qwen3:4b for laptops)
+  ollama:
+    image: ollama/ollama:latest
+    profiles: ["tier-a-llm"]
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama:/root/.ollama
+    restart: unless-stopped
+
+volumes:
+  ollama:

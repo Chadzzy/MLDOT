@@ -1,0 +1,30 @@
+{"en": "This is Mr. Chan from building management.", "yue_reference": "我係管理處嘅陳生。", "notes": "building-manager: polite self-introduction"}
+{"en": "There's a problem with the water pipe on the 8th floor.", "yue_reference": "8樓嗰條水管有啲問題。", "notes": "building-manager: reporting an issue"}
+{"en": "We need to come into your unit to check it.", "yue_reference": "我哋要入嚟你個單位查一查。", "notes": "building-manager: requesting entry, colloquial 入嚟"}
+{"en": "Are you free tomorrow afternoon, around 2pm?", "yue_reference": "你聽日下晝兩點左右得唔得閒？", "notes": "building-manager: scheduling, 得唔得閒 = free?"}
+{"en": "No problem, we can reschedule whenever suits you.", "yue_reference": "冇問題，你幾時方便我哋就幾時改期。", "notes": "building-manager: reassuring, 冇問題"}
+{"en": "The water will be shut off for about an hour.", "yue_reference": "會停水大概一個鐘。", "notes": "building-manager: 一個鐘 = one hour (colloquial)"}
+{"en": "Please remember to open the door for me.", "yue_reference": "記住開門畀我呀。", "notes": "building-manager: reminder, sentence particle 呀"}
+{"en": "The lift will be under maintenance this weekend.", "yue_reference": "部𨋢今個週末會維修。", "notes": "building-manager: 部𨋢 = the lift (colloquial)"}
+{"en": "Someone reported that your bathroom is leaking.", "yue_reference": "有人話你個廁所漏緊水。", "notes": "building-manager: 話 = said, 漏緊水 = leaking now"}
+{"en": "I'll bring my colleague along to help.", "yue_reference": "我會帶埋我同事嚟幫手。", "notes": "building-manager: 帶埋 = bring along, 幫手 = help"}
+{"en": "Please take me to Mong Kok MTR station.", "yue_reference": "唔該載我去旺角地鐵站。", "notes": "taxi: 唔該 = please, 載 = take/drive"}
+{"en": "Can you stop at the next corner?", "yue_reference": "可唔可以喺下個街口停？", "notes": "taxi: 喺 = at, 街口 = street corner"}
+{"en": "How much is it to the airport?", "yue_reference": "去機場要幾多錢？", "notes": "taxi: asking fare, 幾多錢"}
+{"en": "Please take the tunnel, it's faster.", "yue_reference": "唔該行隧道，快啲。", "notes": "taxi: 行隧道 = go through the tunnel, 快啲 = faster"}
+{"en": "Turn left at the next set of lights.", "yue_reference": "下個燈位轉左。", "notes": "taxi: 燈位 = traffic light spot"}
+{"en": "I'm in a hurry, could you go a bit faster?", "yue_reference": "我趕時間，可唔可以快啲呀？", "notes": "taxi: 趕時間 = in a hurry"}
+{"en": "Can you drop me off in front of that building?", "yue_reference": "可唔可以喺嗰棟大廈門口落我？", "notes": "taxi: 落我 = let me off, 嗰棟大廈 = that building"}
+{"en": "Do you take Octopus card?", "yue_reference": "你收唔收八達通？", "notes": "taxi: 八達通 = Octopus card, 收唔收 = accept?"}
+{"en": "It's just past the market, on the right.", "yue_reference": "過咗個街市就係，喺右手邊。", "notes": "taxi: 過咗 = after passing, 街市 = wet market"}
+{"en": "Please wait here for five minutes.", "yue_reference": "唔該喺度等我五分鐘。", "notes": "taxi: 喺度 = here, 等我 = wait for me"}
+{"en": "How much is the grouper per catty?", "yue_reference": "石斑幾多錢一斤？", "notes": "market: 石斑 = grouper, 斤 = catty"}
+{"en": "The prawns are really fresh today.", "yue_reference": "今日啲蝦好新鮮。", "notes": "market: 啲 = the (plural), 好新鮮 = very fresh"}
+{"en": "Can you make it a bit cheaper?", "yue_reference": "可唔可以平啲呀？", "notes": "market: 平啲 = cheaper, bargaining"}
+{"en": "I'll take half a catty of choy sum.", "yue_reference": "我要半斤菜心。", "notes": "market: 菜心 = choy sum, 半斤 = half a catty"}
+{"en": "Is this spicy?", "yue_reference": "呢個辣唔辣㗎？", "notes": "market/food: 辣唔辣 = spicy or not, particle 㗎"}
+{"en": "One bowl of wonton noodles, please.", "yue_reference": "唔該一碗雲吞麵。", "notes": "food: 雲吞麵 = wonton noodles, 一碗 = one bowl"}
+{"en": "Less oil and less salt, thanks.", "yue_reference": "少油少鹽，唔該。", "notes": "food: ordering preference"}
+{"en": "Do you have anything cheaper?", "yue_reference": "有冇平啲嘅？", "notes": "market: 有冇 = have or not, 嘅 = one(s)"}
+{"en": "I don't want any spring onions, thanks.", "yue_reference": "唔要蔥呀，唔該。", "notes": "food: 唔要 = don't want, 蔥 = spring onion"}
+{"en": "Give me two of these, thanks.", "yue_reference": "呢啲畀兩個我，唔該。", "notes": "market: 呢啲 = these, 畀...我 = give me"}
