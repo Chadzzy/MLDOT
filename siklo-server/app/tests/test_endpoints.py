@@ -137,6 +137,22 @@ def test_go_search_alias_fuzzy(client):
 
 
 def test_go_empty_query_returns_all(client):
+    # P4 curated the seed dataset up to ~200 POIs (was a 6-entry fixture);
+    # an empty query now hits the router's own default page size instead of
+    # returning the whole (much larger) dataset.
     r = client.get("/api/destinations")
     assert r.status_code == 200
-    assert len(r.json()["results"]) == 6
+    results = r.json()["results"]
+    assert len(results) == 20  # default `limit` in app/routers/go.py
+    assert len(results) < len(_load_all_pois())
+
+
+def _load_all_pois():
+    import json
+    from pathlib import Path
+
+    data_path = (
+        Path(__file__).resolve().parent.parent / "data" / "hk_poi.json"
+    )
+    with open(data_path, encoding="utf-8") as f:
+        return json.load(f)

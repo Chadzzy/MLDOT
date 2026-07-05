@@ -10,25 +10,1610 @@
     "landmark_en": "Airport Express Terminal",
     "jyutping": "hoeng1 gong2 gwok3 zai3 gei1 coeng4",
     "pinyin": "Xiānggǎng Guójì Jīchǎng",
-    "aliases": ["HKIA", "Airport", "Chek Lap Kok", "赤鱲角機場"],
-    "recent": true
+    "aliases": [
+      "hkia",
+      "airport",
+      "chek lap kok",
+      "赤鱲角機場",
+      "cheklapkok"
+    ]
   },
   {
     "id": 2,
-    "name_yue": "銅鑼灣時代廣場",
-    "name_cmn": "铜锣湾时代广场",
-    "name_en": "Times Square, Causeway Bay",
-    "area": "Causeway Bay",
-    "landmark_yue": "近銅鑼灣地鐵站A出口",
-    "landmark_cmn": "近铜锣湾地铁站A出口",
-    "landmark_en": "Near Causeway Bay MTR Exit A",
-    "jyutping": "tung4 lo4 waan1 si4 doi6 gwong2 coeng4",
-    "pinyin": "Tóngluówān Shídài Guǎngchǎng",
-    "aliases": ["Times Square", "CWB", "銅鑼灣"],
-    "recent": true
+    "name_yue": "亞洲國際博覽館",
+    "name_cmn": "亚洲国际博览馆",
+    "name_en": "AsiaWorld-Expo",
+    "area": "Lantau",
+    "landmark_yue": "博覽館港鐵站",
+    "landmark_cmn": "博览馆港铁站",
+    "landmark_en": "AsiaWorld-Expo MTR Station",
+    "jyutping": "aa3 zau1 gwok3 zai3 bok3 laam5 gun2",
+    "pinyin": "Yàzhōu Guójìbólǎn Guǎn",
+    "aliases": [
+      "asiaworld-expo",
+      "asia world expo",
+      "awe",
+      "博覽館"
+    ]
   },
   {
     "id": 3,
+    "name_yue": "信德中心澳門碼頭",
+    "name_cmn": "信德中心澳门码头",
+    "name_en": "Macau Ferry Terminal, Shun Tak Centre",
+    "area": "Sheung Wan",
+    "landmark_yue": "信德中心",
+    "landmark_cmn": "信德中心",
+    "landmark_en": "Shun Tak Centre",
+    "jyutping": "seon3 dak1 zung1 sam1 ou3 mun2 maa5 tau4",
+    "pinyin": "Xìndé Zhōngxīn Àomén Mǎtóu",
+    "aliases": [
+      "macau ferry",
+      "shun tak",
+      "信德中心"
+    ]
+  },
+  {
+    "id": 4,
+    "name_yue": "中港城",
+    "name_cmn": "中港城",
+    "name_en": "China Ferry Terminal, Tsim Sha Tsui",
+    "area": "Tsim Sha Tsui",
+    "landmark_yue": "尖沙咀中港城",
+    "landmark_cmn": "尖沙咀中港城",
+    "landmark_en": "China Hong Kong City, Tsim Sha Tsui",
+    "jyutping": "zung1 gong2 sing4",
+    "pinyin": "Zhōnggǎngchéng",
+    "aliases": [
+      "china ferry terminal",
+      "china hk city",
+      "中港城"
+    ]
+  },
+  {
+    "id": 5,
+    "name_yue": "中環天星碼頭",
+    "name_cmn": "中环天星码头",
+    "name_en": "Star Ferry Pier, Central",
+    "area": "Central",
+    "landmark_yue": "愛丁堡廣場",
+    "landmark_cmn": "爱丁堡广场",
+    "landmark_en": "Edinburgh Place",
+    "jyutping": "zung1 waan4 tin1 sing1 maa5 tau4",
+    "pinyin": "Zhōnghuán Tiānxīng Mǎtóu",
+    "aliases": [
+      "star ferry central",
+      "天星碼頭"
+    ]
+  },
+  {
+    "id": 6,
+    "name_yue": "尖沙咀天星碼頭",
+    "name_cmn": "尖沙咀天星码头",
+    "name_en": "Star Ferry Pier, Tsim Sha Tsui",
+    "area": "Tsim Sha Tsui",
+    "landmark_yue": "尖沙咀鐘樓對出",
+    "landmark_cmn": "尖沙咀钟楼对出",
+    "landmark_en": "Next to the Clock Tower, Tsim Sha Tsui",
+    "jyutping": "zim1 saa1 zeoi2 tin1 sing1 maa5 tau4",
+    "pinyin": "Jiānshājǔ Tiānxīng Mǎtóu",
+    "aliases": [
+      "star ferry tst"
+    ]
+  },
+  {
+    "id": 7,
+    "name_yue": "羅湖口岸",
+    "name_cmn": "罗湖口岸",
+    "name_en": "Lo Wu Control Point",
+    "area": "North District",
+    "landmark_yue": "羅湖鐵路站旁",
+    "landmark_cmn": "罗湖铁路站旁",
+    "landmark_en": "Next to Lo Wu MTR Station",
+    "jyutping": "lo4 wu4 hau2 ngon6",
+    "pinyin": "Luóhúkǒuàn",
+    "aliases": [
+      "lowu border",
+      "lo wu border",
+      "羅湖"
+    ]
+  },
+  {
+    "id": 8,
+    "name_yue": "落馬洲口岸",
+    "name_cmn": "落马洲口岸",
+    "name_en": "Lok Ma Chau Control Point",
+    "area": "North District",
+    "landmark_yue": "落馬洲支線總站",
+    "landmark_cmn": "落马洲支线总站",
+    "landmark_en": "Lok Ma Chau Spur Line Terminus",
+    "jyutping": "lok6 maa5 zau1 hau2 ngon6",
+    "pinyin": "Luòmǎzhōu Kǒuàn",
+    "aliases": [
+      "lok ma chau border",
+      "lmc"
+    ]
+  },
+  {
+    "id": 9,
+    "name_yue": "深圳灣口岸",
+    "name_cmn": "深圳湾口岸",
+    "name_en": "Shenzhen Bay Port",
+    "area": "Yuen Long",
+    "landmark_yue": "深港西部通道香港口岸",
+    "landmark_cmn": "深港西部通道香港口岸",
+    "landmark_en": "HK side of the Shenzhen Western Corridor",
+    "jyutping": "sam1 zan3 waan1 hau2 ngon6",
+    "pinyin": "Shēnzhènwān Kǒuàn",
+    "aliases": [
+      "shenzhen bay border",
+      "sz bay"
+    ]
+  },
+  {
+    "id": 10,
+    "name_yue": "港珠澳大橋香港口岸",
+    "name_cmn": "港珠澳大桥香港口岸",
+    "name_en": "Hong Kong Port, HZMB",
+    "area": "Lantau",
+    "landmark_yue": "大嶼山人工島",
+    "landmark_cmn": "大屿山人工岛",
+    "landmark_en": "Artificial island off Lantau",
+    "jyutping": "gong2 zyu1 ou3 daai6 kiu4 hoeng1 gong2 hau2 ngon6",
+    "pinyin": "Gǎngzhūào Dàqiáo Xiānggǎng Kǒuàn",
+    "aliases": [
+      "hzmb",
+      "hk zhuhai macau bridge",
+      "港珠澳大橋"
+    ]
+  },
+  {
+    "id": 11,
+    "name_yue": "堅尼地城",
+    "name_cmn": "坚尼地城",
+    "name_en": "Kennedy Town Station",
+    "area": "Kennedy Town",
+    "landmark_yue": "堅尼地城港鐵站大堂",
+    "landmark_cmn": "坚尼地城港铁站大堂",
+    "landmark_en": "Kennedy Town Station concourse",
+    "jyutping": "gin1 nei4 dei6 sing4",
+    "pinyin": "Jiānnídì Chéng",
+    "aliases": [
+      "kennedy town"
+    ]
+  },
+  {
+    "id": 12,
+    "name_yue": "香港大學",
+    "name_cmn": "香港大学",
+    "name_en": "HKU Station",
+    "area": "Sai Ying Pun",
+    "landmark_yue": "香港大學港鐵站大堂",
+    "landmark_cmn": "香港大学港铁站大堂",
+    "landmark_en": "HKU Station concourse",
+    "jyutping": "hoeng1 gong2 daai6 hok6",
+    "pinyin": "Xiānggǎngdàxué",
+    "aliases": [
+      "hku"
+    ]
+  },
+  {
+    "id": 13,
+    "name_yue": "西營盤",
+    "name_cmn": "西营盘",
+    "name_en": "Sai Ying Pun Station",
+    "area": "Sai Ying Pun",
+    "landmark_yue": "西營盤港鐵站大堂",
+    "landmark_cmn": "西营盘港铁站大堂",
+    "landmark_en": "Sai Ying Pun Station concourse",
+    "jyutping": "sai1 jing4 pun4",
+    "pinyin": "Xī Yíngpán",
+    "aliases": [
+      "sai ying pun"
+    ]
+  },
+  {
+    "id": 14,
+    "name_yue": "上環",
+    "name_cmn": "上环",
+    "name_en": "Sheung Wan Station",
+    "area": "Sheung Wan",
+    "landmark_yue": "上環港鐵站大堂",
+    "landmark_cmn": "上环港铁站大堂",
+    "landmark_en": "Sheung Wan Station concourse",
+    "jyutping": "soeng6 waan4",
+    "pinyin": "Shàng Huán",
+    "aliases": [
+      "sheung wan"
+    ]
+  },
+  {
+    "id": 15,
+    "name_yue": "中環",
+    "name_cmn": "中环",
+    "name_en": "Central Station",
+    "area": "Central",
+    "landmark_yue": "中環港鐵站大堂",
+    "landmark_cmn": "中环港铁站大堂",
+    "landmark_en": "Central Station concourse",
+    "jyutping": "zung1 waan4",
+    "pinyin": "Zhōnghuán",
+    "aliases": [
+      "central"
+    ]
+  },
+  {
+    "id": 16,
+    "name_yue": "金鐘",
+    "name_cmn": "金钟",
+    "name_en": "Admiralty Station",
+    "area": "Admiralty",
+    "landmark_yue": "金鐘港鐵站大堂",
+    "landmark_cmn": "金钟港铁站大堂",
+    "landmark_en": "Admiralty Station concourse",
+    "jyutping": "gam1 zung1",
+    "pinyin": "Jīnzhōng",
+    "aliases": [
+      "admiralty"
+    ]
+  },
+  {
+    "id": 17,
+    "name_yue": "灣仔",
+    "name_cmn": "湾仔",
+    "name_en": "Wan Chai Station",
+    "area": "Wan Chai",
+    "landmark_yue": "灣仔港鐵站大堂",
+    "landmark_cmn": "湾仔港铁站大堂",
+    "landmark_en": "Wan Chai Station concourse",
+    "jyutping": "waan1 zai2",
+    "pinyin": "Wānzǎi",
+    "aliases": [
+      "wan chai"
+    ]
+  },
+  {
+    "id": 18,
+    "name_yue": "銅鑼灣",
+    "name_cmn": "铜锣湾",
+    "name_en": "Causeway Bay Station",
+    "area": "Causeway Bay",
+    "landmark_yue": "銅鑼灣港鐵站大堂",
+    "landmark_cmn": "铜锣湾港铁站大堂",
+    "landmark_en": "Causeway Bay Station concourse",
+    "jyutping": "tung4 lo4 waan1",
+    "pinyin": "Tóngluówān",
+    "aliases": [
+      "causeway bay",
+      "cwb"
+    ]
+  },
+  {
+    "id": 19,
+    "name_yue": "天后",
+    "name_cmn": "天后",
+    "name_en": "Tin Hau Station",
+    "area": "Tin Hau",
+    "landmark_yue": "天后港鐵站大堂",
+    "landmark_cmn": "天后港铁站大堂",
+    "landmark_en": "Tin Hau Station concourse",
+    "jyutping": "tin1 hau6",
+    "pinyin": "Tiānhòu",
+    "aliases": [
+      "tin hau"
+    ]
+  },
+  {
+    "id": 20,
+    "name_yue": "炮台山",
+    "name_cmn": "炮台山",
+    "name_en": "Fortress Hill Station",
+    "area": "Fortress Hill",
+    "landmark_yue": "炮台山港鐵站大堂",
+    "landmark_cmn": "炮台山港铁站大堂",
+    "landmark_en": "Fortress Hill Station concourse",
+    "jyutping": "paau3 toi4 saan1",
+    "pinyin": "Pàotái Shān",
+    "aliases": [
+      "fortress hill"
+    ]
+  },
+  {
+    "id": 21,
+    "name_yue": "北角",
+    "name_cmn": "北角",
+    "name_en": "North Point Station",
+    "area": "North Point",
+    "landmark_yue": "北角港鐵站大堂",
+    "landmark_cmn": "北角港铁站大堂",
+    "landmark_en": "North Point Station concourse",
+    "jyutping": "bak1 gok3",
+    "pinyin": "Běijiǎo",
+    "aliases": [
+      "north point"
+    ]
+  },
+  {
+    "id": 22,
+    "name_yue": "鰂魚涌",
+    "name_cmn": "鲗鱼涌",
+    "name_en": "Quarry Bay Station",
+    "area": "Quarry Bay",
+    "landmark_yue": "鰂魚涌港鐵站大堂",
+    "landmark_cmn": "鲗鱼涌港铁站大堂",
+    "landmark_en": "Quarry Bay Station concourse",
+    "jyutping": "zak1 jyu4 cung1",
+    "pinyin": "Zéi Yú Yǒng",
+    "aliases": [
+      "quarry bay"
+    ]
+  },
+  {
+    "id": 23,
+    "name_yue": "太古",
+    "name_cmn": "太古",
+    "name_en": "Tai Koo Station",
+    "area": "Tai Koo",
+    "landmark_yue": "太古港鐵站大堂",
+    "landmark_cmn": "太古港铁站大堂",
+    "landmark_en": "Tai Koo Station concourse",
+    "jyutping": "taai3 gu2",
+    "pinyin": "Tàigǔ",
+    "aliases": [
+      "tai koo"
+    ]
+  },
+  {
+    "id": 24,
+    "name_yue": "西灣河",
+    "name_cmn": "西湾河",
+    "name_en": "Sai Wan Ho Station",
+    "area": "Sai Wan Ho",
+    "landmark_yue": "西灣河港鐵站大堂",
+    "landmark_cmn": "西湾河港铁站大堂",
+    "landmark_en": "Sai Wan Ho Station concourse",
+    "jyutping": "sai1 waan1 ho2",
+    "pinyin": "Xīwān Hé",
+    "aliases": [
+      "sai wan ho"
+    ]
+  },
+  {
+    "id": 25,
+    "name_yue": "筲箕灣",
+    "name_cmn": "筲箕湾",
+    "name_en": "Shau Kei Wan Station",
+    "area": "Shau Kei Wan",
+    "landmark_yue": "筲箕灣港鐵站大堂",
+    "landmark_cmn": "筲箕湾港铁站大堂",
+    "landmark_en": "Shau Kei Wan Station concourse",
+    "jyutping": "saau1 gei1 waan1",
+    "pinyin": "Shāojī Wān",
+    "aliases": [
+      "shau kei wan"
+    ]
+  },
+  {
+    "id": 26,
+    "name_yue": "杏花邨",
+    "name_cmn": "杏花邨",
+    "name_en": "Heng Fa Chuen Station",
+    "area": "Chai Wan",
+    "landmark_yue": "杏花邨港鐵站大堂",
+    "landmark_cmn": "杏花邨港铁站大堂",
+    "landmark_en": "Heng Fa Chuen Station concourse",
+    "jyutping": "hang6 faa1 cyun1",
+    "pinyin": "Xìnghuā Cūn",
+    "aliases": [
+      "heng fa chuen"
+    ]
+  },
+  {
+    "id": 27,
+    "name_yue": "柴灣",
+    "name_cmn": "柴湾",
+    "name_en": "Chai Wan Station",
+    "area": "Chai Wan",
+    "landmark_yue": "柴灣港鐵站大堂",
+    "landmark_cmn": "柴湾港铁站大堂",
+    "landmark_en": "Chai Wan Station concourse",
+    "jyutping": "caai4 waan1",
+    "pinyin": "Cháiwān",
+    "aliases": [
+      "chai wan"
+    ]
+  },
+  {
+    "id": 28,
+    "name_yue": "荃灣",
+    "name_cmn": "荃湾",
+    "name_en": "Tsuen Wan Station",
+    "area": "Tsuen Wan",
+    "landmark_yue": "荃灣港鐵站大堂",
+    "landmark_cmn": "荃湾港铁站大堂",
+    "landmark_en": "Tsuen Wan Station concourse",
+    "jyutping": "cyun4 waan1",
+    "pinyin": "Quánwān",
+    "aliases": [
+      "tsuen wan"
+    ]
+  },
+  {
+    "id": 29,
+    "name_yue": "大窩口",
+    "name_cmn": "大窝口",
+    "name_en": "Tai Wo Hau Station",
+    "area": "Tsuen Wan",
+    "landmark_yue": "大窩口港鐵站大堂",
+    "landmark_cmn": "大窝口港铁站大堂",
+    "landmark_en": "Tai Wo Hau Station concourse",
+    "jyutping": "daai6 wo1 hau2",
+    "pinyin": "Dàwōkǒu",
+    "aliases": [
+      "tai wo hau"
+    ]
+  },
+  {
+    "id": 30,
+    "name_yue": "葵興",
+    "name_cmn": "葵兴",
+    "name_en": "Kwai Hing Station",
+    "area": "Kwai Chung",
+    "landmark_yue": "葵興港鐵站大堂",
+    "landmark_cmn": "葵兴港铁站大堂",
+    "landmark_en": "Kwai Hing Station concourse",
+    "jyutping": "kwai4 hing1",
+    "pinyin": "Kuíxīng",
+    "aliases": [
+      "kwai hing"
+    ]
+  },
+  {
+    "id": 31,
+    "name_yue": "葵芳",
+    "name_cmn": "葵芳",
+    "name_en": "Kwai Fong Station",
+    "area": "Kwai Chung",
+    "landmark_yue": "葵芳港鐵站大堂",
+    "landmark_cmn": "葵芳港铁站大堂",
+    "landmark_en": "Kwai Fong Station concourse",
+    "jyutping": "kwai4 fong1",
+    "pinyin": "Kuífāng",
+    "aliases": [
+      "kwai fong"
+    ]
+  },
+  {
+    "id": 32,
+    "name_yue": "荔景",
+    "name_cmn": "荔景",
+    "name_en": "Lai King Station",
+    "area": "Kwai Chung",
+    "landmark_yue": "荔景港鐵站大堂",
+    "landmark_cmn": "荔景港铁站大堂",
+    "landmark_en": "Lai King Station concourse",
+    "jyutping": "lai6 ging2",
+    "pinyin": "Lìjǐng",
+    "aliases": [
+      "lai king"
+    ]
+  },
+  {
+    "id": 33,
+    "name_yue": "美孚",
+    "name_cmn": "美孚",
+    "name_en": "Mei Foo Station",
+    "area": "Mei Foo",
+    "landmark_yue": "美孚港鐵站大堂",
+    "landmark_cmn": "美孚港铁站大堂",
+    "landmark_en": "Mei Foo Station concourse",
+    "jyutping": "mei5 fu1",
+    "pinyin": "Měifú",
+    "aliases": [
+      "mei foo"
+    ]
+  },
+  {
+    "id": 34,
+    "name_yue": "荔枝角",
+    "name_cmn": "荔枝角",
+    "name_en": "Lai Chi Kok Station",
+    "area": "Lai Chi Kok",
+    "landmark_yue": "荔枝角港鐵站大堂",
+    "landmark_cmn": "荔枝角港铁站大堂",
+    "landmark_en": "Lai Chi Kok Station concourse",
+    "jyutping": "lai6 zi1 gok3",
+    "pinyin": "Lìzhī Jiǎo",
+    "aliases": [
+      "lai chi kok"
+    ]
+  },
+  {
+    "id": 35,
+    "name_yue": "長沙灣",
+    "name_cmn": "长沙湾",
+    "name_en": "Cheung Sha Wan Station",
+    "area": "Cheung Sha Wan",
+    "landmark_yue": "長沙灣港鐵站大堂",
+    "landmark_cmn": "长沙湾港铁站大堂",
+    "landmark_en": "Cheung Sha Wan Station concourse",
+    "jyutping": "coeng4 saa1 waan4",
+    "pinyin": "Zhǎng Shāwān",
+    "aliases": [
+      "cheung sha wan"
+    ]
+  },
+  {
+    "id": 36,
+    "name_yue": "深水埗",
+    "name_cmn": "深水埗",
+    "name_en": "Sham Shui Po Station",
+    "area": "Sham Shui Po",
+    "landmark_yue": "深水埗港鐵站大堂",
+    "landmark_cmn": "深水埗港铁站大堂",
+    "landmark_en": "Sham Shui Po Station concourse",
+    "jyutping": "sam1 seoi2 bou2",
+    "pinyin": "Shēnshuǐ Bù",
+    "aliases": [
+      "sham shui po"
+    ]
+  },
+  {
+    "id": 37,
+    "name_yue": "太子",
+    "name_cmn": "太子",
+    "name_en": "Prince Edward Station",
+    "area": "Prince Edward",
+    "landmark_yue": "太子港鐵站大堂",
+    "landmark_cmn": "太子港铁站大堂",
+    "landmark_en": "Prince Edward Station concourse",
+    "jyutping": "taai3 zi2",
+    "pinyin": "Tàizi",
+    "aliases": [
+      "prince edward"
+    ]
+  },
+  {
+    "id": 38,
+    "name_yue": "旺角",
+    "name_cmn": "旺角",
+    "name_en": "Mong Kok Station",
+    "area": "Mong Kok",
+    "landmark_yue": "旺角港鐵站大堂",
+    "landmark_cmn": "旺角港铁站大堂",
+    "landmark_en": "Mong Kok Station concourse",
+    "jyutping": "wong6 gok3",
+    "pinyin": "Wàngjiǎo",
+    "aliases": [
+      "mk",
+      "mong kok",
+      "mongkok",
+      "旺角站"
+    ]
+  },
+  {
+    "id": 39,
+    "name_yue": "油麻地",
+    "name_cmn": "油麻地",
+    "name_en": "Yau Ma Tei Station",
+    "area": "Yau Ma Tei",
+    "landmark_yue": "油麻地港鐵站大堂",
+    "landmark_cmn": "油麻地港铁站大堂",
+    "landmark_en": "Yau Ma Tei Station concourse",
+    "jyutping": "jau4 maa4 dei2",
+    "pinyin": "Yóumá Dì",
+    "aliases": [
+      "yau ma tei"
+    ]
+  },
+  {
+    "id": 40,
+    "name_yue": "佐敦",
+    "name_cmn": "佐敦",
+    "name_en": "Jordan Station",
+    "area": "Jordan",
+    "landmark_yue": "佐敦港鐵站大堂",
+    "landmark_cmn": "佐敦港铁站大堂",
+    "landmark_en": "Jordan Station concourse",
+    "jyutping": "zo2 deon1",
+    "pinyin": "Zuǒdūn",
+    "aliases": [
+      "jordan"
+    ]
+  },
+  {
+    "id": 41,
+    "name_yue": "尖沙咀",
+    "name_cmn": "尖沙咀",
+    "name_en": "Tsim Sha Tsui Station",
+    "area": "Tsim Sha Tsui",
+    "landmark_yue": "尖沙咀港鐵站大堂",
+    "landmark_cmn": "尖沙咀港铁站大堂",
+    "landmark_en": "Tsim Sha Tsui Station concourse",
+    "jyutping": "zim1 saa1 zeoi2",
+    "pinyin": "Jiānshājǔ",
+    "aliases": [
+      "tsim sha tsui",
+      "tst"
+    ]
+  },
+  {
+    "id": 42,
+    "name_yue": "黃埔",
+    "name_cmn": "黄埔",
+    "name_en": "Whampoa Station",
+    "area": "Whampoa",
+    "landmark_yue": "黃埔港鐵站大堂",
+    "landmark_cmn": "黄埔港铁站大堂",
+    "landmark_en": "Whampoa Station concourse",
+    "jyutping": "wong4 bou3",
+    "pinyin": "Huángpǔ",
+    "aliases": [
+      "whampoa"
+    ]
+  },
+  {
+    "id": 43,
+    "name_yue": "何文田",
+    "name_cmn": "何文田",
+    "name_en": "Ho Man Tin Station",
+    "area": "Ho Man Tin",
+    "landmark_yue": "何文田港鐵站大堂",
+    "landmark_cmn": "何文田港铁站大堂",
+    "landmark_en": "Ho Man Tin Station concourse",
+    "jyutping": "ho4 man4 tin4",
+    "pinyin": "Héwéntián",
+    "aliases": [
+      "ho man tin"
+    ]
+  },
+  {
+    "id": 44,
+    "name_yue": "石硤尾",
+    "name_cmn": "石硖尾",
+    "name_en": "Shek Kip Mei Station",
+    "area": "Sham Shui Po",
+    "landmark_yue": "石硤尾港鐵站大堂",
+    "landmark_cmn": "石硖尾港铁站大堂",
+    "landmark_en": "Shek Kip Mei Station concourse",
+    "jyutping": "sek6 gip3 mei5",
+    "pinyin": "Shíxiá Wěi",
+    "aliases": [
+      "shek kip mei"
+    ]
+  },
+  {
+    "id": 45,
+    "name_yue": "九龍塘",
+    "name_cmn": "九龙塘",
+    "name_en": "Kowloon Tong Station",
+    "area": "Kowloon Tong",
+    "landmark_yue": "九龍塘港鐵站大堂",
+    "landmark_cmn": "九龙塘港铁站大堂",
+    "landmark_en": "Kowloon Tong Station concourse",
+    "jyutping": "gau2 lung4 tong4",
+    "pinyin": "Jiǔlóngtáng",
+    "aliases": [
+      "kowloon tong"
+    ]
+  },
+  {
+    "id": 46,
+    "name_yue": "樂富",
+    "name_cmn": "乐富",
+    "name_en": "Lok Fu Station",
+    "area": "Wong Tai Sin",
+    "landmark_yue": "樂富港鐵站大堂",
+    "landmark_cmn": "乐富港铁站大堂",
+    "landmark_en": "Lok Fu Station concourse",
+    "jyutping": "lok6 fu3",
+    "pinyin": "Lèfù",
+    "aliases": [
+      "lok fu"
+    ]
+  },
+  {
+    "id": 47,
+    "name_yue": "黃大仙",
+    "name_cmn": "黄大仙",
+    "name_en": "Wong Tai Sin Station",
+    "area": "Wong Tai Sin",
+    "landmark_yue": "黃大仙港鐵站大堂",
+    "landmark_cmn": "黄大仙港铁站大堂",
+    "landmark_en": "Wong Tai Sin Station concourse",
+    "jyutping": "wong4 daai6 sin1",
+    "pinyin": "Huángdàxiān",
+    "aliases": [
+      "wong tai sin"
+    ]
+  },
+  {
+    "id": 48,
+    "name_yue": "鑽石山",
+    "name_cmn": "钻石山",
+    "name_en": "Diamond Hill Station",
+    "area": "Diamond Hill",
+    "landmark_yue": "鑽石山港鐵站大堂",
+    "landmark_cmn": "钻石山港铁站大堂",
+    "landmark_en": "Diamond Hill Station concourse",
+    "jyutping": "zyun3 sek6 saan1",
+    "pinyin": "Zuànshí Shān",
+    "aliases": [
+      "diamond hill"
+    ]
+  },
+  {
+    "id": 49,
+    "name_yue": "彩虹",
+    "name_cmn": "彩虹",
+    "name_en": "Choi Hung Station",
+    "area": "Choi Hung",
+    "landmark_yue": "彩虹港鐵站大堂",
+    "landmark_cmn": "彩虹港铁站大堂",
+    "landmark_en": "Choi Hung Station concourse",
+    "jyutping": "coi2 hung4",
+    "pinyin": "Cǎihóng",
+    "aliases": [
+      "choi hung"
+    ]
+  },
+  {
+    "id": 50,
+    "name_yue": "九龍灣",
+    "name_cmn": "九龙湾",
+    "name_en": "Kowloon Bay Station",
+    "area": "Kowloon Bay",
+    "landmark_yue": "九龍灣港鐵站大堂",
+    "landmark_cmn": "九龙湾港铁站大堂",
+    "landmark_en": "Kowloon Bay Station concourse",
+    "jyutping": "gau2 lung4 waan1",
+    "pinyin": "Jiǔlóngwān",
+    "aliases": [
+      "kowloon bay"
+    ]
+  },
+  {
+    "id": 51,
+    "name_yue": "牛頭角",
+    "name_cmn": "牛头角",
+    "name_en": "Ngau Tau Kok Station",
+    "area": "Ngau Tau Kok",
+    "landmark_yue": "牛頭角港鐵站大堂",
+    "landmark_cmn": "牛头角港铁站大堂",
+    "landmark_en": "Ngau Tau Kok Station concourse",
+    "jyutping": "ngau4 tau4 gok3",
+    "pinyin": "Niútóu Jiǎo",
+    "aliases": [
+      "ngau tau kok"
+    ]
+  },
+  {
+    "id": 52,
+    "name_yue": "觀塘",
+    "name_cmn": "观塘",
+    "name_en": "Kwun Tong Station",
+    "area": "Kwun Tong",
+    "landmark_yue": "觀塘港鐵站大堂",
+    "landmark_cmn": "观塘港铁站大堂",
+    "landmark_en": "Kwun Tong Station concourse",
+    "jyutping": "gun1 tong4",
+    "pinyin": "Guāntáng",
+    "aliases": [
+      "kwun tong"
+    ]
+  },
+  {
+    "id": 53,
+    "name_yue": "藍田",
+    "name_cmn": "蓝田",
+    "name_en": "Lam Tin Station",
+    "area": "Lam Tin",
+    "landmark_yue": "藍田港鐵站大堂",
+    "landmark_cmn": "蓝田港铁站大堂",
+    "landmark_en": "Lam Tin Station concourse",
+    "jyutping": "laam4 tin4",
+    "pinyin": "Lántián",
+    "aliases": [
+      "lam tin"
+    ]
+  },
+  {
+    "id": 54,
+    "name_yue": "油塘",
+    "name_cmn": "油塘",
+    "name_en": "Yau Tong Station",
+    "area": "Yau Tong",
+    "landmark_yue": "油塘港鐵站大堂",
+    "landmark_cmn": "油塘港铁站大堂",
+    "landmark_en": "Yau Tong Station concourse",
+    "jyutping": "jau4 tong4",
+    "pinyin": "Yóutáng",
+    "aliases": [
+      "yau tong"
+    ]
+  },
+  {
+    "id": 55,
+    "name_yue": "調景嶺",
+    "name_cmn": "调景岭",
+    "name_en": "Tiu Keng Leng Station",
+    "area": "Tseung Kwan O",
+    "landmark_yue": "調景嶺港鐵站大堂",
+    "landmark_cmn": "调景岭港铁站大堂",
+    "landmark_en": "Tiu Keng Leng Station concourse",
+    "jyutping": "tiu4 ging2 leng5",
+    "pinyin": "Diàojǐnglǐng",
+    "aliases": [
+      "tiu keng leng"
+    ]
+  },
+  {
+    "id": 56,
+    "name_yue": "將軍澳",
+    "name_cmn": "将军澳",
+    "name_en": "Tseung Kwan O Station",
+    "area": "Tseung Kwan O",
+    "landmark_yue": "將軍澳港鐵站大堂",
+    "landmark_cmn": "将军澳港铁站大堂",
+    "landmark_en": "Tseung Kwan O Station concourse",
+    "jyutping": "zoeng1 gwan1 ou3",
+    "pinyin": "Jiāngjūn Ào",
+    "aliases": [
+      "tseung kwan o"
+    ]
+  },
+  {
+    "id": 57,
+    "name_yue": "坑口",
+    "name_cmn": "坑口",
+    "name_en": "Hang Hau Station",
+    "area": "Tseung Kwan O",
+    "landmark_yue": "坑口港鐵站大堂",
+    "landmark_cmn": "坑口港铁站大堂",
+    "landmark_en": "Hang Hau Station concourse",
+    "jyutping": "haang1 hau2",
+    "pinyin": "Kēngkǒu",
+    "aliases": [
+      "hang hau"
+    ]
+  },
+  {
+    "id": 58,
+    "name_yue": "寶琳",
+    "name_cmn": "宝琳",
+    "name_en": "Po Lam Station",
+    "area": "Tseung Kwan O",
+    "landmark_yue": "寶琳港鐵站大堂",
+    "landmark_cmn": "宝琳港铁站大堂",
+    "landmark_en": "Po Lam Station concourse",
+    "jyutping": "bou2 lam4",
+    "pinyin": "Bǎolín",
+    "aliases": [
+      "po lam"
+    ]
+  },
+  {
+    "id": 59,
+    "name_yue": "康城",
+    "name_cmn": "康城",
+    "name_en": "LOHAS Park Station",
+    "area": "Tseung Kwan O",
+    "landmark_yue": "康城港鐵站大堂",
+    "landmark_cmn": "康城港铁站大堂",
+    "landmark_en": "LOHAS Park Station concourse",
+    "jyutping": "hong1 sing4",
+    "pinyin": "Kāngchéng",
+    "aliases": [
+      "lohas park"
+    ]
+  },
+  {
+    "id": 60,
+    "name_yue": "會展",
+    "name_cmn": "会展",
+    "name_en": "Exhibition Centre Station",
+    "area": "Wan Chai",
+    "landmark_yue": "會展港鐵站大堂",
+    "landmark_cmn": "会展港铁站大堂",
+    "landmark_en": "Exhibition Centre Station concourse",
+    "jyutping": "wui6 zin2",
+    "pinyin": "Huìzhǎn",
+    "aliases": [
+      "exhibition centre"
+    ]
+  },
+  {
+    "id": 61,
+    "name_yue": "紅磡",
+    "name_cmn": "红磡",
+    "name_en": "Hung Hom Station",
+    "area": "Hung Hom",
+    "landmark_yue": "紅磡港鐵站大堂",
+    "landmark_cmn": "红磡港铁站大堂",
+    "landmark_en": "Hung Hom Station concourse",
+    "jyutping": "hung4 ham3",
+    "pinyin": "Hóng Kàn",
+    "aliases": [
+      "hung hom"
+    ]
+  },
+  {
+    "id": 62,
+    "name_yue": "旺角東",
+    "name_cmn": "旺角东",
+    "name_en": "Mong Kok East Station",
+    "area": "Mong Kok",
+    "landmark_yue": "旺角東港鐵站大堂",
+    "landmark_cmn": "旺角东港铁站大堂",
+    "landmark_en": "Mong Kok East Station concourse",
+    "jyutping": "wong6 gok3 dung1",
+    "pinyin": "Wàngjiǎo Dōng",
+    "aliases": [
+      "mong kok east"
+    ]
+  },
+  {
+    "id": 63,
+    "name_yue": "大圍",
+    "name_cmn": "大围",
+    "name_en": "Tai Wai Station",
+    "area": "Sha Tin",
+    "landmark_yue": "大圍港鐵站大堂",
+    "landmark_cmn": "大围港铁站大堂",
+    "landmark_en": "Tai Wai Station concourse",
+    "jyutping": "daai6 wai4",
+    "pinyin": "Dàwéi",
+    "aliases": [
+      "tai wai"
+    ]
+  },
+  {
+    "id": 64,
+    "name_yue": "沙田",
+    "name_cmn": "沙田",
+    "name_en": "Sha Tin Station",
+    "area": "Sha Tin",
+    "landmark_yue": "沙田港鐵站大堂",
+    "landmark_cmn": "沙田港铁站大堂",
+    "landmark_en": "Sha Tin Station concourse",
+    "jyutping": "saa1 tin4",
+    "pinyin": "Shātián",
+    "aliases": [
+      "sha tin"
+    ]
+  },
+  {
+    "id": 65,
+    "name_yue": "火炭",
+    "name_cmn": "火炭",
+    "name_en": "Fo Tan Station",
+    "area": "Sha Tin",
+    "landmark_yue": "火炭港鐵站大堂",
+    "landmark_cmn": "火炭港铁站大堂",
+    "landmark_en": "Fo Tan Station concourse",
+    "jyutping": "fo2 taan3",
+    "pinyin": "Huǒtàn",
+    "aliases": [
+      "fo tan"
+    ]
+  },
+  {
+    "id": 66,
+    "name_yue": "馬場",
+    "name_cmn": "马场",
+    "name_en": "Racecourse Station",
+    "area": "Sha Tin",
+    "landmark_yue": "馬場港鐵站大堂",
+    "landmark_cmn": "马场港铁站大堂",
+    "landmark_en": "Racecourse Station concourse",
+    "jyutping": "maa5 coeng4",
+    "pinyin": "Mǎchǎng",
+    "aliases": [
+      "racecourse"
+    ]
+  },
+  {
+    "id": 67,
+    "name_yue": "大學",
+    "name_cmn": "大学",
+    "name_en": "University Station",
+    "area": "Ma Liu Shui",
+    "landmark_yue": "大學港鐵站大堂",
+    "landmark_cmn": "大学港铁站大堂",
+    "landmark_en": "University Station concourse",
+    "jyutping": "daai6 hok6",
+    "pinyin": "Dàxué",
+    "aliases": [
+      "university"
+    ]
+  },
+  {
+    "id": 68,
+    "name_yue": "大埔墟",
+    "name_cmn": "大埔墟",
+    "name_en": "Tai Po Market Station",
+    "area": "Tai Po",
+    "landmark_yue": "大埔墟港鐵站大堂",
+    "landmark_cmn": "大埔墟港铁站大堂",
+    "landmark_en": "Tai Po Market Station concourse",
+    "jyutping": "daai6 bou3 heoi1",
+    "pinyin": "Dàbù Xū",
+    "aliases": [
+      "tai po market"
+    ]
+  },
+  {
+    "id": 69,
+    "name_yue": "太和",
+    "name_cmn": "太和",
+    "name_en": "Tai Wo Station",
+    "area": "Tai Po",
+    "landmark_yue": "太和港鐵站大堂",
+    "landmark_cmn": "太和港铁站大堂",
+    "landmark_en": "Tai Wo Station concourse",
+    "jyutping": "taai3 wo4",
+    "pinyin": "Tàihé",
+    "aliases": [
+      "tai wo"
+    ]
+  },
+  {
+    "id": 70,
+    "name_yue": "粉嶺",
+    "name_cmn": "粉岭",
+    "name_en": "Fanling Station",
+    "area": "Fanling",
+    "landmark_yue": "粉嶺港鐵站大堂",
+    "landmark_cmn": "粉岭港铁站大堂",
+    "landmark_en": "Fanling Station concourse",
+    "jyutping": "fan2 leng5",
+    "pinyin": "Fěnlǐng",
+    "aliases": [
+      "fanling"
+    ]
+  },
+  {
+    "id": 71,
+    "name_yue": "上水",
+    "name_cmn": "上水",
+    "name_en": "Sheung Shui Station",
+    "area": "Sheung Shui",
+    "landmark_yue": "上水港鐵站大堂",
+    "landmark_cmn": "上水港铁站大堂",
+    "landmark_en": "Sheung Shui Station concourse",
+    "jyutping": "soeng6 seoi2",
+    "pinyin": "Shàng Shuǐ",
+    "aliases": [
+      "sheung shui"
+    ]
+  },
+  {
+    "id": 72,
+    "name_yue": "羅湖",
+    "name_cmn": "罗湖",
+    "name_en": "Lo Wu Station",
+    "area": "North District",
+    "landmark_yue": "羅湖港鐵站大堂",
+    "landmark_cmn": "罗湖港铁站大堂",
+    "landmark_en": "Lo Wu Station concourse",
+    "jyutping": "lo4 wu4",
+    "pinyin": "Luóhú",
+    "aliases": [
+      "lo wu"
+    ]
+  },
+  {
+    "id": 73,
+    "name_yue": "落馬洲",
+    "name_cmn": "落马洲",
+    "name_en": "Lok Ma Chau Station",
+    "area": "North District",
+    "landmark_yue": "落馬洲港鐵站大堂",
+    "landmark_cmn": "落马洲港铁站大堂",
+    "landmark_en": "Lok Ma Chau Station concourse",
+    "jyutping": "lok6 maa5 zau1",
+    "pinyin": "Luòmǎzhōu",
+    "aliases": [
+      "lok ma chau"
+    ]
+  },
+  {
+    "id": 74,
+    "name_yue": "烏溪沙",
+    "name_cmn": "乌溪沙",
+    "name_en": "Wu Kai Sha Station",
+    "area": "Ma On Shan",
+    "landmark_yue": "烏溪沙港鐵站大堂",
+    "landmark_cmn": "乌溪沙港铁站大堂",
+    "landmark_en": "Wu Kai Sha Station concourse",
+    "jyutping": "wu1 kai1 saa1",
+    "pinyin": "Wūxī Shā",
+    "aliases": [
+      "wu kai sha"
+    ]
+  },
+  {
+    "id": 75,
+    "name_yue": "馬鞍山",
+    "name_cmn": "马鞍山",
+    "name_en": "Ma On Shan Station",
+    "area": "Ma On Shan",
+    "landmark_yue": "馬鞍山港鐵站大堂",
+    "landmark_cmn": "马鞍山港铁站大堂",
+    "landmark_en": "Ma On Shan Station concourse",
+    "jyutping": "maa5 on1 saan1",
+    "pinyin": "Mǎānshān",
+    "aliases": [
+      "ma on shan"
+    ]
+  },
+  {
+    "id": 76,
+    "name_yue": "恆安",
+    "name_cmn": "恒安",
+    "name_en": "Heng On Station",
+    "area": "Ma On Shan",
+    "landmark_yue": "恆安港鐵站大堂",
+    "landmark_cmn": "恒安港铁站大堂",
+    "landmark_en": "Heng On Station concourse",
+    "jyutping": "hang4 on1",
+    "pinyin": "Héngān",
+    "aliases": [
+      "heng on"
+    ]
+  },
+  {
+    "id": 77,
+    "name_yue": "大水坑",
+    "name_cmn": "大水坑",
+    "name_en": "Tai Shui Hang Station",
+    "area": "Ma On Shan",
+    "landmark_yue": "大水坑港鐵站大堂",
+    "landmark_cmn": "大水坑港铁站大堂",
+    "landmark_en": "Tai Shui Hang Station concourse",
+    "jyutping": "daai6 seoi2 haang1",
+    "pinyin": "Dàshuǐkēng",
+    "aliases": [
+      "tai shui hang"
+    ]
+  },
+  {
+    "id": 78,
+    "name_yue": "石門",
+    "name_cmn": "石门",
+    "name_en": "Shek Mun Station",
+    "area": "Sha Tin",
+    "landmark_yue": "石門港鐵站大堂",
+    "landmark_cmn": "石门港铁站大堂",
+    "landmark_en": "Shek Mun Station concourse",
+    "jyutping": "sek6 mun4",
+    "pinyin": "Shímén",
+    "aliases": [
+      "shek mun"
+    ]
+  },
+  {
+    "id": 79,
+    "name_yue": "第一城",
+    "name_cmn": "第一城",
+    "name_en": "City One Station",
+    "area": "Sha Tin",
+    "landmark_yue": "第一城港鐵站大堂",
+    "landmark_cmn": "第一城港铁站大堂",
+    "landmark_en": "City One Station concourse",
+    "jyutping": "dai6 jat1 sing4",
+    "pinyin": "Dìyī Chéng",
+    "aliases": [
+      "city one"
+    ]
+  },
+  {
+    "id": 80,
+    "name_yue": "沙田圍",
+    "name_cmn": "沙田围",
+    "name_en": "Sha Tin Wai Station",
+    "area": "Sha Tin",
+    "landmark_yue": "沙田圍港鐵站大堂",
+    "landmark_cmn": "沙田围港铁站大堂",
+    "landmark_en": "Sha Tin Wai Station concourse",
+    "jyutping": "saa1 tin4 wai4",
+    "pinyin": "Shātián Wéi",
+    "aliases": [
+      "sha tin wai"
+    ]
+  },
+  {
+    "id": 81,
+    "name_yue": "車公廟",
+    "name_cmn": "车公庙",
+    "name_en": "Che Kung Temple Station",
+    "area": "Sha Tin",
+    "landmark_yue": "車公廟港鐵站大堂",
+    "landmark_cmn": "车公庙港铁站大堂",
+    "landmark_en": "Che Kung Temple Station concourse",
+    "jyutping": "ce1 gung1 miu2",
+    "pinyin": "Chēgōngmiào",
+    "aliases": [
+      "che kung temple"
+    ]
+  },
+  {
+    "id": 82,
+    "name_yue": "顯徑",
+    "name_cmn": "显径",
+    "name_en": "Hin Keng Station",
+    "area": "Sha Tin",
+    "landmark_yue": "顯徑港鐵站大堂",
+    "landmark_cmn": "显径港铁站大堂",
+    "landmark_en": "Hin Keng Station concourse",
+    "jyutping": "hin2 ging3",
+    "pinyin": "Xiǎnjìng",
+    "aliases": [
+      "hin keng"
+    ]
+  },
+  {
+    "id": 83,
+    "name_yue": "啟德",
+    "name_cmn": "启德",
+    "name_en": "Kai Tak Station",
+    "area": "Kai Tak",
+    "landmark_yue": "啟德港鐵站大堂",
+    "landmark_cmn": "启德港铁站大堂",
+    "landmark_en": "Kai Tak Station concourse",
+    "jyutping": "kai2 dak1",
+    "pinyin": "Qǐdé",
+    "aliases": [
+      "kai tak"
+    ]
+  },
+  {
+    "id": 84,
+    "name_yue": "宋皇臺",
+    "name_cmn": "宋皇台",
+    "name_en": "Sung Wong Toi Station",
+    "area": "To Kwa Wan",
+    "landmark_yue": "宋皇臺港鐵站大堂",
+    "landmark_cmn": "宋皇台港铁站大堂",
+    "landmark_en": "Sung Wong Toi Station concourse",
+    "jyutping": "sung3 wong4 toi4",
+    "pinyin": "Sònghuángtái",
+    "aliases": [
+      "sung wong toi"
+    ]
+  },
+  {
+    "id": 85,
+    "name_yue": "土瓜灣",
+    "name_cmn": "土瓜湾",
+    "name_en": "To Kwa Wan Station",
+    "area": "To Kwa Wan",
+    "landmark_yue": "土瓜灣港鐵站大堂",
+    "landmark_cmn": "土瓜湾港铁站大堂",
+    "landmark_en": "To Kwa Wan Station concourse",
+    "jyutping": "tou2 gwaa1 waan4",
+    "pinyin": "Tǔguāwān",
+    "aliases": [
+      "to kwa wan"
+    ]
+  },
+  {
+    "id": 86,
+    "name_yue": "尖東",
+    "name_cmn": "尖东",
+    "name_en": "East Tsim Sha Tsui Station",
+    "area": "Tsim Sha Tsui",
+    "landmark_yue": "尖東港鐵站大堂",
+    "landmark_cmn": "尖东港铁站大堂",
+    "landmark_en": "East Tsim Sha Tsui Station concourse",
+    "jyutping": "zim1 dung1",
+    "pinyin": "Jiāndōng",
+    "aliases": [
+      "east tsim sha tsui"
+    ]
+  },
+  {
+    "id": 87,
+    "name_yue": "柯士甸",
+    "name_cmn": "柯士甸",
+    "name_en": "Austin Station",
+    "area": "Tsim Sha Tsui",
+    "landmark_yue": "柯士甸港鐵站大堂",
+    "landmark_cmn": "柯士甸港铁站大堂",
+    "landmark_en": "Austin Station concourse",
+    "jyutping": "o1 si6 din6",
+    "pinyin": "Kēshìdiān",
+    "aliases": [
+      "austin"
+    ]
+  },
+  {
+    "id": 88,
+    "name_yue": "南昌",
+    "name_cmn": "南昌",
+    "name_en": "Nam Cheong Station",
+    "area": "Nam Cheong",
+    "landmark_yue": "南昌港鐵站大堂",
+    "landmark_cmn": "南昌港铁站大堂",
+    "landmark_en": "Nam Cheong Station concourse",
+    "jyutping": "naam4 coeng1",
+    "pinyin": "Nánchāng",
+    "aliases": [
+      "nam cheong"
+    ]
+  },
+  {
+    "id": 89,
+    "name_yue": "荃灣西",
+    "name_cmn": "荃湾西",
+    "name_en": "Tsuen Wan West Station",
+    "area": "Tsuen Wan",
+    "landmark_yue": "荃灣西港鐵站大堂",
+    "landmark_cmn": "荃湾西港铁站大堂",
+    "landmark_en": "Tsuen Wan West Station concourse",
+    "jyutping": "cyun4 waan1 sai1",
+    "pinyin": "Quánwān Xī",
+    "aliases": [
+      "tsuen wan west"
+    ]
+  },
+  {
+    "id": 90,
+    "name_yue": "錦上路",
+    "name_cmn": "锦上路",
+    "name_en": "Kam Sheung Road Station",
+    "area": "Yuen Long",
+    "landmark_yue": "錦上路港鐵站大堂",
+    "landmark_cmn": "锦上路港铁站大堂",
+    "landmark_en": "Kam Sheung Road Station concourse",
+    "jyutping": "gam2 soeng5 lou6",
+    "pinyin": "Jǐn Shànglù",
+    "aliases": [
+      "kam sheung road"
+    ]
+  },
+  {
+    "id": 91,
+    "name_yue": "元朗",
+    "name_cmn": "元朗",
+    "name_en": "Yuen Long Station",
+    "area": "Yuen Long",
+    "landmark_yue": "元朗港鐵站大堂",
+    "landmark_cmn": "元朗港铁站大堂",
+    "landmark_en": "Yuen Long Station concourse",
+    "jyutping": "jyun4 long5",
+    "pinyin": "Yuánlǎng",
+    "aliases": [
+      "yuen long"
+    ]
+  },
+  {
+    "id": 92,
+    "name_yue": "朗屏",
+    "name_cmn": "朗屏",
+    "name_en": "Long Ping Station",
+    "area": "Yuen Long",
+    "landmark_yue": "朗屏港鐵站大堂",
+    "landmark_cmn": "朗屏港铁站大堂",
+    "landmark_en": "Long Ping Station concourse",
+    "jyutping": "long5 ping4",
+    "pinyin": "Lǎngpíng",
+    "aliases": [
+      "long ping"
+    ]
+  },
+  {
+    "id": 93,
+    "name_yue": "天水圍",
+    "name_cmn": "天水围",
+    "name_en": "Tin Shui Wai Station",
+    "area": "Tin Shui Wai",
+    "landmark_yue": "天水圍港鐵站大堂",
+    "landmark_cmn": "天水围港铁站大堂",
+    "landmark_en": "Tin Shui Wai Station concourse",
+    "jyutping": "tin1 seoi2 wai4",
+    "pinyin": "Tiānshuǐ Wéi",
+    "aliases": [
+      "tin shui wai"
+    ]
+  },
+  {
+    "id": 94,
+    "name_yue": "兆康",
+    "name_cmn": "兆康",
+    "name_en": "Siu Hong Station",
+    "area": "Tuen Mun",
+    "landmark_yue": "兆康港鐵站大堂",
+    "landmark_cmn": "兆康港铁站大堂",
+    "landmark_en": "Siu Hong Station concourse",
+    "jyutping": "siu6 hong1",
+    "pinyin": "Zhàokāng",
+    "aliases": [
+      "siu hong"
+    ]
+  },
+  {
+    "id": 95,
+    "name_yue": "屯門",
+    "name_cmn": "屯门",
+    "name_en": "Tuen Mun Station",
+    "area": "Tuen Mun",
+    "landmark_yue": "屯門港鐵站大堂",
+    "landmark_cmn": "屯门港铁站大堂",
+    "landmark_en": "Tuen Mun Station concourse",
+    "jyutping": "tyun4 mun4",
+    "pinyin": "Túnmén",
+    "aliases": [
+      "tuen mun"
+    ]
+  },
+  {
+    "id": 96,
+    "name_yue": "香港站",
+    "name_cmn": "香港站",
+    "name_en": "Hong Kong Station",
+    "area": "Central",
+    "landmark_yue": "香港站港鐵站大堂",
+    "landmark_cmn": "香港站港铁站大堂",
+    "landmark_en": "Hong Kong Station concourse",
+    "jyutping": "hoeng1 gong2 zaam6",
+    "pinyin": "Xiānggǎngzhàn",
+    "aliases": [
+      "hong kong"
+    ]
+  },
+  {
+    "id": 97,
+    "name_yue": "九龍站",
+    "name_cmn": "九龙站",
+    "name_en": "Kowloon Station",
+    "area": "West Kowloon",
+    "landmark_yue": "九龍站港鐵站大堂",
+    "landmark_cmn": "九龙站港铁站大堂",
+    "landmark_en": "Kowloon Station concourse",
+    "jyutping": "gau2 lung4 zaam6",
+    "pinyin": "Jiǔlóng Zhàn",
+    "aliases": [
+      "kowloon"
+    ]
+  },
+  {
+    "id": 98,
+    "name_yue": "奧運",
+    "name_cmn": "奥运",
+    "name_en": "Olympic Station",
+    "area": "Tai Kok Tsui",
+    "landmark_yue": "奧運港鐵站大堂",
+    "landmark_cmn": "奥运港铁站大堂",
+    "landmark_en": "Olympic Station concourse",
+    "jyutping": "ou3 wan6",
+    "pinyin": "Àoyùn",
+    "aliases": [
+      "olympic"
+    ]
+  },
+  {
+    "id": 99,
+    "name_yue": "青衣",
+    "name_cmn": "青衣",
+    "name_en": "Tsing Yi Station",
+    "area": "Tsing Yi",
+    "landmark_yue": "青衣港鐵站大堂",
+    "landmark_cmn": "青衣港铁站大堂",
+    "landmark_en": "Tsing Yi Station concourse",
+    "jyutping": "cing1 ji1",
+    "pinyin": "Qīngyī",
+    "aliases": [
+      "tsing yi"
+    ]
+  },
+  {
+    "id": 100,
+    "name_yue": "欣澳",
+    "name_cmn": "欣澳",
+    "name_en": "Sunny Bay Station",
+    "area": "Lantau",
+    "landmark_yue": "欣澳港鐵站大堂",
+    "landmark_cmn": "欣澳港铁站大堂",
+    "landmark_en": "Sunny Bay Station concourse",
+    "jyutping": "jan1 ou3",
+    "pinyin": "Xīnào",
+    "aliases": [
+      "sunny bay"
+    ]
+  },
+  {
+    "id": 101,
+    "name_yue": "東涌",
+    "name_cmn": "东涌",
+    "name_en": "Tung Chung Station",
+    "area": "Tung Chung",
+    "landmark_yue": "東涌港鐵站大堂",
+    "landmark_cmn": "东涌港铁站大堂",
+    "landmark_en": "Tung Chung Station concourse",
+    "jyutping": "dung1 cung1",
+    "pinyin": "Dōngyǒng",
+    "aliases": [
+      "tung chung"
+    ]
+  },
+  {
+    "id": 102,
+    "name_yue": "迪士尼",
+    "name_cmn": "迪士尼",
+    "name_en": "Disneyland Resort Station",
+    "area": "Lantau",
+    "landmark_yue": "迪士尼港鐵站大堂",
+    "landmark_cmn": "迪士尼港铁站大堂",
+    "landmark_en": "Disneyland Resort Station concourse",
+    "jyutping": "dik6 si6 nei4",
+    "pinyin": "Díshìní",
+    "aliases": [
+      "disneyland resort"
+    ]
+  },
+  {
+    "id": 103,
+    "name_yue": "海洋公園",
+    "name_cmn": "海洋公园",
+    "name_en": "Ocean Park Station",
+    "area": "Wong Chuk Hang",
+    "landmark_yue": "海洋公園港鐵站大堂",
+    "landmark_cmn": "海洋公园港铁站大堂",
+    "landmark_en": "Ocean Park Station concourse",
+    "jyutping": "hoi2 joeng4 gung1 jyun2",
+    "pinyin": "Hǎiyánggōngyuán",
+    "aliases": [
+      "ocean park"
+    ]
+  },
+  {
+    "id": 104,
+    "name_yue": "黃竹坑",
+    "name_cmn": "黄竹坑",
+    "name_en": "Wong Chuk Hang Station",
+    "area": "Wong Chuk Hang",
+    "landmark_yue": "黃竹坑港鐵站大堂",
+    "landmark_cmn": "黄竹坑港铁站大堂",
+    "landmark_en": "Wong Chuk Hang Station concourse",
+    "jyutping": "wong4 zuk1 haang1",
+    "pinyin": "Huángzhú Kēng",
+    "aliases": [
+      "wong chuk hang"
+    ]
+  },
+  {
+    "id": 105,
+    "name_yue": "利東",
+    "name_cmn": "利东",
+    "name_en": "Lei Tung Station",
+    "area": "Ap Lei Chau",
+    "landmark_yue": "利東港鐵站大堂",
+    "landmark_cmn": "利东港铁站大堂",
+    "landmark_en": "Lei Tung Station concourse",
+    "jyutping": "lei6 dung1",
+    "pinyin": "Lìdōng",
+    "aliases": [
+      "lei tung"
+    ]
+  },
+  {
+    "id": 106,
+    "name_yue": "海怡半島",
+    "name_cmn": "海怡半岛",
+    "name_en": "South Horizons Station",
+    "area": "Ap Lei Chau",
+    "landmark_yue": "海怡半島港鐵站大堂",
+    "landmark_cmn": "海怡半岛港铁站大堂",
+    "landmark_en": "South Horizons Station concourse",
+    "jyutping": "hoi2 ji4 bun3 dou2",
+    "pinyin": "Hǎiyí Bàndǎo",
+    "aliases": [
+      "south horizons"
+    ]
+  },
+  {
+    "id": 107,
     "name_yue": "瑪麗醫院",
     "name_cmn": "玛丽医院",
     "name_en": "Queen Mary Hospital",
@@ -38,49 +1623,1521 @@
     "landmark_en": "102 Pok Fu Lam Road",
     "jyutping": "maa5 lai6 ji1 jyun2",
     "pinyin": "Mǎlì Yīyuàn",
-    "aliases": ["QMH", "Pok Fu Lam Hospital"],
-    "recent": true
+    "aliases": [
+      "pok fu lam hospital",
+      "qmh",
+      "queen mary",
+      "queen mary hospital"
+    ]
   },
   {
-    "id": 10,
-    "name_yue": "旺角花園街",
-    "name_cmn": "旺角花园街",
-    "name_en": "Fa Yuen Street, Mong Kok",
-    "area": "Mong Kok",
-    "landmark_yue": "近旺角地鐵站，近波鞋街",
-    "landmark_cmn": "近旺角地铁站，近波鞋街",
-    "landmark_en": "Near Mong Kok MTR, near the Sneaker Street entrance",
-    "jyutping": "wong6 gok3 faa1 jyun4 gaai1",
-    "pinyin": "Wàngjiǎo Huāyuán Jiē",
-    "aliases": ["Sneaker Street", "波鞋街", "花園街"],
-    "recent": false
+    "id": 108,
+    "name_yue": "威爾斯親王醫院",
+    "name_cmn": "威尔斯亲王医院",
+    "name_en": "Prince of Wales Hospital",
+    "area": "Sha Tin",
+    "landmark_yue": "沙田銀城街30-32號",
+    "landmark_cmn": "沙田银城街30-32号",
+    "landmark_en": "30-32 Ngan Shing Street, Sha Tin",
+    "jyutping": "wai1 ji5 si1 can1 wong4 ji1 jyun2",
+    "pinyin": "Wēiěrsī Qīnwáng Yīyuàn",
+    "aliases": [
+      "pwh",
+      "prince of wales"
+    ]
   },
   {
-    "id": 11,
-    "name_yue": "旺角",
-    "name_cmn": "旺角",
-    "name_en": "Mong Kok MTR Station",
-    "area": "Mong Kok",
-    "landmark_yue": "旺角地鐵站E2出口",
-    "landmark_cmn": "旺角地铁站E2出口",
-    "landmark_en": "Mong Kok MTR Exit E2",
-    "jyutping": "wong6 gok3",
-    "pinyin": "Wàngjiǎo",
-    "aliases": ["Mong Kok", "MK", "旺角站"],
-    "recent": false
+    "id": 109,
+    "name_yue": "伊利沙伯醫院",
+    "name_cmn": "伊利沙伯医院",
+    "name_en": "Queen Elizabeth Hospital",
+    "area": "Yau Ma Tei",
+    "landmark_yue": "加士居道30號",
+    "landmark_cmn": "加士居道30号",
+    "landmark_en": "30 Gascoigne Road",
+    "jyutping": "ji1 lei6 saa1 baak3 ji1 jyun2",
+    "pinyin": "Yīlì Shābó Yīyuàn",
+    "aliases": [
+      "qeh"
+    ]
   },
   {
-    "id": 12,
-    "name_yue": "旺角西站",
-    "name_cmn": "旺角西站",
-    "name_en": "Mong Kok West Station",
+    "id": 110,
+    "name_yue": "瑪嘉烈醫院",
+    "name_cmn": "玛嘉烈医院",
+    "name_en": "Princess Margaret Hospital",
+    "area": "Kwai Chung",
+    "landmark_yue": "醫院道2-10號",
+    "landmark_cmn": "医院道2-10号",
+    "landmark_en": "2-10 Princess Margaret Hospital Road",
+    "jyutping": "maa5 gaa1 lit6 ji1 jyun2",
+    "pinyin": "Mǎjiāliè Yīyuàn",
+    "aliases": [
+      "pmh"
+    ]
+  },
+  {
+    "id": 111,
+    "name_yue": "東區尤德夫人那打素醫院",
+    "name_cmn": "东区尤德夫人那打素医院",
+    "name_en": "Pamela Youde Nethersole Eastern Hospital",
+    "area": "Chai Wan",
+    "landmark_yue": "康復道3號",
+    "landmark_cmn": "康复道3号",
+    "landmark_en": "3 Lok Man Road",
+    "jyutping": "dung1 keoi1 jau4 dak1 fu1 jan4 naa5 daa2 sou3 ji1 jyun2",
+    "pinyin": "Dōngqū Yóudé Fūrén Nà Dǎsù Yīyuàn",
+    "aliases": [
+      "pyneh",
+      "eastern hospital"
+    ]
+  },
+  {
+    "id": 112,
+    "name_yue": "廣華醫院",
+    "name_cmn": "广华医院",
+    "name_en": "Kwong Wah Hospital",
+    "area": "Yau Ma Tei",
+    "landmark_yue": "窩打老道25號",
+    "landmark_cmn": "窝打老道25号",
+    "landmark_en": "25 Waterloo Road",
+    "jyutping": "gwong2 waa4 ji1 jyun2",
+    "pinyin": "Guǎnghuá Yīyuàn",
+    "aliases": [
+      "kwh"
+    ]
+  },
+  {
+    "id": 113,
+    "name_yue": "基督教聯合醫院",
+    "name_cmn": "基督教联合医院",
+    "name_en": "United Christian Hospital",
+    "area": "Kwun Tong",
+    "landmark_yue": "協和街130號",
+    "landmark_cmn": "协和街130号",
+    "landmark_en": "130 Hip Wo Street",
+    "jyutping": "gei1 duk1 gaau3 lyun4 hap6 ji1 jyun2",
+    "pinyin": "Jīdūjiào Liánhé Yīyuàn",
+    "aliases": [
+      "uch"
+    ]
+  },
+  {
+    "id": 114,
+    "name_yue": "屯門醫院",
+    "name_cmn": "屯门医院",
+    "name_en": "Tuen Mun Hospital",
+    "area": "Tuen Mun",
+    "landmark_yue": "青松觀路23號",
+    "landmark_cmn": "青松观路23号",
+    "landmark_en": "23 Tsing Chung Koon Road",
+    "jyutping": "tyun4 mun4 ji1 jyun2",
+    "pinyin": "Túnmén Yīyuàn",
+    "aliases": [
+      "tmh"
+    ]
+  },
+  {
+    "id": 115,
+    "name_yue": "博愛醫院",
+    "name_cmn": "博爱医院",
+    "name_en": "Pok Oi Hospital",
+    "area": "Yuen Long",
+    "landmark_yue": "又新街九號",
+    "landmark_cmn": "又新街九号",
+    "landmark_en": "9 Yau San Street",
+    "jyutping": "bok3 oi3 ji1 jyun2",
+    "pinyin": "Bóàiyīyuàn",
+    "aliases": [
+      "poh"
+    ]
+  },
+  {
+    "id": 116,
+    "name_yue": "北區醫院",
+    "name_cmn": "北区医院",
+    "name_en": "North District Hospital",
+    "area": "Sheung Shui",
+    "landmark_yue": "彩園路45號",
+    "landmark_cmn": "彩园路45号",
+    "landmark_en": "45 Choi Yuen Road",
+    "jyutping": "bak1 keoi1 ji1 jyun2",
+    "pinyin": "Běiqū Yīyuàn",
+    "aliases": [
+      "ndh"
+    ]
+  },
+  {
+    "id": 117,
+    "name_yue": "雅麗氏何妙齡那打素醫院",
+    "name_cmn": "雅丽氏何妙龄那打素医院",
+    "name_en": "Alice Ho Miu Ling Nethersole Hospital",
+    "area": "Tai Po",
+    "landmark_yue": "全安路11號",
+    "landmark_cmn": "全安路11号",
+    "landmark_en": "11 Chuen On Road",
+    "jyutping": "ngaa5 lai6 si6 ho4 miu6 ling4 naa5 daa2 sou3 ji1 jyun2",
+    "pinyin": "Yǎlì Shìhé Miàolíng Nà Dǎsù Yīyuàn",
+    "aliases": [
+      "ahnh",
+      "nethersole hospital"
+    ]
+  },
+  {
+    "id": 118,
+    "name_yue": "仁濟醫院",
+    "name_cmn": "仁济医院",
+    "name_en": "Yan Chai Hospital",
+    "area": "Tsuen Wan",
+    "landmark_yue": "深川道7-11號",
+    "landmark_cmn": "深川道7-11号",
+    "landmark_en": "7-11 Yan Chai Street",
+    "jyutping": "jan4 zai3 ji1 jyun2",
+    "pinyin": "Rénjì Yīyuàn",
+    "aliases": [
+      "ych"
+    ]
+  },
+  {
+    "id": 119,
+    "name_yue": "明愛醫院",
+    "name_cmn": "明爱医院",
+    "name_en": "Caritas Medical Centre",
+    "area": "Sham Shui Po",
+    "landmark_yue": "永康街111號",
+    "landmark_cmn": "永康街111号",
+    "landmark_en": "111 Wing Hong Street",
+    "jyutping": "ming4 oi3 ji1 jyun2",
+    "pinyin": "Míngài Yīyuàn",
+    "aliases": [
+      "cmc"
+    ]
+  },
+  {
+    "id": 120,
+    "name_yue": "律敦治醫院",
+    "name_cmn": "律敦治医院",
+    "name_en": "Ruttonjee Hospital",
+    "area": "Wan Chai",
+    "landmark_yue": "皇后大道東266號",
+    "landmark_cmn": "皇后大道东266号",
+    "landmark_en": "266 Queen's Road East",
+    "jyutping": "leot6 deon1 zi6 ji1 jyun2",
+    "pinyin": "Lǜdūnzhì Yīyuàn",
+    "aliases": [
+      "ruttonjee"
+    ]
+  },
+  {
+    "id": 121,
+    "name_yue": "養和醫院",
+    "name_cmn": "养和医院",
+    "name_en": "Hong Kong Sanatorium & Hospital",
+    "area": "Happy Valley",
+    "landmark_yue": "山村道2號",
+    "landmark_cmn": "山村道2号",
+    "landmark_en": "2 Village Road",
+    "jyutping": "joeng5 wo4 ji1 jyun2",
+    "pinyin": "Yǎng Hé Yīyuàn",
+    "aliases": [
+      "sanatorium",
+      "養和"
+    ]
+  },
+  {
+    "id": 122,
+    "name_yue": "仁安醫院",
+    "name_cmn": "仁安医院",
+    "name_en": "Union Hospital",
+    "area": "Tai Wai",
+    "landmark_yue": "沙田大圍富健街18號",
+    "landmark_cmn": "沙田大围富健街18号",
+    "landmark_en": "18 Fu Kin Street, Tai Wai",
+    "jyutping": "jan4 on1 ji1 jyun2",
+    "pinyin": "Rénān Yīyuàn",
+    "aliases": [
+      "union hospital"
+    ]
+  },
+  {
+    "id": 123,
+    "name_yue": "港怡醫院",
+    "name_cmn": "港怡医院",
+    "name_en": "Gleneagles Hong Kong Hospital",
+    "area": "Wong Chuk Hang",
+    "landmark_yue": "黃竹坑南朗山道1號",
+    "landmark_cmn": "黄竹坑南朗山道1号",
+    "landmark_en": "1 Nam Fung Path, Wong Chuk Hang",
+    "jyutping": "gong2 ji4 ji1 jyun2",
+    "pinyin": "Gǎngyí Yīyuàn",
+    "aliases": [
+      "gleneagles"
+    ]
+  },
+  {
+    "id": 124,
+    "name_yue": "銅鑼灣時代廣場",
+    "name_cmn": "铜锣湾时代广场",
+    "name_en": "Times Square, Causeway Bay",
+    "area": "Causeway Bay",
+    "landmark_yue": "近銅鑼灣地鐵站A出口",
+    "landmark_cmn": "近铜锣湾地铁站A出口",
+    "landmark_en": "Near Causeway Bay MTR Exit A",
+    "jyutping": "tung4 lo4 waan1 si4 doi6 gwong2 coeng4",
+    "pinyin": "Tóngluówān Shídàiguǎngchǎng",
+    "aliases": [
+      "times square",
+      "cwb",
+      "銅鑼灣"
+    ]
+  },
+  {
+    "id": 125,
+    "name_yue": "太古廣場",
+    "name_cmn": "太古广场",
+    "name_en": "Pacific Place",
+    "area": "Admiralty",
+    "landmark_yue": "近金鐘港鐵站C1出口",
+    "landmark_cmn": "近金钟港铁站C1出口",
+    "landmark_en": "Near Admiralty MTR Exit C1",
+    "jyutping": "taai3 gu2 gwong2 coeng4",
+    "pinyin": "Tàigǔ Guǎngchǎng",
+    "aliases": [
+      "pacific place"
+    ]
+  },
+  {
+    "id": 126,
+    "name_yue": "國際金融中心商場",
+    "name_cmn": "国际金融中心商场",
+    "name_en": "IFC Mall",
+    "area": "Central",
+    "landmark_yue": "近香港站港鐵站",
+    "landmark_cmn": "近香港站港铁站",
+    "landmark_en": "Next to Hong Kong Station",
+    "jyutping": "gwok3 zai3 gam1 jung4 zung1 sam1 soeng1 coeng4",
+    "pinyin": "Guójì Jīnróngzhōngxīn Shāngchǎng",
+    "aliases": [
+      "ifc",
+      "ifc mall",
+      "two ifc"
+    ]
+  },
+  {
+    "id": 127,
+    "name_yue": "海港城",
+    "name_cmn": "海港城",
+    "name_en": "Harbour City",
+    "area": "Tsim Sha Tsui",
+    "landmark_yue": "廣東道港威商場",
+    "landmark_cmn": "广东道港威商场",
+    "landmark_en": "Canton Road, Tsim Sha Tsui",
+    "jyutping": "hoi2 gong2 sing4",
+    "pinyin": "Hǎigǎng Chéng",
+    "aliases": [
+      "harbour city"
+    ]
+  },
+  {
+    "id": 128,
+    "name_yue": "朗豪坊",
+    "name_cmn": "朗豪坊",
+    "name_en": "Langham Place, Mong Kok",
     "area": "Mong Kok",
-    "landmark_yue": "近奧海城",
-    "landmark_cmn": "近奥海城",
-    "landmark_en": "Near Olympian City",
-    "jyutping": "wong6 gok3 sai1 zaam6",
-    "pinyin": "Wàngjiǎo Xī Zhàn",
-    "aliases": ["Olympian City", "奧海城", "MKW"],
-    "recent": false
+    "landmark_yue": "亞皆老街近旺角港鐵站",
+    "landmark_cmn": "亚皆老街近旺角港铁站",
+    "landmark_en": "Argyle Street, near Mong Kok MTR",
+    "jyutping": "long5 hou4 fong1",
+    "pinyin": "Lǎngháofāng",
+    "aliases": [
+      "langham place"
+    ]
+  },
+  {
+    "id": 129,
+    "name_yue": "圓方",
+    "name_cmn": "圆方",
+    "name_en": "Elements Mall",
+    "area": "West Kowloon",
+    "landmark_yue": "近九龍站",
+    "landmark_cmn": "近九龙站",
+    "landmark_en": "Next to Kowloon Station",
+    "jyutping": "jyun4 fong1",
+    "pinyin": "Yuánfāng",
+    "aliases": [
+      "elements"
+    ]
+  },
+  {
+    "id": 130,
+    "name_yue": "尖沙咀K11 MUSEA",
+    "name_cmn": "尖沙咀K11 MUSEA",
+    "name_en": "K11 MUSEA",
+    "area": "Tsim Sha Tsui",
+    "landmark_yue": "梳士巴利道18號",
+    "landmark_cmn": "梳士巴利道18号",
+    "landmark_en": "18 Salisbury Road",
+    "jyutping": "zim1 saa1 zeoi2 […]",
+    "pinyin": "Jiānshājǔ K11   MU SE A",
+    "aliases": [
+      "k11 musea",
+      "musea"
+    ]
+  },
+  {
+    "id": 131,
+    "name_yue": "尖沙咀K11購物藝術館",
+    "name_cmn": "尖沙咀K11购物艺术馆",
+    "name_en": "K11 Art Mall",
+    "area": "Tsim Sha Tsui",
+    "landmark_yue": "河內道18號",
+    "landmark_cmn": "河内道18号",
+    "landmark_en": "18 Hanoi Road",
+    "jyutping": "zim1 saa1 zeoi2 […] kau3 mat6 ngai6 seot6 gun2",
+    "pinyin": "Jiānshājǔ K11 Gòuwù Yìshùguǎn",
+    "aliases": [
+      "k11 art mall",
+      "k11"
+    ]
+  },
+  {
+    "id": 132,
+    "name_yue": "新城市廣場",
+    "name_cmn": "新城市广场",
+    "name_en": "New Town Plaza",
+    "area": "Sha Tin",
+    "landmark_yue": "近沙田港鐵站",
+    "landmark_cmn": "近沙田港铁站",
+    "landmark_en": "Next to Sha Tin MTR Station",
+    "jyutping": "san1 sing4 si5 gwong2 coeng4",
+    "pinyin": "Xīn Chéngshì Guǎngchǎng",
+    "aliases": [
+      "ntp",
+      "new town plaza"
+    ]
+  },
+  {
+    "id": 133,
+    "name_yue": "apm商場",
+    "name_cmn": "apm商场",
+    "name_en": "APM, Kwun Tong",
+    "area": "Kwun Tong",
+    "landmark_yue": "觀塘駿業街418號",
+    "landmark_cmn": "观塘骏业街418号",
+    "landmark_en": "418 Kwun Tong Road",
+    "jyutping": "[…] soeng1 coeng4",
+    "pinyin": "Apm Shāngchǎng",
+    "aliases": [
+      "apm"
+    ]
+  },
+  {
+    "id": 134,
+    "name_yue": "太古城中心",
+    "name_cmn": "太古城中心",
+    "name_en": "Cityplaza",
+    "area": "Tai Koo",
+    "landmark_yue": "近太古港鐵站",
+    "landmark_cmn": "近太古港铁站",
+    "landmark_en": "Next to Tai Koo MTR Station",
+    "jyutping": "taai3 gu2 sing4 zung1 sam1",
+    "pinyin": "Tài Gǔchéng Zhōngxīn",
+    "aliases": [
+      "cityplaza",
+      "太古城"
+    ]
+  },
+  {
+    "id": 135,
+    "name_yue": "奧海城",
+    "name_cmn": "奥海城",
+    "name_en": "Olympian City",
+    "area": "Tai Kok Tsui",
+    "landmark_yue": "近奧運港鐵站",
+    "landmark_cmn": "近奥运港铁站",
+    "landmark_en": "Next to Olympic MTR Station",
+    "jyutping": "ou3 hoi2 sing4",
+    "pinyin": "Ào Hǎichéng",
+    "aliases": [
+      "olympian city"
+    ]
+  },
+  {
+    "id": 136,
+    "name_yue": "MegaBox",
+    "name_cmn": "MegaBox",
+    "name_en": "MegaBox",
+    "area": "Kowloon Bay",
+    "landmark_yue": "偉業街38號",
+    "landmark_cmn": "伟业街38号",
+    "landmark_en": "38 Wang Chiu Road",
+    "jyutping": "[…]",
+    "pinyin": "Me Ga Bo X",
+    "aliases": [
+      "megabox"
+    ]
+  },
+  {
+    "id": 137,
+    "name_yue": "置地廣場",
+    "name_cmn": "置地广场",
+    "name_en": "The Landmark, Central",
+    "area": "Central",
+    "landmark_yue": "皇后大道中15號",
+    "landmark_cmn": "皇后大道中15号",
+    "landmark_en": "15 Queen's Road Central",
+    "jyutping": "zi3 dei6 gwong2 coeng4",
+    "pinyin": "Zhì Dì Guǎngchǎng",
+    "aliases": [
+      "the landmark",
+      "landmark"
+    ]
+  },
+  {
+    "id": 138,
+    "name_yue": "又一城",
+    "name_cmn": "又一城",
+    "name_en": "Festival Walk",
+    "area": "Kowloon Tong",
+    "landmark_yue": "近九龍塘港鐵站",
+    "landmark_cmn": "近九龙塘港铁站",
+    "landmark_en": "Next to Kowloon Tong MTR Station",
+    "jyutping": "jau6 jat1 sing4",
+    "pinyin": "Yòu Yīchéng",
+    "aliases": [
+      "festival walk"
+    ]
+  },
+  {
+    "id": 139,
+    "name_yue": "荷里活廣場",
+    "name_cmn": "荷里活广场",
+    "name_en": "Plaza Hollywood",
+    "area": "Diamond Hill",
+    "landmark_yue": "近鑽石山港鐵站",
+    "landmark_cmn": "近钻石山港铁站",
+    "landmark_en": "Next to Diamond Hill MTR Station",
+    "jyutping": "ho4 lei5 wut6 gwong2 coeng4",
+    "pinyin": "Hélǐhuó Guǎngchǎng",
+    "aliases": [
+      "plaza hollywood"
+    ]
+  },
+  {
+    "id": 140,
+    "name_yue": "新都會廣場",
+    "name_cmn": "新都会广场",
+    "name_en": "Metroplaza",
+    "area": "Kwai Chung",
+    "landmark_yue": "近葵芳港鐵站",
+    "landmark_cmn": "近葵芳港铁站",
+    "landmark_en": "Next to Kwai Fong MTR Station",
+    "jyutping": "san1 dou1 wui6 gwong2 coeng4",
+    "pinyin": "Xīn Dōu Huì Guǎngchǎng",
+    "aliases": [
+      "metroplaza"
+    ]
+  },
+  {
+    "id": 141,
+    "name_yue": "屯門市廣場",
+    "name_cmn": "屯门市广场",
+    "name_en": "Tuen Mun Town Plaza",
+    "area": "Tuen Mun",
+    "landmark_yue": "屯門新市中心",
+    "landmark_cmn": "屯门新市中心",
+    "landmark_en": "Tuen Mun Town Centre",
+    "jyutping": "tyun4 mun4 si5 gwong2 coeng4",
+    "pinyin": "Túnmén Shì Guǎngchǎng",
+    "aliases": [
+      "tuen mun town plaza"
+    ]
+  },
+  {
+    "id": 142,
+    "name_yue": "廟街夜市",
+    "name_cmn": "庙街夜市",
+    "name_en": "Temple Street Night Market",
+    "area": "Yau Ma Tei",
+    "landmark_yue": "近油麻地港鐵站",
+    "landmark_cmn": "近油麻地港铁站",
+    "landmark_en": "Near Yau Ma Tei MTR Station",
+    "jyutping": "miu2 gaai1 je6 si5",
+    "pinyin": "Miàojiē Yèshì",
+    "aliases": [
+      "temple street",
+      "廟街"
+    ]
+  },
+  {
+    "id": 143,
+    "name_yue": "女人街",
+    "name_cmn": "女人街",
+    "name_en": "Ladies' Market, Mong Kok",
+    "area": "Mong Kok",
+    "landmark_yue": "通菜街近旺角港鐵站",
+    "landmark_cmn": "通菜街近旺角港铁站",
+    "landmark_en": "Tung Choi Street, near Mong Kok MTR",
+    "jyutping": "neoi5 jan2 gaai1",
+    "pinyin": "Nǚrénjiē",
+    "aliases": [
+      "ladies market",
+      "ladies street"
+    ]
+  },
+  {
+    "id": 144,
+    "name_yue": "嘉咸街街市",
+    "name_cmn": "嘉咸街街市",
+    "name_en": "Graham Street Market",
+    "area": "Central",
+    "landmark_yue": "嘉咸街",
+    "landmark_cmn": "嘉咸街",
+    "landmark_en": "Graham Street",
+    "jyutping": "gaa1 haam4 gaai1 gaai1 si5",
+    "pinyin": "Jiā Xiánjiē Jiēshì",
+    "aliases": [
+      "graham street",
+      "graham street market"
+    ]
+  },
+  {
+    "id": 145,
+    "name_yue": "赤柱市場",
+    "name_cmn": "赤柱市场",
+    "name_en": "Stanley Market",
+    "area": "Stanley",
+    "landmark_yue": "近赤柱大街",
+    "landmark_cmn": "近赤柱大街",
+    "landmark_en": "Near Stanley Main Street",
+    "jyutping": "cek3 cyu5 si5 coeng4",
+    "pinyin": "Chìzhù Shìchǎng",
+    "aliases": [
+      "stanley market"
+    ]
+  },
+  {
+    "id": 146,
+    "name_yue": "西港城",
+    "name_cmn": "西港城",
+    "name_en": "Western Market",
+    "area": "Sheung Wan",
+    "landmark_yue": "德輔道中323號",
+    "landmark_cmn": "德辅道中323号",
+    "landmark_en": "323 Des Voeux Road Central",
+    "jyutping": "sai1 gong2 sing4",
+    "pinyin": "Xī Gǎngchéng",
+    "aliases": [
+      "western market"
+    ]
+  },
+  {
+    "id": 147,
+    "name_yue": "渣甸街",
+    "name_cmn": "渣甸街",
+    "name_en": "Jardine's Bazaar",
+    "area": "Causeway Bay",
+    "landmark_yue": "近銅鑼灣港鐵站",
+    "landmark_cmn": "近铜锣湾港铁站",
+    "landmark_en": "Near Causeway Bay MTR Station",
+    "jyutping": "zaa1 din6 gaai1",
+    "pinyin": "Zhādiānjiē",
+    "aliases": [
+      "jardine's bazaar",
+      "jardines bazaar"
+    ]
+  },
+  {
+    "id": 148,
+    "name_yue": "信和中心",
+    "name_cmn": "信和中心",
+    "name_en": "Sino Centre, Mong Kok",
+    "area": "Mong Kok",
+    "landmark_yue": "彌敦道近旺角港鐵站",
+    "landmark_cmn": "弥敦道近旺角港铁站",
+    "landmark_en": "Nathan Road, near Mong Kok MTR",
+    "jyutping": "seon3 wo4 zung1 sam1",
+    "pinyin": "Xìn Hé Zhōngxīn",
+    "aliases": [
+      "sino centre",
+      "mong kok computer centre"
+    ]
+  },
+  {
+    "id": 149,
+    "name_yue": "裕華國貨",
+    "name_cmn": "裕华国货",
+    "name_en": "Yue Hwa Chinese Products",
+    "area": "Jordan",
+    "landmark_yue": "彌敦道301-309號",
+    "landmark_cmn": "弥敦道301-309号",
+    "landmark_en": "301-309 Nathan Road",
+    "jyutping": "jyu6 waa4 gwok3 fo3",
+    "pinyin": "Yùhuá Guóhuò",
+    "aliases": [
+      "yue hwa"
+    ]
+  },
+  {
+    "id": 150,
+    "name_yue": "灣仔電腦城",
+    "name_cmn": "湾仔电脑城",
+    "name_en": "Wan Chai Computer Centre",
+    "area": "Wan Chai",
+    "landmark_yue": "軒尼詩道130號",
+    "landmark_cmn": "轩尼诗道130号",
+    "landmark_en": "130 Hennessy Road",
+    "jyutping": "waan1 zai2 din6 nou5 sing4",
+    "pinyin": "Wānzǎi Diànnǎochéng",
+    "aliases": [
+      "wan chai computer centre"
+    ]
+  },
+  {
+    "id": 151,
+    "name_yue": "彌敦道",
+    "name_cmn": "弥敦道",
+    "name_en": "Nathan Road",
+    "area": "Tsim Sha Tsui",
+    "landmark_yue": "尖沙咀主要幹道",
+    "landmark_cmn": "尖沙咀主要干道",
+    "landmark_en": "Main thoroughfare of Tsim Sha Tsui",
+    "jyutping": "nei4 deon1 dou6",
+    "pinyin": "Mídūndào",
+    "aliases": [
+      "nathan road"
+    ]
+  },
+  {
+    "id": 152,
+    "name_yue": "廣東道",
+    "name_cmn": "广东道",
+    "name_en": "Canton Road",
+    "area": "Tsim Sha Tsui",
+    "landmark_yue": "近海港城",
+    "landmark_cmn": "近海港城",
+    "landmark_en": "Near Harbour City",
+    "jyutping": "gwong2 dung1 dou6",
+    "pinyin": "Guǎngdōng Dào",
+    "aliases": [
+      "canton road"
+    ]
+  },
+  {
+    "id": 153,
+    "name_yue": "皇后大道中",
+    "name_cmn": "皇后大道中",
+    "name_en": "Queen's Road Central",
+    "area": "Central",
+    "landmark_yue": "中環主要幹道",
+    "landmark_cmn": "中环主要干道",
+    "landmark_en": "Main thoroughfare of Central",
+    "jyutping": "wong4 hau6 daai6 dou6 zung1",
+    "pinyin": "Huánghòu Dàdào Zhōng",
+    "aliases": [
+      "queens road central"
+    ]
+  },
+  {
+    "id": 154,
+    "name_yue": "德輔道中",
+    "name_cmn": "德辅道中",
+    "name_en": "Des Voeux Road Central",
+    "area": "Central",
+    "landmark_yue": "電車路",
+    "landmark_cmn": "电车路",
+    "landmark_en": "Tram route through Central",
+    "jyutping": "dak1 fu6 dou6 zung1",
+    "pinyin": "Défǔ Dào Zhōng",
+    "aliases": [
+      "des voeux road"
+    ]
+  },
+  {
+    "id": 155,
+    "name_yue": "荷李活道",
+    "name_cmn": "荷李活道",
+    "name_en": "Hollywood Road",
+    "area": "Sheung Wan",
+    "landmark_yue": "古董街",
+    "landmark_cmn": "古董街",
+    "landmark_en": "Antiques street",
+    "jyutping": "ho4 lei5 wut6 dou6",
+    "pinyin": "Hé Lǐhuó Dào",
+    "aliases": [
+      "hollywood road"
+    ]
+  },
+  {
+    "id": 156,
+    "name_yue": "蘭桂坊",
+    "name_cmn": "兰桂坊",
+    "name_en": "Lan Kwai Fong",
+    "area": "Central",
+    "landmark_yue": "德己立街一帶",
+    "landmark_cmn": "德己立街一带",
+    "landmark_en": "Around D'Aguilar Street",
+    "jyutping": "laan4 gwai3 fong1",
+    "pinyin": "Lánguìfāng",
+    "aliases": [
+      "lkf",
+      "lan kwai fong"
+    ]
+  },
+  {
+    "id": 157,
+    "name_yue": "蘇豪",
+    "name_cmn": "苏豪",
+    "name_en": "SoHo",
+    "area": "Central",
+    "landmark_yue": "荷李活道以南",
+    "landmark_cmn": "荷李活道以南",
+    "landmark_en": "South of Hollywood Road",
+    "jyutping": "sou1 hou4",
+    "pinyin": "Sūháo",
+    "aliases": [
+      "soho"
+    ]
+  },
+  {
+    "id": 158,
+    "name_yue": "諾士佛台",
+    "name_cmn": "诺士佛台",
+    "name_en": "Knutsford Terrace",
+    "area": "Tsim Sha Tsui",
+    "landmark_yue": "近尖沙咀港鐵站",
+    "landmark_cmn": "近尖沙咀港铁站",
+    "landmark_en": "Near Tsim Sha Tsui MTR Station",
+    "jyutping": "nok6 si6 fat6 toi4",
+    "pinyin": "Nuòshì Fútái",
+    "aliases": [
+      "knutsford terrace"
+    ]
+  },
+  {
+    "id": 159,
+    "name_yue": "西洋菜南街",
+    "name_cmn": "西洋菜南街",
+    "name_en": "Sai Yeung Choi Street South, Mong Kok",
+    "area": "Mong Kok",
+    "landmark_yue": "旺角行人專用區",
+    "landmark_cmn": "旺角行人专用区",
+    "landmark_en": "Mong Kok pedestrian precinct",
+    "jyutping": "sai1 joeng4 coi3 naam4 gaai1",
+    "pinyin": "Xīyáng Cài Nánjiē",
+    "aliases": [
+      "sai yeung choi street"
+    ]
+  },
+  {
+    "id": 160,
+    "name_yue": "砵蘭街",
+    "name_cmn": "砵兰街",
+    "name_en": "Portland Street, Mong Kok",
+    "area": "Mong Kok",
+    "landmark_yue": "近旺角港鐵站",
+    "landmark_cmn": "近旺角港铁站",
+    "landmark_en": "Near Mong Kok MTR Station",
+    "jyutping": "but3 laan4 gaai1",
+    "pinyin": "Bō Lánjiē",
+    "aliases": [
+      "portland street"
+    ]
+  },
+  {
+    "id": 161,
+    "name_yue": "上海街",
+    "name_cmn": "上海街",
+    "name_en": "Shanghai Street",
+    "area": "Yau Ma Tei",
+    "landmark_yue": "近油麻地果欄",
+    "landmark_cmn": "近油麻地果栏",
+    "landmark_en": "Near the Yau Ma Tei Fruit Market",
+    "jyutping": "soeng6 hoi2 gaai1",
+    "pinyin": "Shànghǎijiē",
+    "aliases": [
+      "shanghai street"
+    ]
+  },
+  {
+    "id": 162,
+    "name_yue": "通菜街(金魚街)",
+    "name_cmn": "通菜街(金鱼街)",
+    "name_en": "Tung Choi Street (Goldfish Market), Mong Kok",
+    "area": "Mong Kok",
+    "landmark_yue": "金魚街",
+    "landmark_cmn": "金鱼街",
+    "landmark_en": "Goldfish Market",
+    "jyutping": "tung1 coi3 gaai1 (gam1 jyu4 gaai1)",
+    "pinyin": "Tōngcài Jiē ( Jīnyú Jiē )",
+    "aliases": [
+      "goldfish street",
+      "goldfish market",
+      "tung choi street"
+    ]
+  },
+  {
+    "id": 163,
+    "name_yue": "鴨寮街",
+    "name_cmn": "鸭寮街",
+    "name_en": "Apliu Street",
+    "area": "Sham Shui Po",
+    "landmark_yue": "電子零件市集",
+    "landmark_cmn": "电子零件市集",
+    "landmark_en": "Electronics flea market",
+    "jyutping": "aap3 liu4 gaai1",
+    "pinyin": "Yā Liáo Jiē",
+    "aliases": [
+      "apliu street"
+    ]
+  },
+  {
+    "id": 164,
+    "name_yue": "摩羅上街",
+    "name_cmn": "摩罗上街",
+    "name_en": "Cat Street (Upper Lascar Row)",
+    "area": "Sheung Wan",
+    "landmark_yue": "古玩跳蚤市場",
+    "landmark_cmn": "古玩跳蚤市场",
+    "landmark_en": "Antiques flea market",
+    "jyutping": "mo1 lo4 soeng5 gaai1",
+    "pinyin": "Móluó Shàngjiē",
+    "aliases": [
+      "cat street"
+    ]
+  },
+  {
+    "id": 165,
+    "name_yue": "灣仔道",
+    "name_cmn": "湾仔道",
+    "name_en": "Wan Chai Road",
+    "area": "Wan Chai",
+    "landmark_yue": "灣仔街市一帶",
+    "landmark_cmn": "湾仔街市一带",
+    "landmark_en": "Around Wan Chai Market",
+    "jyutping": "waan1 zai2 dou6",
+    "pinyin": "Wānzǎi Dào",
+    "aliases": [
+      "wan chai road"
+    ]
+  },
+  {
+    "id": 166,
+    "name_yue": "謝斐道",
+    "name_cmn": "谢斐道",
+    "name_en": "Jaffe Road",
+    "area": "Wan Chai",
+    "landmark_yue": "灣仔酒吧街",
+    "landmark_cmn": "湾仔酒吧街",
+    "landmark_en": "Wan Chai bar street",
+    "jyutping": "ze6 fei2 dou6",
+    "pinyin": "Xièfěidào",
+    "aliases": [
+      "jaffe road"
+    ]
+  },
+  {
+    "id": 167,
+    "name_yue": "波斯富街",
+    "name_cmn": "波斯富街",
+    "name_en": "Percival Street",
+    "area": "Causeway Bay",
+    "landmark_yue": "近銅鑼灣港鐵站",
+    "landmark_cmn": "近铜锣湾港铁站",
+    "landmark_en": "Near Causeway Bay MTR Station",
+    "jyutping": "bo1 si1 fu3 gaai1",
+    "pinyin": "Bōsī Fùjiē",
+    "aliases": [
+      "percival street"
+    ]
+  },
+  {
+    "id": 168,
+    "name_yue": "羅素街",
+    "name_cmn": "罗素街",
+    "name_en": "Russell Street",
+    "area": "Causeway Bay",
+    "landmark_yue": "近時代廣場",
+    "landmark_cmn": "近时代广场",
+    "landmark_en": "Near Times Square",
+    "jyutping": "lo4 sou3 gaai1",
+    "pinyin": "Luósù Jiē",
+    "aliases": [
+      "russell street"
+    ]
+  },
+  {
+    "id": 169,
+    "name_yue": "英皇道",
+    "name_cmn": "英皇道",
+    "name_en": "King's Road",
+    "area": "North Point",
+    "landmark_yue": "北角主要幹道",
+    "landmark_cmn": "北角主要干道",
+    "landmark_en": "Main thoroughfare of North Point",
+    "jyutping": "jing1 wong4 dou6",
+    "pinyin": "Yīnghuángdào",
+    "aliases": [
+      "kings road",
+      "king's road"
+    ]
+  },
+  {
+    "id": 170,
+    "name_yue": "電氣道",
+    "name_cmn": "电气道",
+    "name_en": "Electric Road",
+    "area": "North Point",
+    "landmark_yue": "近北角港鐵站",
+    "landmark_cmn": "近北角港铁站",
+    "landmark_en": "Near North Point MTR Station",
+    "jyutping": "din6 hei3 dou6",
+    "pinyin": "Diànqì Dào",
+    "aliases": [
+      "electric road"
+    ]
+  },
+  {
+    "id": 171,
+    "name_yue": "赤柱大街",
+    "name_cmn": "赤柱大街",
+    "name_en": "Stanley Main Street",
+    "area": "Stanley",
+    "landmark_yue": "赤柱海濱",
+    "landmark_cmn": "赤柱海滨",
+    "landmark_en": "Stanley waterfront",
+    "jyutping": "cek3 cyu5 daai6 gaai1",
+    "pinyin": "Chìzhù Dàjiē",
+    "aliases": [
+      "stanley main street"
+    ]
+  },
+  {
+    "id": 172,
+    "name_yue": "淺水灣",
+    "name_cmn": "浅水湾",
+    "name_en": "Repulse Bay",
+    "area": "Repulse Bay",
+    "landmark_yue": "淺水灣海灘",
+    "landmark_cmn": "浅水湾海滩",
+    "landmark_en": "Repulse Bay Beach",
+    "jyutping": "cin2 seoi2 waan1",
+    "pinyin": "Qiǎnshuǐwān",
+    "aliases": [
+      "repulse bay"
+    ]
+  },
+  {
+    "id": 173,
+    "name_yue": "愉景灣",
+    "name_cmn": "愉景湾",
+    "name_en": "Discovery Bay",
+    "area": "Lantau",
+    "landmark_yue": "愉景灣碼頭",
+    "landmark_cmn": "愉景湾码头",
+    "landmark_en": "Discovery Bay Pier",
+    "jyutping": "jyu4 ging2 waan1",
+    "pinyin": "Yújǐngwān",
+    "aliases": [
+      "discovery bay",
+      "db"
+    ]
+  },
+  {
+    "id": 174,
+    "name_yue": "西貢墟",
+    "name_cmn": "西贡墟",
+    "name_en": "Sai Kung Town",
+    "area": "Sai Kung",
+    "landmark_yue": "西貢海濱公園",
+    "landmark_cmn": "西贡海滨公园",
+    "landmark_en": "Sai Kung Waterfront Park",
+    "jyutping": "sai1 gung3 heoi1",
+    "pinyin": "Xīgòng Xū",
+    "aliases": [
+      "sai kung",
+      "sai kung town"
+    ]
+  },
+  {
+    "id": 175,
+    "name_yue": "香港仔",
+    "name_cmn": "香港仔",
+    "name_en": "Aberdeen",
+    "area": "Aberdeen",
+    "landmark_yue": "香港仔避風塘",
+    "landmark_cmn": "香港仔避风塘",
+    "landmark_en": "Aberdeen Typhoon Shelter",
+    "jyutping": "hoeng1 gong2 zai2",
+    "pinyin": "Xiānggǎng Zǎi",
+    "aliases": [
+      "aberdeen"
+    ]
+  },
+  {
+    "id": 176,
+    "name_yue": "堅尼地城海旁",
+    "name_cmn": "坚尼地城海旁",
+    "name_en": "Kennedy Town Praya",
+    "area": "Kennedy Town",
+    "landmark_yue": "堅尼地城海濱",
+    "landmark_cmn": "坚尼地城海滨",
+    "landmark_en": "Kennedy Town waterfront",
+    "jyutping": "gin1 nei4 dei6 sing4 hoi2 pong4",
+    "pinyin": "Jiānnídì Chénghǎipáng",
+    "aliases": [
+      "kennedy town praya"
+    ]
+  },
+  {
+    "id": 177,
+    "name_yue": "德輔道西(海味街)",
+    "name_cmn": "德辅道西(海味街)",
+    "name_en": "Dried Seafood Street, Des Voeux Road West",
+    "area": "Sheung Wan",
+    "landmark_yue": "海味街",
+    "landmark_cmn": "海味街",
+    "landmark_en": "Dried Seafood Street",
+    "jyutping": "dak1 fu6 dou6 sai1 (hoi2 mei2 gaai1)",
+    "pinyin": "Défǔ Dào Xī ( Hǎiwèi Jiē )",
+    "aliases": [
+      "dried seafood street",
+      "des voeux road west"
+    ]
+  },
+  {
+    "id": 178,
+    "name_yue": "大澳",
+    "name_cmn": "大澳",
+    "name_en": "Tai O Fishing Village",
+    "area": "Lantau",
+    "landmark_yue": "大澳棚屋",
+    "landmark_cmn": "大澳棚屋",
+    "landmark_en": "Tai O stilt houses",
+    "jyutping": "daai6 ou3",
+    "pinyin": "Dàào",
+    "aliases": [
+      "tai o"
+    ]
+  },
+  {
+    "id": 179,
+    "name_yue": "梅窩",
+    "name_cmn": "梅窝",
+    "name_en": "Mui Wo",
+    "area": "Lantau",
+    "landmark_yue": "梅窩碼頭",
+    "landmark_cmn": "梅窝码头",
+    "landmark_en": "Mui Wo Ferry Pier",
+    "jyutping": "mui4 wo1",
+    "pinyin": "Méiwō",
+    "aliases": [
+      "mui wo"
+    ]
+  },
+  {
+    "id": 180,
+    "name_yue": "長洲",
+    "name_cmn": "长洲",
+    "name_en": "Cheung Chau",
+    "area": "Islands",
+    "landmark_yue": "長洲碼頭",
+    "landmark_cmn": "长洲码头",
+    "landmark_en": "Cheung Chau Ferry Pier",
+    "jyutping": "coeng4 zau1",
+    "pinyin": "Zhǎngzhōu",
+    "aliases": [
+      "cheung chau"
+    ]
+  },
+  {
+    "id": 181,
+    "name_yue": "太平山頂",
+    "name_cmn": "太平山顶",
+    "name_en": "Victoria Peak",
+    "area": "The Peak",
+    "landmark_yue": "山頂纜車總站",
+    "landmark_cmn": "山顶缆车总站",
+    "landmark_en": "Peak Tram Terminus",
+    "jyutping": "taai3 ping4 saan1 ding2",
+    "pinyin": "Tàipíng Shāndǐng",
+    "aliases": [
+      "the peak",
+      "victoria peak",
+      "山頂"
+    ]
+  },
+  {
+    "id": 182,
+    "name_yue": "天壇大佛",
+    "name_cmn": "天坛大佛",
+    "name_en": "Tian Tan Buddha (Big Buddha)",
+    "area": "Lantau",
+    "landmark_yue": "寶蓮禪寺旁",
+    "landmark_cmn": "宝莲禅寺旁",
+    "landmark_en": "Next to Po Lin Monastery",
+    "jyutping": "tin1 taan4 daai6 fat6",
+    "pinyin": "Tiāntán Dàfú",
+    "aliases": [
+      "big buddha",
+      "tian tan buddha"
+    ]
+  },
+  {
+    "id": 183,
+    "name_yue": "寶蓮禪寺",
+    "name_cmn": "宝莲禅寺",
+    "name_en": "Po Lin Monastery",
+    "area": "Lantau",
+    "landmark_yue": "昂坪",
+    "landmark_cmn": "昂坪",
+    "landmark_en": "Ngong Ping Plateau",
+    "jyutping": "bou2 lin4 sim4 zi2",
+    "pinyin": "Bǎolián Chánsì",
+    "aliases": [
+      "po lin monastery"
+    ]
+  },
+  {
+    "id": 184,
+    "name_yue": "跑馬地馬場",
+    "name_cmn": "跑马地马场",
+    "name_en": "Happy Valley Racecourse",
+    "area": "Happy Valley",
+    "landmark_yue": "跑馬地",
+    "landmark_cmn": "跑马地",
+    "landmark_en": "Happy Valley",
+    "jyutping": "paau2 maa5 dei2 maa5 coeng4",
+    "pinyin": "Pǎomǎdì Mǎchǎng",
+    "aliases": [
+      "happy valley racecourse"
+    ]
+  },
+  {
+    "id": 185,
+    "name_yue": "沙田馬場",
+    "name_cmn": "沙田马场",
+    "name_en": "Sha Tin Racecourse",
+    "area": "Sha Tin",
+    "landmark_yue": "近馬場港鐵站",
+    "landmark_cmn": "近马场港铁站",
+    "landmark_en": "Next to Racecourse MTR Station",
+    "jyutping": "saa1 tin4 maa5 coeng4",
+    "pinyin": "Shātián Mǎchǎng",
+    "aliases": [
+      "sha tin racecourse"
+    ]
+  },
+  {
+    "id": 186,
+    "name_yue": "香港大球場",
+    "name_cmn": "香港大球场",
+    "name_en": "Hong Kong Stadium",
+    "area": "So Kon Po",
+    "landmark_yue": "掃桿埔",
+    "landmark_cmn": "扫杆埔",
+    "landmark_en": "So Kon Po",
+    "jyutping": "hoeng1 gong2 daai6 kau4 coeng4",
+    "pinyin": "Xiānggǎng Dàqiúchǎng",
+    "aliases": [
+      "hk stadium",
+      "hong kong stadium"
+    ]
+  },
+  {
+    "id": 187,
+    "name_yue": "香港體育館",
+    "name_cmn": "香港体育馆",
+    "name_en": "Hong Kong Coliseum",
+    "area": "Hung Hom",
+    "landmark_yue": "近紅磡港鐵站",
+    "landmark_cmn": "近红磡港铁站",
+    "landmark_en": "Next to Hung Hom MTR Station",
+    "jyutping": "hoeng1 gong2 tai2 juk6 gun2",
+    "pinyin": "Xiānggǎng Tǐyùguǎn",
+    "aliases": [
+      "hk coliseum",
+      "红磡體育館",
+      "hung hom coliseum"
+    ]
+  },
+  {
+    "id": 188,
+    "name_yue": "香港會議展覽中心",
+    "name_cmn": "香港会议展览中心",
+    "name_en": "Hong Kong Convention and Exhibition Centre",
+    "area": "Wan Chai",
+    "landmark_yue": "灣仔博覽道1號",
+    "landmark_cmn": "湾仔博览道1号",
+    "landmark_en": "1 Expo Drive, Wan Chai",
+    "jyutping": "hoeng1 gong2 wui6 ji5 zin2 laam5 zung1 sam1",
+    "pinyin": "Xiānggǎng Huìyìzhǎnlǎn Zhōngxīn",
+    "aliases": [
+      "hkcec",
+      "convention centre"
+    ]
+  },
+  {
+    "id": 189,
+    "name_yue": "政府總部",
+    "name_cmn": "政府总部",
+    "name_en": "Central Government Offices",
+    "area": "Admiralty",
+    "landmark_yue": "添馬添美道2號",
+    "landmark_cmn": "添马添美道2号",
+    "landmark_en": "2 Tim Mei Avenue, Tamar",
+    "jyutping": "zing3 fu2 zung2 bou6",
+    "pinyin": "Zhèngfǔ Zǒngbù",
+    "aliases": [
+      "government offices",
+      "central government offices"
+    ]
+  },
+  {
+    "id": 190,
+    "name_yue": "立法會綜合大樓",
+    "name_cmn": "立法会综合大楼",
+    "name_en": "Legislative Council Complex",
+    "area": "Admiralty",
+    "landmark_yue": "立法會道1號",
+    "landmark_cmn": "立法会道1号",
+    "landmark_en": "1 Legislative Council Road",
+    "jyutping": "laap6 faat3 wui2 zung3 hap6 daai6 lau4",
+    "pinyin": "Lìfǎhuì Zōnghé Dàlóu",
+    "aliases": [
+      "legco"
+    ]
+  },
+  {
+    "id": 191,
+    "name_yue": "禮賓府",
+    "name_cmn": "礼宾府",
+    "name_en": "Government House",
+    "area": "Central",
+    "landmark_yue": "上亞厘畢道",
+    "landmark_cmn": "上亚厘毕道",
+    "landmark_en": "Upper Albert Road",
+    "jyutping": "lai5 ban1 fu2",
+    "pinyin": "Lǐbīnfǔ",
+    "aliases": [
+      "government house"
+    ]
+  },
+  {
+    "id": 192,
+    "name_yue": "香港大學本部",
+    "name_cmn": "香港大学本部",
+    "name_en": "HKU Main Campus",
+    "area": "Pok Fu Lam",
+    "landmark_yue": "香港大學本部大樓",
+    "landmark_cmn": "香港大学本部大楼",
+    "landmark_en": "HKU Main Building",
+    "jyutping": "hoeng1 gong2 daai6 hok6 bun2 bou6",
+    "pinyin": "Xiānggǎngdàxué Běnbù",
+    "aliases": [
+      "hku main campus",
+      "hku campus"
+    ]
+  },
+  {
+    "id": 193,
+    "name_yue": "香港中文大學",
+    "name_cmn": "香港中文大学",
+    "name_en": "CUHK",
+    "area": "Sha Tin",
+    "landmark_yue": "近大學港鐵站",
+    "landmark_cmn": "近大学港铁站",
+    "landmark_en": "Next to University MTR Station",
+    "jyutping": "hoeng1 gong2 zung1 man2 daai6 hok6",
+    "pinyin": "Xiānggǎng Zhōngwén Dàxué",
+    "aliases": [
+      "cuhk",
+      "chinese university"
+    ]
+  },
+  {
+    "id": 194,
+    "name_yue": "香港科技大學",
+    "name_cmn": "香港科技大学",
+    "name_en": "HKUST",
+    "area": "Clear Water Bay",
+    "landmark_yue": "清水灣科大道",
+    "landmark_cmn": "清水湾科大道",
+    "landmark_en": "Clear Water Bay Road",
+    "jyutping": "hoeng1 gong2 fo1 gei6 daai6 hok6",
+    "pinyin": "Xiānggǎng Kējì Dàxué",
+    "aliases": [
+      "hkust",
+      "ust"
+    ]
+  },
+  {
+    "id": 195,
+    "name_yue": "香港理工大學",
+    "name_cmn": "香港理工大学",
+    "name_en": "PolyU",
+    "area": "Hung Hom",
+    "landmark_yue": "紅磡近香港體育館",
+    "landmark_cmn": "红磡近香港体育馆",
+    "landmark_en": "Near Hong Kong Coliseum, Hung Hom",
+    "jyutping": "hoeng1 gong2 lei5 gung1 daai6 hok6",
+    "pinyin": "Xiānggǎng Lǐgōng Dàxué",
+    "aliases": [
+      "polyu"
+    ]
+  },
+  {
+    "id": 196,
+    "name_yue": "香港城市大學",
+    "name_cmn": "香港城市大学",
+    "name_en": "City University of Hong Kong",
+    "area": "Kowloon Tong",
+    "landmark_yue": "達之路83號",
+    "landmark_cmn": "达之路83号",
+    "landmark_en": "83 Tat Chee Avenue",
+    "jyutping": "hoeng1 gong2 sing4 si5 daai6 hok6",
+    "pinyin": "Xiānggǎng Chéngshì Dàxué",
+    "aliases": [
+      "cityu",
+      "city university"
+    ]
+  },
+  {
+    "id": 197,
+    "name_yue": "香港文化中心",
+    "name_cmn": "香港文化中心",
+    "name_en": "Hong Kong Cultural Centre",
+    "area": "Tsim Sha Tsui",
+    "landmark_yue": "尖沙咀梳士巴利道10號",
+    "landmark_cmn": "尖沙咀梳士巴利道10号",
+    "landmark_en": "10 Salisbury Road",
+    "jyutping": "hoeng1 gong2 man4 faa3 zung1 sam1",
+    "pinyin": "Xiānggǎng Wénhuà Zhōngxīn",
+    "aliases": [
+      "cultural centre"
+    ]
+  },
+  {
+    "id": 198,
+    "name_yue": "香港太空館",
+    "name_cmn": "香港太空馆",
+    "name_en": "Hong Kong Space Museum",
+    "area": "Tsim Sha Tsui",
+    "landmark_yue": "梳士巴利道10號",
+    "landmark_cmn": "梳士巴利道10号",
+    "landmark_en": "10 Salisbury Road",
+    "jyutping": "hoeng1 gong2 taai3 hung1 gun2",
+    "pinyin": "Xiānggǎng Tàikōng Guǎn",
+    "aliases": [
+      "space museum"
+    ]
+  },
+  {
+    "id": 199,
+    "name_yue": "香港歷史博物館",
+    "name_cmn": "香港历史博物馆",
+    "name_en": "Hong Kong Museum of History",
+    "area": "Tsim Sha Tsui",
+    "landmark_yue": "漆咸道南100號",
+    "landmark_cmn": "漆咸道南100号",
+    "landmark_en": "100 Chatham Road South",
+    "jyutping": "hoeng1 gong2 lik6 si2 bok3 mat6 gun2",
+    "pinyin": "Xiānggǎng Lìshǐ Bówù Guǎn",
+    "aliases": [
+      "museum of history"
+    ]
+  },
+  {
+    "id": 200,
+    "name_yue": "昂坪360",
+    "name_cmn": "昂坪360",
+    "name_en": "Ngong Ping 360",
+    "area": "Lantau",
+    "landmark_yue": "東涌纜車站",
+    "landmark_cmn": "东涌缆车站",
+    "landmark_en": "Tung Chung Cable Car Station",
+    "jyutping": "ngong4 ping4 […]",
+    "pinyin": "Ángpíng 360",
+    "aliases": [
+      "ngong ping 360",
+      "cable car"
+    ]
+  },
+  {
+    "id": 201,
+    "name_yue": "香港濕地公園",
+    "name_cmn": "香港湿地公园",
+    "name_en": "Hong Kong Wetland Park",
+    "area": "Tin Shui Wai",
+    "landmark_yue": "天水圍濕地公園路",
+    "landmark_cmn": "天水围湿地公园路",
+    "landmark_en": "Wetland Park Road, Tin Shui Wai",
+    "jyutping": "hoeng1 gong2 sap1 dei6 gung1 jyun2",
+    "pinyin": "Xiānggǎng Shīdì Gōngyuán",
+    "aliases": [
+      "wetland park"
+    ]
+  },
+  {
+    "id": 202,
+    "name_yue": "啟德體育園",
+    "name_cmn": "启德体育园",
+    "name_en": "Kai Tak Sports Park",
+    "area": "Kai Tak",
+    "landmark_yue": "近啟德港鐵站",
+    "landmark_cmn": "近启德港铁站",
+    "landmark_en": "Next to Kai Tak MTR Station",
+    "jyutping": "kai2 dak1 tai2 juk6 jyun4",
+    "pinyin": "Qǐdé Tǐyù Yuán",
+    "aliases": [
+      "kai tak sports park"
+    ]
+  },
+  {
+    "id": 203,
+    "name_yue": "M+博物館",
+    "name_cmn": "M+博物馆",
+    "name_en": "M+ Museum",
+    "area": "West Kowloon",
+    "landmark_yue": "西九文化區博物館道38號",
+    "landmark_cmn": "西九文化区博物馆道38号",
+    "landmark_en": "38 Museum Drive, West Kowloon Cultural District",
+    "jyutping": "[…] bok3 mat6 gun2",
+    "pinyin": "M + Bówùguǎn",
+    "aliases": [
+      "m+",
+      "m plus museum"
+    ]
+  },
+  {
+    "id": 204,
+    "name_yue": "大館",
+    "name_cmn": "大馆",
+    "name_en": "Tai Kwun",
+    "area": "Central",
+    "landmark_yue": "荷李活道10號",
+    "landmark_cmn": "荷李活道10号",
+    "landmark_en": "10 Hollywood Road",
+    "jyutping": "daai6 gun2",
+    "pinyin": "Dàguǎn",
+    "aliases": [
+      "tai kwun"
+    ]
+  },
+  {
+    "id": 205,
+    "name_yue": "萬佛寺",
+    "name_cmn": "万佛寺",
+    "name_en": "Ten Thousand Buddhas Monastery",
+    "area": "Sha Tin",
+    "landmark_yue": "近沙田港鐵站",
+    "landmark_cmn": "近沙田港铁站",
+    "landmark_en": "Near Sha Tin MTR Station",
+    "jyutping": "maan6 fat6 zi2",
+    "pinyin": "Wànfósì",
+    "aliases": [
+      "ten thousand buddhas",
+      "萬佛寺"
+    ]
   }
 ]

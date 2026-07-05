@@ -9,12 +9,21 @@ import { colors, type } from '../../src/theme/tokens';
 const POIS = poiData as Poi[];
 
 export default function CardScreen() {
-  const params = useLocalSearchParams<{ id?: string; lang?: string }>();
+  const params = useLocalSearchParams<{ id?: string; lang?: string; data?: string }>();
 
-  const destination = useMemo(
-    () => POIS.find(p => String(p.id) === String(params.id)),
-    [params.id]
-  );
+  const destination = useMemo(() => {
+    // Ad-hoc destinations (from the "Translate '…' as a destination"
+    // fallback, or a recent entry with a saved driver note) travel as a
+    // serialized `data` param since they don't live in hk_poi.json.
+    if (params.data) {
+      try {
+        return JSON.parse(params.data) as Poi;
+      } catch {
+        // Fall through to the id lookup below.
+      }
+    }
+    return POIS.find(p => String(p.id) === String(params.id));
+  }, [params.id, params.data]);
 
   const initialLang: GoLang = params.lang === 'cmn' ? 'cmn' : 'yue';
 
