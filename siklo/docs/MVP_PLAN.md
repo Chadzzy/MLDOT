@@ -1,23 +1,32 @@
-# SikLo MVP — Execution Plan
+# SikLo MVP — Execution Plan (v2, mobile)
 
-**Scope:** Talk (single-device only) + Go, for **Cantonese and Mandarin**. Real speech pipeline built on open-source models. Design follows Duolingo best practices on the existing HK-inspired palette.
+**Scope:** Talk (single-device only) + Go, for **Cantonese and Mandarin**, as a **native mobile app** (Expo / React Native). Real speech pipeline built on open-source models. Design follows Duolingo interaction best practices on the HK palette.
 
-**Handover doc for implementing agents.** The prototype in `siklo/` is the UX reference — keep its visual language, replace mocks with the real pipeline described here.
+**Handover doc for implementing agents.**
+
+## UI source of truth — do not redesign
+
+The Talk and Go experiences were heavily prototyped. Two artifacts define the UI, and the mobile app **ports them faithfully**:
+
+1. **The coded prototype in `siklo/`** — especially `src/components/talk/SplitScreenView.jsx` (split-screen tap-to-talk halves, breathe glow while listening, streaming block-cursor text, centre swap divider, warmer `--bg-elevated` tint on the Cantonese half, larger Traditional characters) and `src/components/go/DestinationCard.jsx` (inverted cream card, 52px characters, full-width 56px audio buttons, driver-note field).
+2. **PRD v0.3** — palette, type scale, motion rules (200–300 ms ease-out, nothing bounces), interaction principles.
+
+Any visual deviation from these needs owner sign-off. The Duolingo layer (§6) changes *tactility and feedback*, not layout.
 
 ---
 
 ## 1. MVP Scope
 
 ### In
-- **Talk — Single Phone Mode only.** Split-screen: English speaker (top) ↔ Cantonese/Mandarin speaker (bottom). Tap-to-talk, real mic capture, STT → translation → streamed bilingual text → TTS playback of the translation. Language toggle for the bottom half (粵 Cantonese / 普 Mandarin).
-- **Go.** Destination search over a curated HK POI dataset, free-text fallback via the translation model, driver card (inverted light theme, 52px chars), real TTS playback in Cantonese and Mandarin, driver notes translated to both.
-- **PWA-ready web app** (mobile-first, installable). No native builds.
+- **Talk — Single Phone Mode only.** The `SplitScreenView` experience: English half (top) ↔ Cantonese/Mandarin half (bottom), tap-to-talk per half, real mic capture, STT → translation → streamed bilingual text → TTS playback of the translation. 粵/普 toggle for the bottom half.
+- **Go.** Destination search over a curated HK POI dataset, free-text fallback via the translation model, driver card, real TTS playback. **Traditional characters for Cantonese, Simplified for Mandarin, switched by the 粵/普 toggle** — exactly as PRD and prototype.
+- **Expo (React Native) app**, iOS + Android, dev-client builds. Two-tab bottom nav (Talk, Go); Translate/Learn tabs hidden behind a feature flag, not deleted.
 
 ### Out (explicitly)
-- Room codes / two-device sessions, WebSockets between users
+- Room codes / two-device sessions
 - Translate (voice-note) and Learn modes
-- Accounts, auth, persistence beyond localStorage
-- Reactions system (Talk single-device doesn't need it)
+- Accounts, auth, server-side persistence
+- App Store / Play Store submission (EAS builds for TestFlight/internal track only, later)
 
 ---
 
@@ -26,104 +35,105 @@
 ### STT — speech to text
 | Option | Model | Why | Requirements |
 |---|---|---|---|
-| **Primary** | `Qwen/Qwen3-ASR-1.7B` (Apache-style Qwen license — agent: verify license text on HF before shipping) | Current open-source SOTA for Mandarin + Cantonese + English; single model handles all three with language ID | ~5.1 GB VRAM FP16, ~1.3 GB INT4 |
-| **Fallback / CPU tier** | `FunAudioLLM/SenseVoice-Small` | zh/yue/en/ja/ko, non-autoregressive, ~15× faster than Whisper, runs on CPU | CPU-viable, tiny |
+| **Primary** | `Qwen/Qwen3-ASR-1.7B` (agent: verify license text on HF in P1) | Current open-source SOTA for Mandarin + Cantonese + English in one model, with language ID | ~5.1 GB VRAM FP16, ~1.3 GB INT4 |
+| **Fallback / CPU tier** | `FunAudioLLM/SenseVoice-Small` | zh/yue/en, non-autoregressive, ~15× faster than Whisper, CPU-viable | tiny |
 
-Both auto-detect language → the Talk screen never asks "which language was that?" — detection drives translation direction.
+Auto language detection drives translation direction — the Talk screen never asks which language was spoken.
 
 ### MT — translation
-The hard problem: **colloquial spoken Cantonese ≠ written Chinese.** NLLB-200 has `yue_Hant` but skews written; unacceptable for Talk.
+**Colloquial spoken Cantonese ≠ written Chinese.** NLLB-200 has `yue_Hant` but skews written; rejected for Talk.
 
 | Option | Model | Why |
 |---|---|---|
-| **Primary** | `Qwen3-8B-Instruct` (or Qwen2.5-7B-Instruct) served via vLLM or Ollama | Best colloquial Cantonese among open models; one model covers en↔yue, en↔cmn, and generates Jyutping + context notes in the same call. Prompted, not fine-tuned. |
-| **Low-resource tier** | Qwen3-4B quantized (Q4) via Ollama/llama.cpp | Runs on a laptop; acceptable quality for demo |
-| **Rejected** | NLLB-200-600M | Written-Chinese bias for yue; keep only as offline emergency fallback |
+| **Primary** | `Qwen3-8B-Instruct` via vLLM (or Ollama) | Best colloquial Cantonese among open models; one model covers en↔yue, en↔cmn, and emits Jyutping/Pinyin + register notes in one structured-JSON call |
+| **Low-resource tier** | Qwen3-4B quantized (Q4) via Ollama | Laptop-class demo quality |
+| **If quality disappoints** | YueTung (Qwen2.5-7B Cantonese fine-tune) | Drop-in swap; decide on the P1 eval set |
 
-**Translation prompt contract** (structured JSON out): `{ translation, romanization (Jyutping for yue / Pinyin for cmn), register_note }`. Use vLLM guided JSON or Ollama format=json. Romanization can also come from `ToJyutping`/`pycantonese` (deterministic, preferred for Go cards).
+Deterministic romanization for Go cards: `ToJyutping` (yue) / `pypinyin` (cmn) server-side.
 
 ### TTS — text to speech
 | Option | Model | Why |
 |---|---|---|
-| **Primary (open source)** | `ASLP-lab/Cosyvoice2-Yue` (Cantonese fine-tune of CosyVoice2-0.5B, Apache-2.0) for yue; base `CosyVoice2-0.5B` for cmn | True open-source Cantonese TTS, ~150 ms first-audio latency, streaming-capable |
-| **Zero-deploy tier** | `edge-tts` (Microsoft neural voices, free, no key): `zh-HK-HiuGaaiNeural` / `zh-HK-WanLungNeural` (yue), `zh-CN-XiaoxiaoNeural` (cmn) | Nothing to host; not OSS but zero-cost pragmatic default for demos |
-| **Alternative** | GPT-SoVITS v2 (Cantonese cross-lingual) | Only if CosyVoice2-Yue quality disappoints; heavier to operate |
+| **Primary (open source)** | `ASLP-lab/Cosyvoice2-Yue` (Apache-2.0 Cantonese fine-tune of CosyVoice2-0.5B) for yue; base `CosyVoice2-0.5B` for cmn | True OSS Cantonese TTS, ~150 ms first-audio, streaming-capable |
+| **Zero-deploy tier** | `edge-tts` (free, no key): `zh-HK-HiuGaai/HiuMaan/WanLungNeural` (yue), `zh-CN-Xiaoxiao/YunxiNeural` (cmn) | Nothing to host; pragmatic demo default |
 
-**Recommendation:** ship both tiers behind one `/tts` endpoint with a `TTS_BACKEND=cosyvoice|edge` env switch. Demos run on edge-tts with zero GPU; the open-source story is CosyVoice2-Yue.
+One `/tts` endpoint, `TTS_BACKEND=cosyvoice|edge` env switch.
 
 ### Deployment tiers
-- **Tier A — laptop/demo (no GPU):** SenseVoice-Small (CPU) + Ollama Qwen3-4B-Q4 + edge-tts. Everything in `docker-compose up`.
-- **Tier B — single 16 GB GPU (RunPod/Modal/HF Space):** Qwen3-ASR-1.7B + vLLM Qwen3-8B + CosyVoice2-Yue. Target < 3.5 s tap-release → first translated audio.
+- **Tier A — laptop/demo (no GPU):** SenseVoice-Small (CPU) + Ollama Qwen3-4B-Q4 + edge-tts. `docker-compose up`, phone connects over LAN.
+- **Tier B — single 16 GB GPU (RunPod/Modal):** Qwen3-ASR-1.7B + vLLM Qwen3-8B + CosyVoice2-Yue. Target < 3.5 s tap-release → first translated audio.
 
 ---
 
 ## 3. Architecture
 
 ```
-siklo/                          # existing Vite React app → becomes the client
-siklo-server/                   # NEW: FastAPI backend
-  app/
-    main.py                     # FastAPI, CORS, static
-    routers/
-      stt.py                    # POST /api/stt        (audio blob → {text, lang})
-      translate.py              # POST /api/translate  ({text, source, target} → {translation, romanization, note})
-      tts.py                    # POST /api/tts        ({text, lang, voice} → audio/mpeg, streamed)
-      go.py                     # GET  /api/destinations?q=  (POI search + LLM fallback)
-    services/
-      stt_qwen.py / stt_sensevoice.py
-      mt_qwen.py                # prompt templates per direction, JSON-schema output
-      tts_cosyvoice.py / tts_edge.py
-      romanize.py               # ToJyutping / pypinyin
-    data/
-      hk_poi.json               # ~200 curated HK destinations (see §5)
+siklo/                # existing web prototype — kept as the UI reference, untouched
+siklo-mobile/         # NEW: Expo app (SDK ≥53)
+  app/                # expo-router: (tabs)/talk.tsx, (tabs)/go.tsx, go/card.tsx
+  src/
+    theme/tokens.ts   # palette + type scale ported 1:1 from PRD/prototype CSS vars
+    components/       # Button (tactile), Chip, Card, Waveform, StreamingText
+    features/talk/    # SplitScreen, useRecorder, useTranslateStream
+    features/go/      # Search, DestinationCard, poi search (fuse.js)
+    services/api.ts   # STT / translate-SSE / TTS client
+    data/hk_poi.json  # bundled POI dataset
+siklo-server/         # NEW: FastAPI backend
+  app/routers/  stt.py  translate.py  tts.py  go.py
+  app/services/ stt_*.py  mt_qwen.py  tts_*.py  romanize.py
   Dockerfile, docker-compose.yml, .env.example
 ```
 
-- **Client mic capture:** `MediaRecorder` (webm/opus) with a tap-to-talk button; client-side VAD (`@ricky0123/vad-web`) auto-stops on silence ≥ 800 ms as backup to manual release.
-- **Streaming UX:** `/api/translate` streams tokens (SSE) → drives the existing `useStreamingText` cursor with *real* tokens instead of the timer fake. `/api/tts` streams audio; start playback on first chunk.
-- **No WebSockets needed** (single device): plain fetch + SSE.
-- **Latency budget (Tier B):** STT ≤ 1.2 s, MT first-token ≤ 0.6 s, TTS first-audio ≤ 0.8 s → speech-to-first-audio ~2.5–3.5 s. Show the existing waveform/typing indicators during each stage — never blank (PRD rule).
+**Mobile-specific decisions:**
+- **Audio capture:** `expo-audio` (SDK ≥53; `expo-av` is dead). Records m4a/aac on both platforms — one codec path, backend decodes via ffmpeg. Tap-to-talk = press starts `AudioRecorder`, release stops and uploads. Silence auto-stop (≥ 800 ms) via metering callback as backup.
+- **Live waveform while listening:** drive the prototype's waveform bars from `expo-audio` metering levels — real amplitude, not the timer fake.
+- **Streaming translation text:** SSE via `react-native-sse` (or `expo/fetch` streaming) → feeds the ported `useStreamingText` cursor with real tokens.
+- **TTS playback:** `expo-audio` player streaming from the `/tts` URL; start on first chunk.
+- **Haptics:** `expo-haptics` — light impact on tap-to-talk press/release, success notification on translation complete.
+- **Storage:** AsyncStorage (recents, toggle state), `expo-file-system` (cached Go-card audio for offline taxi use).
+- **Styling:** plain `StyleSheet` + `theme/tokens.ts`. No UI library (PRD rule: component libraries will fight this design). Font via `expo-font` (Plus Jakarta Sans).
+- **Navigation:** expo-router tabs, 2 visible tabs, PRD bottom-nav spec (64px, amber active with 2px top indicator).
+
+**Latency budget (Tier B):** STT ≤ 1.2 s, MT first-token ≤ 0.6 s, TTS first-audio ≤ 0.8 s → speech-to-first-audio ~2.5–3.5 s. Every stage shows its indicator ("Listening…", "Translating…", "Speaking…") — never blank.
 
 ---
 
-## 4. Talk — Single Device (rebuild spec)
+## 4. Talk — Single Device (port spec)
 
-Base: existing `SplitScreenView.jsx`, promoted to *the* Talk mode. Delete `TalkHome` session cards, room-code flow, `useSimulatedSession`, `TalkView` (two-device).
+Port `SplitScreenView.jsx` to RN, preserving: half-screen tap targets, breathe glow while listening, `--bg-elevated` tint + larger Traditional characters on the bottom half, centre divider with swap icon, streaming block cursor `▋`, LIVE indicator + session timer.
 
 **Flow per utterance:**
-1. Tap your half → mic starts, half glows (existing breathe animation), waveform renders live mic amplitude (`AnalyserService` on the audio stream — real, not fake).
-2. Release (or VAD silence) → "Translating…" state → POST `/api/stt`.
-3. STT returns `{text, lang}` → render source text instantly → SSE `/api/translate` streams the translation into the *other* half with the block cursor.
-4. On translation complete → auto-play TTS of the translation (toggleable), speaker icon pulses during playback.
-5. Both utterances append to a scrollable in-session transcript; latest exchange pinned large.
+1. Press-and-hold your half → haptic tick, mic starts, half glows, waveform renders live metering.
+2. Release (or silence auto-stop) → "Translating…" → upload to `/api/stt`.
+3. STT returns `{text, lang}` → source text renders instantly → SSE `/api/translate` streams the translation into the *other* half with the cursor.
+4. Translation complete → cursor fades (400 ms per PRD), success haptic, auto-play TTS of the translation (toggleable), speaker icon pulses during playback.
+5. Exchanges append to an in-session transcript; latest pinned large.
 
-**Language handling:** top half = English. Bottom half = toggle 粵/普 (persisted in localStorage). STT auto-detect guards against wrong-half taps: if detected lang ≠ expected half, translate in the correct direction anyway and show a gentle "Heard Cantonese — translated it for you" hint. That's a Duolingo move: never punish, always recover.
-
----
-
-## 5. Go (rebuild spec)
-
-- **POI dataset:** curate `hk_poi.json` (~200 entries): MTR stations, hospitals, malls, airport/ferry/border points, major streets & tourist areas. Fields: `{ name_yue, name_cmn (Simplified), name_en, area, landmark_yue, landmark_cmn, landmark_en, jyutping, pinyin, aliases[] }`. Build it with an LLM pass then human-spot-check the top 50.
-- **Search:** client-side fuzzy (fuse.js) over English/Chinese/aliases — instant, offline-friendly. No match → "Translate '…' as a destination" action that calls `/api/translate` and builds a card from free text.
-- **Card:** keep the existing inverted cream design exactly. Play buttons call real `/api/tts` (yue and cmn). Driver note field → `/api/translate` to both languages, shown on the card.
-- **Offline resilience (taxi = flaky signal):** cache generated card audio in IndexedDB; card itself renders from local data. Recent destinations in localStorage.
+**Language handling:** top = English; bottom = 粵/普 toggle (persisted). If STT detects a language that doesn't match the tapped half, translate in the correct direction anyway and show a gentle "Heard Cantonese — translated it for you" hint. Never an error wall.
 
 ---
 
-## 6. Design — Duolingo best practices × HK palette
+## 5. Go (port spec)
 
-Keep the palette and typography from the PRD verbatim. Layer on Duolingo's interaction grammar:
+- **POI dataset:** `hk_poi.json`, ~200 entries: `{ name_yue (Traditional), name_cmn (Simplified), name_en, area, landmark_yue, landmark_cmn, landmark_en, jyutping, pinyin, aliases[] }`. MTR stations, hospitals, malls, airport/ferry/border, major streets. LLM-generated, human spot-check top 50.
+- **Search:** client-side fuzzy (fuse.js) over en/zh/aliases — instant, offline. No match → "Translate '…' as a destination" via `/api/translate`.
+- **Card:** port `DestinationCard.jsx` exactly (inverted cream, 52px chars, 56px audio buttons). 粵 shows Traditional + Jyutping context, 普 shows Simplified + Pinyin context — toggle switches both script and audio language, as prototyped. Driver note → `/api/translate` to both languages, rendered on card.
+- **Offline resilience:** card renders from bundled data; generated audio cached to `expo-file-system`; recents in AsyncStorage.
 
-1. **Chunky tactile buttons** — primary actions get a 4px darker bottom edge (`box-shadow: 0 4px 0 #B05E1F`) that compresses on press (`translateY(2px)`, shadow 2px). Amber primary, jade secondary. This is the single biggest "feels like Duolingo" change.
-2. **One primary action per screen** — Talk: the mic. Go: the search field. Everything else recedes.
-3. **Immediate, multi-channel feedback** — every state change gets color + motion + (mobile) `navigator.vibrate(10)`. Success = jade flash + soft chime; error = amber shake (never red-harsh, never blame).
-4. **Celebration moments, used sparingly** — first successful Talk exchange of a session: brief jade particle burst behind the transcript. Go card generated: card slides up with a satisfying spring (keep PRD's "nothing bounces" rule elsewhere — this is the one earned exception, spring damped, no overshoot > 4px).
-5. **Never-blank progress** — reuse existing waveform/step indicators; label each stage ("Listening…", "Translating…", "Speaking…").
-6. **Forgiving errors** — STT low-confidence → show best guess with a one-tap "↻ Try again" chip instead of an error state.
-7. **Streaks-lite** — a small session counter ("3 exchanges today") in the header. No XP/leagues in MVP; hooks for Learn later.
-8. **Copy voice** — short, warm, second person. "Hold and speak — I'll handle the Cantonese."
+---
 
-Deliverable: extract the design system into `siklo/src/styles/tokens.css` + a small `Button`/`Chip`/`Card` component set so both modes share the tactile language.
+## 6. Design — Duolingo interaction layer × HK palette
+
+Palette, type, layout: **unchanged from prototype/PRD.** The Duolingo layer adds tactility and feedback only:
+
+1. **Chunky tactile buttons** — primary actions get a 4px darker bottom edge (amber → `#B05E1F`) that compresses on press (`translateY(2px)`). Applies to Go's audio buttons and CTAs; the Talk halves keep their full-bleed glow interaction.
+2. **One primary action per screen** — Talk: the halves. Go: the search field.
+3. **Multi-channel feedback** — every state change: color + motion + haptic. Success = jade + soft chime; retry = amber shake, never harsh red.
+4. **One earned celebration per mode** — first successful exchange of a Talk session: brief jade particle burst. Go card generated: damped spring slide-up (≤ 4px overshoot; PRD's "nothing bounces" holds everywhere else).
+5. **Never-blank progress** — prototype's waveform/step indicators, staged labels.
+6. **Forgiving errors** — low-confidence STT shows best guess + "↻ Try again" chip.
+7. **Streaks-lite** — "3 exchanges today" counter in header; hooks for Learn later, no XP/leagues.
+8. **Copy voice** — short, warm, second person: "Hold and speak — I'll handle the Cantonese."
 
 ---
 
@@ -131,26 +141,23 @@ Deliverable: extract the design system into `siklo/src/styles/tokens.css` + a sm
 
 | Phase | Work | Agent | Depends on |
 |---|---|---|---|
-| **P1 — Backend scaffold** | `siklo-server/` FastAPI + all 4 endpoints with Tier A models (SenseVoice CPU, Ollama Qwen3-4B, edge-tts), docker-compose, smoke tests hitting each endpoint with a fixture WAV | Opus | — |
-| **P2 — Design system refactor** | tokens.css, tactile Button/Chip/Card, strip Translate/Learn/two-device-Talk to feature-flag stubs, bottom nav → 2 tabs (Talk, Go) | Sonnet | — (parallel with P1) |
-| **P3 — Talk rebuild** | Real mic capture + VAD, wire STT/translate-SSE/TTS, live waveform, transcript, language toggle, recovery UX | Opus | P1 + P2 |
-| **P4 — Go rebuild** | hk_poi.json curation, fuse.js search, free-text fallback, real TTS on card, driver notes, IndexedDB audio cache | Sonnet | P1 + P2 |
-| **P5 — Tier B + polish** | vLLM Qwen3-8B + Qwen3-ASR + CosyVoice2-Yue behind env switches; latency measurement; `/verify` pass driving both flows end-to-end; README with both run tiers | Opus | P3 + P4 |
+| **P1 — Backend** | `siklo-server/` FastAPI, 4 endpoints on Tier A models, m4a/aac ffmpeg decode, docker-compose, smoke tests with fixture recordings, 30-sentence Cantonese MT eval | Opus | — |
+| **P2 — Expo scaffold + port** | `siklo-mobile/` Expo app, tokens.ts from prototype CSS, tactile component set, 2-tab nav, pixel-faithful static ports of SplitScreen + GoHome + DestinationCard | Sonnet | — (parallel) |
+| **P3 — Talk live** | expo-audio recording + metering waveform, STT/translate-SSE/TTS wiring, haptics, transcript, toggle, recovery UX | Opus | P1 + P2 |
+| **P4 — Go live** | hk_poi.json curation, fuse.js search, free-text fallback, real TTS + audio caching, driver notes | Sonnet | P1 + P2 |
+| **P5 — Tier B + verify** | vLLM Qwen3-8B + Qwen3-ASR + CosyVoice2-Yue env switches, latency measurement, end-to-end verify on device (both flows), README for both tiers | Opus | P3 + P4 |
 
-Each phase lands as a separate commit series on `claude/build-siklo-prototype-2i5Iq` (or a child branch per phase, merged back).
-
-**Definition of done (MVP):** on a laptop with `docker-compose up` + `npm run dev`, a user can (a) speak English and hear/read colloquial Cantonese and Mandarin translations, and the reverse; (b) search "Mong Kok", show the driver card, and play real Cantonese/Mandarin audio — all with no cloud API keys.
+**Definition of done:** with `docker-compose up` on a laptop and the Expo dev client on a phone (same LAN), a user can (a) hold-and-speak English and hear/read colloquial Cantonese or Mandarin, and the reverse; (b) search "Mong Kok", show the driver card in 粵 (Traditional) or 普 (Simplified), and play real audio in either — no cloud API keys.
 
 ---
 
-## 8. Risks & open decisions
+## 8. Risks
 
 | Risk | Mitigation |
 |---|---|
-| Colloquial Cantonese MT quality from prompted Qwen | Build a 30-sentence eval set (building-manager / taxi / market scenarios), score during P1; if weak, try YueTung (Qwen2.5-7B Cantonese fine-tune) as drop-in |
-| CosyVoice2-Yue naturalness | edge-tts tier is always available; A/B in P5 |
-| Qwen3-ASR license terms | Verify on HF model card in P1; SenseVoice fallback if restrictive |
-| iOS Safari MediaRecorder quirks (no webm) | Record as mp4/aac on Safari (feature-detect), backend accepts both via ffmpeg decode |
-| GPU hosting cost for Tier B | Decision needed from owner: RunPod/Modal budget, or demo stays Tier A. **Not blocking** — plan runs Tier A end-to-end |
-
-**Open question for the owner (non-blocking):** Mandarin script for Go cards — PRD shows Simplified (mainland drivers); confirm, else render Traditional with a script toggle.
+| Colloquial Cantonese MT quality from prompted Qwen | P1 eval set (building-manager / taxi / market scenarios); swap to YueTung if weak |
+| CosyVoice2-Yue naturalness | edge-tts tier always available; A/B in P5 |
+| Qwen3-ASR license terms | Verify on HF card in P1; SenseVoice fallback |
+| expo-audio metering granularity for live waveform | Fallback: animate from recording state only (prototype behavior) — cosmetic, not blocking |
+| Phone ↔ laptop LAN friction in Tier A demos | Document `EXPO_PUBLIC_API_URL`; optional tunnel (cloudflared) in compose |
+| GPU hosting cost for Tier B | Owner decision on budget; **not blocking** — Tier A runs end-to-end |
