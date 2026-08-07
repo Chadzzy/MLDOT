@@ -1,0 +1,832 @@
+<title>The Window — Disruption over time</title>
+
+<style>
+  :root{
+    --night:#080C12; --night-2:#0C121B; --panel:#141C27; --panel-2:#1B2531;
+    --line:#25313F; --line-soft:#1B2531;
+    --ink:#EEF2F7; --muted:#8A97A8; --faint:#5C6A7B;
+    --solar:#F5A524; --solar-hi:#FFC978; --solar-dim:rgba(245,165,36,.14);
+    --signal:#F0575C; --signal-dim:rgba(240,87,92,.13);
+    --jade:#3DD68C; --jade-dim:rgba(61,214,140,.12);
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+    --mono:ui-monospace,"SF Mono",SFMono-Regular,"Cascadia Mono","Roboto Mono",Menlo,Consolas,monospace;
+    --sans:"Avenir Next","Segoe UI",system-ui,-apple-system,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0}
+  body{
+    background:var(--night); color:var(--ink); font-family:var(--sans);
+    -webkit-font-smoothing:antialiased; overflow-x:hidden;
+  }
+  body::before{
+    content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
+    background:
+      radial-gradient(90% 55% at 78% -8%, rgba(245,165,36,.09) 0%, transparent 62%),
+      radial-gradient(70% 50% at 8% 4%, rgba(240,87,92,.06) 0%, transparent 60%),
+      linear-gradient(180deg,#0A1017 0%, #080C12 45%, #06090E 100%);
+  }
+  body::after{
+    content:""; position:fixed; inset:0; z-index:1; pointer-events:none; opacity:.035;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .wrap{position:relative; z-index:2}
+
+  .kicker{font-family:var(--mono); font-size:11px; letter-spacing:.34em; text-transform:uppercase; color:var(--solar); font-weight:500}
+  h1,h2,h3.serif{font-family:var(--serif); font-weight:400; letter-spacing:-.015em; line-height:1.05}
+  .num{font-variant-numeric:tabular-nums}
+
+  /* masthead */
+  .mast{max-width:1400px; margin:0 auto; padding:56px 48px 38px}
+  .mark{display:flex; align-items:center; gap:13px; margin-bottom:44px}
+  .sun{
+    width:26px; height:26px; border-radius:50%; flex:none; position:relative;
+    background:radial-gradient(circle at 34% 30%, var(--solar-hi), var(--solar) 58%, #B8761A 100%);
+    box-shadow:0 0 22px rgba(245,165,36,.42);
+  }
+  .sun::after{content:""; position:absolute; inset:-7px; border-radius:50%; border:1px solid rgba(245,165,36,.26)}
+  .mark-txt{font-family:var(--mono); font-size:12px; letter-spacing:.3em; text-transform:uppercase}
+  .mark-txt span{color:var(--faint)}
+  .mast h1{font-size:clamp(42px,5.8vw,76px); max-width:18ch; margin:18px 0 22px}
+  .mast h1 em{font-style:italic; color:var(--solar-hi)}
+  .lede{font-size:17px; line-height:1.62; color:var(--muted); max-width:64ch}
+  .lede b{color:var(--ink); font-weight:600}
+
+  /* ── scrubber ─────────────────────────────── */
+  .scrub{
+    position:sticky; top:0; z-index:50;
+    background:rgba(8,12,18,.92); backdrop-filter:blur(16px);
+    border-top:1px solid var(--line-soft); border-bottom:1px solid var(--line-soft);
+  }
+  .scrub-in{max-width:1400px; margin:0 auto; padding:16px 48px 20px}
+  .scrub-top{display:flex; align-items:center; gap:18px; margin-bottom:12px}
+  .playbtn{
+    width:38px; height:38px; border-radius:50%; flex:none; cursor:pointer;
+    border:1px solid var(--solar); background:var(--solar-dim); color:var(--solar-hi);
+    display:grid; place-items:center; transition:background .2s;
+  }
+  .playbtn:hover{background:rgba(245,165,36,.24)}
+  .playbtn svg{width:15px; height:15px; fill:currentColor}
+  .clock{font-family:var(--mono); font-size:26px; letter-spacing:.04em; min-width:96px}
+  .phase{
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.18em; text-transform:uppercase;
+    padding:6px 13px; border-radius:999px; border:1px solid var(--line); color:var(--muted);
+    transition:all .3s;
+  }
+  .phase.p-nominal{border-color:rgba(61,214,140,.4); color:var(--jade)}
+  .phase.p-watch{border-color:rgba(245,165,36,.4); color:var(--solar-hi)}
+  .phase.p-risk{border-color:rgba(245,165,36,.6); color:var(--solar-hi); background:var(--solar-dim)}
+  .phase.p-below{border-color:var(--signal); color:#fff; background:var(--signal)}
+  .phase.p-resolved{border-color:rgba(61,214,140,.5); color:var(--jade); background:var(--jade-dim)}
+  .scrub-hint{margin-left:auto; font-family:var(--mono); font-size:11px; color:var(--faint); letter-spacing:.08em}
+
+  .track{position:relative; height:34px}
+  .track input{
+    -webkit-appearance:none; appearance:none; width:100%; height:34px; margin:0;
+    background:transparent; cursor:ew-resize; position:relative; z-index:3;
+  }
+  .track input::-webkit-slider-runnable-track{height:4px; margin-top:0; background:transparent}
+  .track input::-webkit-slider-thumb{
+    -webkit-appearance:none; width:20px; height:20px; border-radius:50%;
+    background:var(--solar-hi); border:3px solid #241804; margin-top:-8px;
+    box-shadow:0 0 14px rgba(245,165,36,.6);
+  }
+  .track input:focus-visible{outline:2px solid var(--solar-hi); outline-offset:4px}
+  .track-bg{position:absolute; left:0; right:0; top:13px; height:4px; border-radius:2px; background:var(--line-soft); z-index:1}
+  .track-fill{position:absolute; left:0; top:13px; height:4px; border-radius:2px; background:linear-gradient(90deg,var(--jade),var(--solar) 55%,var(--signal)); z-index:2; width:0}
+  .ticks{display:flex; justify-content:space-between; font-family:var(--mono); font-size:9.5px; color:var(--faint); letter-spacing:.06em; margin-top:4px}
+
+  /* ── instrument grid ──────────────────────── */
+  .board{max-width:1400px; margin:0 auto; padding:52px 48px 30px}
+  .board-note{font-size:14.5px; color:var(--muted); max-width:60ch; line-height:1.6; margin-bottom:36px}
+  .board-note b{color:var(--ink)}
+
+  .panel{
+    background:var(--night-2); border:1px solid var(--line-soft); border-radius:16px;
+    padding:22px 24px; position:relative;
+  }
+  .panel-lab{
+    font-family:var(--mono); font-size:10px; letter-spacing:.22em; text-transform:uppercase;
+    color:var(--faint); margin-bottom:16px; display:flex; justify-content:space-between; align-items:center;
+  }
+  .panel-lab .src{
+    font-size:9.5px; letter-spacing:.06em; text-transform:none; color:var(--faint);
+    border:1px solid var(--line-soft); border-radius:3px; padding:2px 8px;
+  }
+
+  /* rail */
+  .rail-panel{margin-bottom:22px}
+  .rail-svg{width:100%; height:190px; display:block}
+
+  .cockpit{display:grid; grid-template-columns:1fr 1fr 1.25fr 376px; gap:22px; align-items:start}
+  .cockpit .phone-slot{grid-row:span 2}
+
+  /* window dial */
+  .dial-num{font-family:var(--serif); font-size:74px; line-height:1; transition:color .3s}
+  .dial-num small{font-family:var(--sans); font-size:15px; color:var(--muted); margin-left:6px}
+  .dial-sub{font-family:var(--mono); font-size:10.5px; color:var(--faint); letter-spacing:.08em; margin-top:10px; min-height:15px}
+  .gates{position:relative; height:14px; margin-top:18px; border-radius:3px; overflow:visible; background:var(--line-soft)}
+  .gate-l,.gate-r{position:absolute; top:0; bottom:0; background:var(--panel-2); border:1px solid var(--line)}
+  .gate-l{left:0; border-radius:3px 0 0 3px}
+  .gate-r{right:0; border-radius:0 3px 3px 0}
+  .gate-gap{position:absolute; top:0; bottom:0; background:var(--jade-dim); border-top:1px solid var(--jade); border-bottom:1px solid var(--jade); transition:background .3s}
+  .mct-tick{position:absolute; top:-5px; bottom:-5px; width:2px; background:var(--signal); opacity:.7}
+  .mct-tick::after{
+    content:"MCT"; position:absolute; top:-15px; left:-11px;
+    font-family:var(--mono); font-size:8.5px; letter-spacing:.1em; color:var(--signal);
+  }
+
+  /* confidence */
+  .conf-num{font-family:var(--serif); font-size:74px; line-height:1; transition:color .3s}
+  .conf-num small{font-family:var(--sans); font-size:15px; color:var(--muted)}
+  .conf-sub{font-family:var(--mono); font-size:10.5px; color:var(--faint); letter-spacing:.08em; margin-top:10px; min-height:15px}
+  .spark{width:100%; height:44px; margin-top:16px; display:block}
+
+  /* ledger */
+  .ledger{max-height:284px; overflow-y:auto; scrollbar-width:thin; padding-right:6px}
+  .led-row{
+    display:flex; gap:14px; padding:9px 0; border-bottom:1px solid rgba(37,49,63,.5);
+    font-size:13px; line-height:1.45; opacity:0; transform:translateY(4px);
+    transition:opacity .35s, transform .35s;
+  }
+  .led-row.show{opacity:1; transform:none}
+  .led-row:last-child{border-bottom:none}
+  .led-t{font-family:var(--mono); font-size:11px; color:var(--faint); flex:none; width:44px; padding-top:2px}
+  .led-x{color:var(--muted)}
+  .led-row.warn .led-x{color:var(--solar-hi)}
+  .led-row.bad .led-x{color:var(--signal)}
+  .led-row.good .led-x{color:var(--jade)}
+  .ledger-note{font-family:var(--mono); font-size:9.5px; color:var(--faint); letter-spacing:.08em; margin-top:12px}
+
+  /* phone / lock screen */
+  .phone{
+    width:100%; max-width:376px; border-radius:44px; padding:11px;
+    background:linear-gradient(160deg,#2A3542,#10161F 42%,#232D39);
+    box-shadow:0 42px 90px -22px rgba(0,0,0,.9), 0 0 0 1px rgba(255,255,255,.05);
+  }
+  .screen{
+    background:linear-gradient(178deg,#0D1520 0%, #090E15 100%);
+    border-radius:34px; overflow:hidden; position:relative; min-height:600px;
+    border:1px solid rgba(255,255,255,.05); display:flex; flex-direction:column;
+  }
+  .island{
+    margin:12px auto 0; background:#000; border-radius:20px; min-height:33px;
+    display:flex; align-items:center; gap:9px; padding:7px 15px; width:max-content;
+    max-width:86%; transition:all .3s; border:1px solid rgba(255,255,255,.06);
+  }
+  .island .idot{width:7px; height:7px; border-radius:50%; background:var(--jade); flex:none}
+  .island .itxt{font-family:var(--mono); font-size:10px; color:var(--muted); letter-spacing:.06em; white-space:nowrap}
+  .island .itxt b{color:var(--ink); font-weight:600}
+  .lock-clock{text-align:center; margin-top:34px}
+  .lock-date{font-size:13.5px; color:var(--muted); font-weight:500; margin-bottom:2px}
+  .lock-time{font-family:var(--serif); font-size:74px; line-height:1; letter-spacing:.01em}
+  .lock-spacer{flex:1}
+  .la-card{
+    margin:0 14px 16px; border-radius:20px; padding:15px 16px;
+    background:rgba(20,28,39,.92); border:1px solid var(--line);
+    backdrop-filter:blur(10px);
+  }
+  .la-top{display:flex; align-items:center; gap:9px; margin-bottom:10px}
+  .la-top .sun{width:14px; height:14px; box-shadow:0 0 10px rgba(245,165,36,.4)}
+  .la-top .sun::after{inset:-3px}
+  .la-top span{font-family:var(--mono); font-size:9.5px; letter-spacing:.2em; text-transform:uppercase; color:var(--muted)}
+  .la-top .la-state{margin-left:auto; letter-spacing:.1em}
+  .la-main{font-size:15.5px; line-height:1.5; font-weight:500}
+  .la-main b{font-weight:700}
+  .la-main .g{color:var(--jade)} .la-main .r{color:var(--signal)} .la-main .s{color:var(--solar-hi)}
+  .la-sub{font-family:var(--mono); font-size:10.5px; color:var(--faint); margin-top:8px; letter-spacing:.04em; line-height:1.7}
+  .la-btns{display:flex; gap:9px; margin-top:13px}
+  .la-btns button{
+    flex:1; border-radius:10px; padding:10px 6px; font-size:12.5px; font-weight:600;
+    font-family:var(--sans); cursor:pointer;
+  }
+  .la-btns .keep{background:transparent; border:1px solid var(--line); color:var(--ink)}
+  .la-btns .take{background:var(--jade); border:none; color:#062315}
+  .heart{display:inline-block; width:8px; height:8px; border-radius:50%; background:var(--jade); margin-right:7px; animation:breathe 4s ease-in-out infinite}
+  @keyframes breathe{0%,100%{opacity:.35; transform:scale(.85)} 50%{opacity:1; transform:scale(1.15)}}
+  @media (prefers-reduced-motion: reduce){ .heart{animation:none} }
+
+  /* ── concept annos under board ────────────── */
+  .concepts{max-width:1400px; margin:0 auto; padding:26px 48px 88px}
+  .concepts-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1px; background:var(--line-soft); border:1px solid var(--line-soft); border-radius:12px; overflow:hidden}
+  .concepts-grid div{background:var(--night-2); padding:24px 22px}
+  .concepts-grid h4{font-family:var(--mono); font-size:10.5px; letter-spacing:.2em; text-transform:uppercase; color:var(--solar); margin-bottom:10px; font-weight:500}
+  .concepts-grid p{font-size:14px; line-height:1.6; color:var(--muted)}
+  .concepts-grid code{font-family:var(--mono); font-size:12px; color:var(--ink); background:var(--panel); padding:1px 5px; border-radius:3px}
+
+  /* ── studies ──────────────────────────────── */
+  .studies{max-width:1400px; margin:0 auto; padding:80px 48px 110px; border-top:1px solid var(--line-soft)}
+  .studies-head{margin-bottom:52px}
+  .studies-head h2{font-size:clamp(30px,3.8vw,50px); margin-top:14px; max-width:24ch}
+  .studies-head .sub{margin-top:15px; font-size:15.5px; color:var(--muted); max-width:58ch; line-height:1.6}
+  .study-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:30px}
+  .study .eyebrow{font-family:var(--mono); font-size:10px; letter-spacing:.22em; text-transform:uppercase; color:var(--faint); margin-bottom:12px}
+  .study h3{font-size:19px; font-weight:600; margin-bottom:8px; letter-spacing:-.01em; font-family:var(--sans)}
+  .study .why{font-size:13.8px; line-height:1.6; color:var(--muted); margin-bottom:20px; min-height:66px}
+  .mini{
+    border-radius:30px; padding:9px;
+    background:linear-gradient(160deg,#2A3542,#10161F 42%,#232D39);
+    box-shadow:0 26px 60px -18px rgba(0,0,0,.85), 0 0 0 1px rgba(255,255,255,.05);
+  }
+  .mini .ms{
+    border-radius:23px; overflow:hidden; min-height:430px; position:relative;
+    border:1px solid rgba(255,255,255,.05); background:linear-gradient(178deg,#0D1520,#090E15);
+    display:flex; flex-direction:column;
+  }
+
+  /* study 1: single sentence */
+  .ss{align-items:center; justify-content:center; text-align:center; padding:34px 26px; gap:0}
+  .ss .sentence{font-family:var(--serif); font-size:31px; line-height:1.32; letter-spacing:-.01em}
+  .ss .sentence b{color:var(--solar-hi); font-weight:400}
+  .ss .bag{font-family:var(--mono); font-size:11px; color:var(--jade); letter-spacing:.1em; margin-top:22px}
+  .ss button{
+    margin-top:44px; width:78%; padding:15px; border-radius:12px; border:none;
+    background:var(--solar); color:#25190A; font-weight:700; font-size:15px; font-family:var(--sans); cursor:pointer;
+  }
+
+  /* study 2: pre-landing */
+  .pl{padding:24px 18px}
+  .pl .pl-kick{font-family:var(--mono); font-size:9.5px; letter-spacing:.2em; text-transform:uppercase; color:var(--solar); margin-bottom:8px}
+  .pl h4{font-family:var(--serif); font-size:24px; font-weight:400; margin-bottom:16px}
+  .pl .pli{
+    display:flex; gap:11px; align-items:flex-start; padding:10px 0;
+    border-bottom:1px solid rgba(37,49,63,.6); font-size:12.8px; line-height:1.45;
+  }
+  .pl .pli:last-of-type{border-bottom:none}
+  .pl .pli .ok{color:var(--jade); font-family:var(--mono); font-size:11px; flex:none; padding-top:1px}
+  .pl .pli b{display:block; font-size:13px}
+  .pl .pli span{color:var(--faint); font-size:11.5px}
+  .pl .qr{
+    margin:16px auto 4px; width:104px; height:104px; border-radius:8px; background:#EEF2F7; padding:8px;
+  }
+  .pl .qr canvas{width:100%; height:100%; image-rendering:pixelated}
+  .pl .qr-lab{text-align:center; font-family:var(--mono); font-size:9px; letter-spacing:.14em; color:var(--faint); margin-top:8px; text-transform:uppercase}
+
+  /* study 3: two-tone */
+  .tt{flex-direction:row}
+  .tt-half{flex:1; padding:22px 16px; display:flex; flex-direction:column}
+  .tt-a{background:linear-gradient(178deg,#0D1520,#090E15); border-right:1px solid rgba(255,255,255,.06)}
+  .tt-b{background:linear-gradient(178deg,#0B1A16,#07110E)}
+  .tt-lab{font-family:var(--mono); font-size:8.5px; letter-spacing:.18em; text-transform:uppercase; color:var(--faint); margin-bottom:14px}
+  .tt-a .row-sim{height:9px; border-radius:4px; background:var(--panel-2); margin-bottom:8px}
+  .tt-a .row-sim.w1{width:86%} .tt-a .row-sim.w2{width:64%} .tt-a .row-sim.w3{width:74%}
+  .tt-a .chip-sim{display:inline-block; height:22px; width:52px; border-radius:11px; background:var(--panel-2); margin:3px 4px 0 0}
+  .tt-title{font-family:var(--serif); font-size:19px; margin-bottom:10px}
+  .tt-b .tt-title{font-size:23px; line-height:1.25}
+  .tt-b .big-line{font-size:14.5px; line-height:1.55; color:#BFE8D4; margin-bottom:18px}
+  .tt-b button{
+    margin-top:auto; padding:13px; border-radius:11px; border:none; background:#3DD68C;
+    color:#062315; font-weight:700; font-size:13.5px; font-family:var(--sans); cursor:pointer;
+  }
+  .tt-a .nav-sim{margin-top:auto; display:flex; gap:6px}
+  .tt-a .nav-sim i{flex:1; height:30px; border-radius:8px; background:var(--panel-2)}
+
+  /* study 4: ambient */
+  .amb{align-items:center; justify-content:center; text-align:center; padding:30px}
+  .amb .orb{
+    width:104px; height:104px; border-radius:50%; position:relative; margin-bottom:30px;
+    background:radial-gradient(circle at 38% 32%, rgba(61,214,140,.28), rgba(61,214,140,.05) 62%, transparent 75%);
+    display:grid; place-items:center;
+  }
+  .amb .orb::before,.amb .orb::after{
+    content:""; position:absolute; inset:0; border-radius:50%;
+    border:1px solid rgba(61,214,140,.3); animation:ripple 4s ease-out infinite;
+  }
+  .amb .orb::after{animation-delay:2s}
+  @keyframes ripple{0%{transform:scale(.6); opacity:.9} 100%{transform:scale(1.35); opacity:0}}
+  @media (prefers-reduced-motion: reduce){ .amb .orb::before,.amb .orb::after{animation:none; opacity:.3} }
+  .amb .core{width:14px; height:14px; border-radius:50%; background:var(--jade); box-shadow:0 0 18px rgba(61,214,140,.7)}
+  .amb h5{font-family:var(--serif); font-size:21px; font-weight:400; margin-bottom:9px}
+  .amb p{font-size:12.5px; color:var(--faint); line-height:1.6; max-width:24ch}
+  .amb .stamp{font-family:var(--mono); font-size:9.5px; color:var(--faint); letter-spacing:.12em; margin-top:24px}
+
+  @media (max-width:1180px){
+    .cockpit{grid-template-columns:1fr 1fr}
+    .cockpit .phone-slot{grid-row:auto; justify-self:center}
+  }
+  @media (max-width:720px){
+    .mast,.scrub-in,.board,.concepts,.studies{padding-left:22px; padding-right:22px}
+    .cockpit{grid-template-columns:1fr}
+    .scrub-hint{display:none}
+  }
+</style>
+
+<div class="wrap">
+
+<!-- ═══ MASTHEAD ═══ -->
+<header class="mast">
+  <div class="mark">
+    <div class="sun"></div>
+    <div class="mark-txt">Sun Airlines <span>· Disruption Mode · Part II</span></div>
+  </div>
+  <div class="kicker">One afternoon · BKK → HKG → LHR</div>
+  <h1>The window is <em>closing</em>. Watch it happen.</h1>
+  <p class="lede">
+    Part I showed four screens. This is the part between the screens — the disruption as it
+    unfolds in time. <b>Drag the scrubber</b> (or press play) and every instrument below moves
+    together: the journey rail, the compressing connection window, the confidence number,
+    the lock screen, and the ledger of what the airline did on Maya's behalf.
+  </p>
+</header>
+
+<!-- ═══ SCRUBBER ═══ -->
+<div class="scrub">
+  <div class="scrub-in">
+    <div class="scrub-top">
+      <button class="playbtn" id="play" aria-label="Play timeline">
+        <svg id="play-ico" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></svg>
+      </button>
+      <div class="clock num" id="clock">14:00</div>
+      <div class="phase p-nominal" id="phase">Nominal</div>
+      <div class="scrub-hint">drag anywhere on the line · everything below is one moment in time</div>
+    </div>
+    <div class="track">
+      <div class="track-bg"></div>
+      <div class="track-fill" id="fill"></div>
+      <input type="range" id="scrub" min="0" max="150" step="0.5" value="0" aria-label="Time of day scrubber, 14:00 to 16:30">
+    </div>
+    <div class="ticks num"><span>14:00</span><span>14:30</span><span>15:00</span><span>15:30</span><span>16:00</span><span>16:30</span></div>
+  </div>
+</div>
+
+<!-- ═══ INSTRUMENT BOARD ═══ -->
+<main class="board">
+  <p class="board-note">
+    Maya is on <b>SA 707 Bangkok → Hong Kong</b>, connecting to <b>SA 250 Hong Kong → London</b>
+    at 18:20. Over the afternoon, headwinds push her arrival later and later. The airline's minimum
+    international connection is <b>30 minutes</b> — and her window is heading straight for it.
+  </p>
+
+  <!-- rail -->
+  <section class="panel rail-panel">
+    <div class="panel-lab">The journey as one object
+      <span class="src">itinerary rail · delay pushes arrival in real time</span>
+    </div>
+    <svg class="rail-svg" id="rail" viewBox="0 0 1200 190" preserveAspectRatio="none" aria-label="Journey timeline rail"></svg>
+  </section>
+
+  <!-- cockpit row -->
+  <div class="cockpit">
+    <section class="panel">
+      <div class="panel-lab">The window</div>
+      <div class="dial-num num" id="win-num">75<small>min</small></div>
+      <div class="dial-sub" id="win-sub">arrival 17:05 · departure 18:20</div>
+      <div class="gates" id="gates">
+        <div class="gate-l" id="gate-l"></div>
+        <div class="gate-gap" id="gate-gap"></div>
+        <div class="gate-r" id="gate-r"></div>
+        <div class="mct-tick" id="mct-tick"></div>
+      </div>
+      <div class="dial-sub" style="margin-top:14px">Minimum · 30 min <span style="opacity:.55">· RAI_PROFILE.connection_times</span></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-lab">Confidence</div>
+      <div class="conf-num num" id="conf-num">96<small>%</small></div>
+      <div class="conf-sub" id="conf-sub">connection holds · from inbound position</div>
+      <svg class="spark" id="spark" viewBox="0 0 300 44" preserveAspectRatio="none"></svg>
+      <div class="dial-sub" style="margin-top:12px"><span style="opacity:.55">predict_flight_disruption() · risk threshold 0.70</span></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-lab">The journey ledger
+        <span class="src">what the airline did, timestamped</span>
+      </div>
+      <div class="ledger" id="ledger"></div>
+      <div class="ledger-note">PROOF OF CARE · VISIBLE IN-APP</div>
+    </section>
+
+    <!-- lock screen -->
+    <div class="phone-slot">
+      <div class="panel-lab" style="margin-bottom:12px">The lock screen is the product
+        <span class="src">she never opens the app</span>
+      </div>
+      <div class="phone"><div class="screen">
+        <div class="island" id="island">
+          <span class="idot" id="idot"></span>
+          <span class="itxt" id="itxt"><b>SA 707</b> · watching</span>
+        </div>
+        <div class="lock-clock">
+          <div class="lock-date">Thursday 7 August</div>
+          <div class="lock-time num" id="lock-time">14:00</div>
+        </div>
+        <div class="lock-spacer"></div>
+        <div class="la-card" id="la-card">
+          <div class="la-top">
+            <div class="sun"></div><span>Sun Airlines</span>
+            <span class="la-state" id="la-state" style="color:var(--jade)">LIVE</span>
+          </div>
+          <div class="la-main" id="la-main"></div>
+          <div class="la-sub" id="la-sub"></div>
+          <div class="la-btns" id="la-btns" hidden>
+            <button class="keep">Keep my connection</button>
+            <button class="take">Take SA 254</button>
+          </div>
+        </div>
+      </div></div>
+    </div>
+  </div>
+</main>
+
+<!-- ═══ CONCEPT NOTES ═══ -->
+<section class="concepts">
+  <div class="concepts-grid">
+    <div>
+      <h4>The compressing window</h4>
+      <p>One visual element carries the whole emotional arc: the gap between arrival and departure,
+      shrinking live. When it crosses the 30-minute minimum it changes state — and only then do
+      options appear. Anxiety made visible is anxiety made manageable.</p>
+    </div>
+    <div>
+      <h4>Confidence, not just fact</h4>
+      <p>"78% likely to hold, from your inbound's current position." Treating the passenger as
+      capable of handling probability is itself a premium signal. Grounded in the notebook's
+      <code>predict_flight_disruption()</code> and its 0.70 risk threshold.</p>
+    </div>
+    <div>
+      <h4>Live Activity as the experience</h4>
+      <p>She never opens the app. The Dynamic Island carries status; the Live Activity expands
+      only when a decision is genuinely hers to make — one moment, two buttons. Everything else
+      is ambient.</p>
+    </div>
+    <div>
+      <h4>The ledger answers the trust gap</h4>
+      <p>14:20 delay detected · 15:45 seat held · 16:03 bag rerouted. A running, timestamped
+      record of what was done on her behalf. Proof of care as an artefact — nobody builds this.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ STUDIES ═══ -->
+<section class="studies">
+  <div class="studies-head">
+    <div class="kicker">Four studies · deliberately opposite instincts</div>
+    <h2>Same disruption, four bets on what care looks like</h2>
+    <p class="sub">
+      Each of these is a testable hypothesis, not a decoration. The single sentence bets on radical
+      reduction; the pre-landing card bets on completeness; the mode shift bets on tone; the
+      heartbeat bets on presence without interruption.
+    </p>
+  </div>
+
+  <div class="study-grid">
+    <!-- study 1 -->
+    <div class="study">
+      <div class="eyebrow">Study 01 · Reduction</div>
+      <h3>The single sentence screen</h3>
+      <p class="why">The opposite of the rich version: one sentence, one button, nothing else.
+      Test them against each other — under stress, which one do people actually obey?</p>
+      <div class="mini"><div class="ms ss">
+        <div class="sentence">Turn left.<br><b>Gate 65.</b><br>28 minutes.</div>
+        <div class="bag">YOUR BAG IS COMING ✓</div>
+        <button>I'm on my way</button>
+      </div></div>
+    </div>
+
+    <!-- study 2 -->
+    <div class="study">
+      <div class="eyebrow">Study 02 · Completeness</div>
+      <h3>The pre-landing card</h3>
+      <p class="why">For the overnight misconnect, delivered before wheels down: everything already
+      resolved, one QR to rule the evening. The moment that eliminates the scramble.</p>
+      <div class="mini"><div class="ms pl">
+        <div class="pl-kick">Before you land</div>
+        <h4>Tonight is handled</h4>
+        <div class="pli"><span class="ok">✓</span><div><b>Regal Airport Hotel</b><span>Room held · late check-in told</span></div></div>
+        <div class="pli"><span class="ok">✓</span><div><b>SA 254 · tomorrow 09:40</b><span>Seat 31C · boarding pass ready</span></div></div>
+        <div class="pli"><span class="ok">✓</span><div><b>Your bag stays with us</b><span>Loaded to SA 254 · no pickup tonight</span></div></div>
+        <div class="pli"><span class="ok">✓</span><div><b>HK$350 dinner credit</b><span>Any airport restaurant</span></div></div>
+        <div class="qr"><canvas id="qr" width="21" height="21"></canvas></div>
+        <div class="qr-lab">One code · hotel + meals + flight</div>
+      </div></div>
+    </div>
+
+    <!-- study 3 -->
+    <div class="study">
+      <div class="eyebrow">Study 03 · Tone</div>
+      <h3>Two-tone mode shift</h3>
+      <p class="why">The app visibly changes character when Disruption Mode activates — calmer
+      palette, larger type, fewer choices. Test whether the shift signals care or alarm.</p>
+      <div class="mini"><div class="ms tt">
+        <div class="tt-half tt-a">
+          <div class="tt-lab">Normal</div>
+          <div class="tt-title">Your trip</div>
+          <div class="row-sim w1"></div><div class="row-sim w2"></div><div class="row-sim w3"></div>
+          <div style="margin-top:10px"><span class="chip-sim"></span><span class="chip-sim"></span><span class="chip-sim"></span></div>
+          <div class="row-sim w2" style="margin-top:12px"></div><div class="row-sim w1"></div>
+          <div class="nav-sim"><i></i><i></i><i></i><i></i></div>
+        </div>
+        <div class="tt-half tt-b">
+          <div class="tt-lab" style="color:#3DD68C">Disruption</div>
+          <div class="tt-title">You're on the 20:55.</div>
+          <div class="big-line">Seat held. Bag moved. Nothing to do until 20:15.</div>
+          <button>Show me the gate</button>
+        </div>
+      </div></div>
+    </div>
+
+    <!-- study 4 -->
+    <div class="study">
+      <div class="eyebrow">Study 04 · Presence</div>
+      <h3>Ambient reassurance</h3>
+      <p class="why">For the do-nothing state: a heartbeat, not a notification. A live sign the
+      journey is being watched — presence without interruption.</p>
+      <div class="mini"><div class="ms amb">
+        <div class="orb"><div class="core"></div></div>
+        <h5>Watching SA 707</h5>
+        <p>All clear. We'll only speak when something changes.</p>
+        <div class="stamp num">LAST CHECKED 12 SECONDS AGO</div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<script>
+(() => {
+  'use strict'
+  const $ = id => document.getElementById(id)
+  const T0 = 14 * 60                      // scrubber zero = 14:00
+  const SCHED_ARR = 17 * 60 + 5           // SA 707 scheduled HKG arrival
+  const DEP_ORIG = 18 * 60 + 20           // SA 250 departure
+  const DEP_ALT  = 20 * 60 + 55           // SA 254 departure
+  const MCT = 30
+  const RESOLVE_T = 122                   // 16:02 — Maya taps "Take SA 254"
+
+  const fmt = m => `${String(Math.floor(m/60)).padStart(2,'0')}:${String(Math.round(m%60)).padStart(2,'0')}`
+
+  // keyframes: t = minutes past 14:00
+  const KF = [
+    { t:0,   delay:0,  conf:96, phase:'nominal' },
+    { t:20,  delay:15, conf:88, phase:'watch' },
+    { t:70,  delay:35, conf:78, phase:'risk' },
+    { t:105, delay:50, conf:41, phase:'below' },
+    { t:RESOLVE_T, delay:50, conf:99, phase:'resolved', snap:true },
+    { t:150, delay:50, conf:99, phase:'resolved' },
+  ]
+  const lerpKF = (t, key) => {
+    for (let i = 0; i < KF.length - 1; i++) {
+      const a = KF[i], b = KF[i+1]
+      if (t >= a.t && t <= b.t) {
+        if (b.snap) return t >= b.t ? b[key] : a[key]
+        const f = (t - a.t) / (b.t - a.t || 1)
+        return a[key] + (b[key] - a[key]) * f
+      }
+    }
+    return KF[KF.length-1][key]
+  }
+  const phaseAt = t => { let p = KF[0].phase; for (const k of KF) if (t >= k.t) p = k.phase; return p }
+
+  const state = t => {
+    const delay = lerpKF(t, 'delay')
+    const conf  = Math.round(lerpKF(t, 'conf'))
+    const phase = phaseAt(t)
+    const resolved = phase === 'resolved'
+    const arr = SCHED_ARR + delay
+    const dep = resolved ? DEP_ALT : DEP_ORIG
+    return { t, delay, conf, phase, resolved, arr, dep, win: Math.round(dep - arr) }
+  }
+
+  const PHASE_LABEL = { nominal:'Nominal', watch:'Watching', risk:'At risk', below:'Below minimum', resolved:'Resolved' }
+  const PHASE_COLOR = { nominal:'var(--jade)', watch:'var(--solar-hi)', risk:'var(--solar-hi)', below:'var(--signal)', resolved:'var(--jade)' }
+
+  // ── ledger ──────────────────────────────────
+  const LEDGER = [
+    { at:0,   ts:'13:02', x:'Inbound aircraft tracked from SIN', k:'' },
+    { at:0,   ts:'13:20', x:'SA 707 departed Bangkok · on time', k:'' },
+    { at:20,  ts:'14:20', x:'Delay detected · +15 min, headwinds', k:'warn' },
+    { at:21,  ts:'14:21', x:'Connection flagged · watching closely', k:'' },
+    { at:68,  ts:'15:08', x:'Delay revised · +35 min', k:'warn' },
+    { at:70,  ts:'15:10', x:'Backup search started · own flights first', k:'' },
+    { at:104, ts:'15:44', x:'Window below 30-min minimum', k:'bad' },
+    { at:105, ts:'15:45', x:'Seat held · SA 254 to London, 20:55', k:'good' },
+    { at:106, ts:'15:46', x:'Second option held · partner via MAD', k:'good' },
+    { at:122, ts:'16:02', x:'You chose SA 254 · confirmed', k:'good' },
+    { at:123, ts:'16:03', x:'Bag SUN0447821 rerouted to SA 254', k:'good' },
+    { at:124, ts:'16:04', x:'New arrival sent to your driver at LHR', k:'good' },
+  ]
+  const ledgerEl = $('ledger')
+  LEDGER.forEach(e => {
+    const d = document.createElement('div')
+    d.className = 'led-row num ' + e.k
+    d.innerHTML = `<span class="led-t">${e.ts}</span><span class="led-x">${e.x}</span>`
+    ledgerEl.appendChild(d); e.el = d
+  })
+
+  // ── lock screen content per phase ───────────
+  const LOCK = {
+    nominal: { dot:'var(--jade)', island:'<b>SA 707</b> · on time', st:['LIVE','var(--jade)'],
+      main:'<span class="heart"></span>On time into Hong Kong.',
+      sub:'ARRIVE 17:05 · CONNECT SA 250 18:20 · WINDOW 75 MIN', btns:false },
+    watch: { dot:'var(--solar)', island:'<b>SA 707</b> · +15 min', st:['LIVE','var(--solar-hi)'],
+      main:'Running <b class="s">15 minutes late</b>. Your connection still holds.',
+      sub:'ARRIVE 17:20 · WINDOW 60 MIN · CONFIDENCE 88%', btns:false },
+    risk: { dot:'var(--solar)', island:'<b>SA 707</b> · connection 78%', st:['LIVE','var(--solar-hi)'],
+      main:'Your connection is <b class="s">78% likely to hold</b>, from your inbound’s position.',
+      sub:'ARRIVE 17:40 · WINDOW 40 MIN · BACKUP BEING HELD', btns:false },
+    below: { dot:'var(--signal)', island:'<b>SA 707</b> · action needed', st:['DECIDE','var(--signal)'],
+      main:'Window is <b class="r">below the 30-minute minimum</b>. A seat on SA 254 (20:55) is held for you.',
+      sub:'CHASE IT AND SA 254 STAYS HELD EITHER WAY', btns:true },
+    resolved: { dot:'var(--jade)', island:'<b>SA 254</b> · 20:55 confirmed', st:['SET','var(--jade)'],
+      main:'<b class="g">You’re on SA 254.</b> Gate B48. Bag moved. Nothing to do until 20:15.',
+      sub:'LHR 05:25 · DRIVER NOTIFIED · DINNER CREDIT ADDED', btns:false },
+  }
+
+  // ── rail drawing ────────────────────────────
+  const railEl = $('rail')
+  const RW = 1200, RH = 190
+  const AX0 = 13*60, AX1 = 22*60
+  const X = m => (m - AX0) / (AX1 - AX0) * (RW - 70) + 40
+  const S = (n, attrs) => {
+    const el = document.createElementNS('http://www.w3.org/2000/svg', n)
+    for (const k in attrs) el.setAttribute(k, attrs[k]); return el
+  }
+  const MONO = 'ui-monospace,Menlo,monospace'
+
+  function drawRail(st) {
+    railEl.innerHTML = ''
+    const Y = 78
+    // hour grid
+    for (let h = 13; h <= 22; h++) {
+      const x = X(h*60)
+      railEl.appendChild(S('line', { x1:x, y1:26, x2:x, y2:RH-30, stroke:'#1B2531', 'stroke-width':1 }))
+      railEl.appendChild(S('text', { x, y:RH-12, fill:'#5C6A7B', 'font-size':11, 'text-anchor':'middle', 'font-family':MONO, textContent:`${h}:00` }))
+    }
+    const label = (x, y, txt, fill, anchor='middle', size=11, weight=400) => {
+      const t = S('text', { x, y, fill, 'font-size':size, 'text-anchor':anchor, 'font-family':MONO, 'font-weight':weight })
+      t.textContent = txt; railEl.appendChild(t)
+    }
+
+    // segment 1: BKK → HKG (arrival slides with delay)
+    const x1 = X(13*60+20), xa = X(st.arr)
+    railEl.appendChild(S('rect', { x:x1, y:Y-11, width:xa-x1, height:22, rx:6, fill:'rgba(245,165,36,.16)', stroke:'#F5A524', 'stroke-width':1.2 }))
+    label(x1+8, Y+4, 'SA 707', '#FFC978', 'start', 11, 600)
+    label(x1, Y-22, 'BKK 13:20', '#8A97A8', 'start')
+    // arrival marker
+    railEl.appendChild(S('line', { x1:xa, y1:Y-24, x2:xa, y2:Y+24, stroke: st.win < MCT && !st.resolved ? '#F0575C' : '#F5A524', 'stroke-width':2 }))
+    label(xa, Y-32, `HKG ${fmt(st.arr)}` + (st.delay > 1 ? ` · +${Math.round(st.delay)}` : ''), st.delay > 1 ? '#FFC978' : '#8A97A8', 'middle', 11, 600)
+
+    // the window: arrival → active departure
+    const xd = X(st.dep)
+    const winCol = st.resolved ? 'rgba(61,214,140,.15)' : (st.win < MCT ? 'rgba(240,87,92,.2)' : 'rgba(61,214,140,.12)')
+    const winStroke = st.resolved ? '#3DD68C' : (st.win < MCT ? '#F0575C' : '#3DD68C')
+    railEl.appendChild(S('rect', { x:xa, y:Y-7, width:Math.max(2, xd-xa), height:14, rx:4, fill:winCol, stroke:winStroke, 'stroke-width':1, 'stroke-dasharray':'3 3' }))
+    label((xa+xd)/2, Y-14, `${st.win} min`, winStroke, 'middle', 11, 600)
+
+    // MCT line for the active departure
+    const xm = X(st.dep - MCT)
+    railEl.appendChild(S('line', { x1:xm, y1:Y-20, x2:xm, y2:Y+20, stroke:'#F0575C', 'stroke-width':1.5, 'stroke-dasharray':'4 3', opacity:.85 }))
+    label(xm, Y+34, 'MCT', '#F0575C', 'middle', 9)
+
+    // segment 2: SA 250 (original) — struck through once resolved
+    const x250 = X(DEP_ORIG), xEnd = RW - 26
+    const segY = Y
+    const orig = S('rect', { x:x250, y:segY-11, width:xEnd-x250-46, height:22, rx:6,
+      fill: st.resolved ? 'rgba(37,49,63,.4)' : 'rgba(245,165,36,.16)',
+      stroke: st.resolved ? '#25313F' : '#F5A524', 'stroke-width':1.2 })
+    railEl.appendChild(orig)
+    label(x250+8, segY+4, 'SA 250 → LHR', st.resolved ? '#5C6A7B' : '#FFC978', 'start', 11, 600)
+    label(x250, segY-22, '18:20', st.resolved ? '#5C6A7B' : '#8A97A8', 'start')
+    if (st.resolved) railEl.appendChild(S('line', { x1:x250, y1:segY, x2:xEnd-46, y2:segY, stroke:'#5C6A7B', 'stroke-width':1.5 }))
+
+    // alternative: SA 254 — ghost from "below", solid when resolved
+    if (st.phase === 'below' || st.resolved) {
+      const x254 = X(DEP_ALT), aY = Y + (st.resolved ? 0 : 44)
+      const altY = st.resolved ? Y : aY
+      const g = st.resolved
+      railEl.appendChild(S('rect', { x:x254, y:altY-11+(st.resolved?0:0), width:xEnd-x254, height:22, rx:6,
+        fill: g ? 'rgba(61,214,140,.16)' : 'rgba(61,214,140,.07)',
+        stroke:'#3DD68C', 'stroke-width':1.2, 'stroke-dasharray': g ? 'none' : '4 4' }))
+      label(x254+8, altY+4, 'SA 254 → LHR', '#3DD68C', 'start', 11, 600)
+      label(x254, altY-22, g ? '20:55 · yours' : '20:55 · held', '#3DD68C', 'start')
+    }
+    // arrow off the right edge
+    railEl.appendChild(S('path', { d:`M${xEnd-14} ${Y-5} l10 5 l-10 5`, fill:'none', stroke:'#5C6A7B', 'stroke-width':1.5 }))
+  }
+
+  // ── spark history ───────────────────────────
+  const sparkEl = $('spark')
+  function drawSpark(t) {
+    sparkEl.innerHTML = ''
+    let d = '', dots = []
+    for (let x = 0; x <= t; x += 1.5) {
+      const c = lerpKF(x, 'conf')
+      const px = x/150*300, py = 42 - (c/100)*38
+      d += (d ? 'L' : 'M') + px.toFixed(1) + ' ' + py.toFixed(1)
+      dots = [px, py]
+    }
+    sparkEl.appendChild(S('line', { x1:0, y1:42-(70/100)*38, x2:300, y2:42-(70/100)*38, stroke:'#F0575C', 'stroke-width':.7, 'stroke-dasharray':'3 4', opacity:.6 }))
+    if (d) {
+      sparkEl.appendChild(S('path', { d, fill:'none', stroke:'#F5A524', 'stroke-width':1.8, 'stroke-linecap':'round' }))
+      sparkEl.appendChild(S('circle', { cx:dots[0], cy:dots[1], r:3.2, fill:'#FFC978' }))
+    }
+  }
+
+  // ── master update ───────────────────────────
+  const els = {
+    clock:$('clock'), phase:$('phase'), fill:$('fill'),
+    winNum:$('win-num'), winSub:$('win-sub'),
+    gateL:$('gate-l'), gateR:$('gate-r'), gateGap:$('gate-gap'), mctTick:$('mct-tick'),
+    confNum:$('conf-num'), confSub:$('conf-sub'),
+    lockTime:$('lock-time'), idot:$('idot'), itxt:$('itxt'),
+    laState:$('la-state'), laMain:$('la-main'), laSub:$('la-sub'), laBtns:$('la-btns'),
+  }
+
+  function update(t) {
+    const st = state(t)
+    els.clock.textContent = fmt(T0 + t)
+    els.lockTime.textContent = fmt(T0 + t)
+    els.fill.style.width = (t/150*100) + '%'
+    els.phase.textContent = PHASE_LABEL[st.phase]
+    els.phase.className = 'phase p-' + st.phase
+
+    // window dial
+    els.winNum.innerHTML = `${st.win}<small>min</small>`
+    els.winNum.style.color = st.resolved ? 'var(--jade)' : (st.win < MCT ? 'var(--signal)' : (st.win < 45 ? 'var(--solar-hi)' : 'var(--ink)'))
+    els.winSub.textContent = `arrival ${fmt(st.arr)} · departure ${fmt(st.dep)}` + (st.resolved ? ' · SA 254' : '')
+    // gates: map window (0..75+) onto the bar; gap centred
+    const span = Math.min(1, st.win / 90)
+    const gapPct = Math.max(2.5, span * 88)
+    const side = (100 - gapPct) / 2
+    els.gateL.style.width = side + '%'
+    els.gateR.style.width = side + '%'
+    els.gateGap.style.left = side + '%'
+    els.gateGap.style.width = gapPct + '%'
+    const gapCol = st.resolved ? 'var(--jade-dim)' : (st.win < MCT ? 'var(--signal-dim)' : 'var(--jade-dim)')
+    const gapBor = st.resolved ? 'var(--jade)' : (st.win < MCT ? 'var(--signal)' : 'var(--jade)')
+    els.gateGap.style.background = gapCol
+    els.gateGap.style.borderColor = gapBor
+    // MCT tick sits where a 30-min window would close to
+    const mctPct = (100 - Math.max(2.5, Math.min(1, MCT/90) * 88)) / 2
+    els.mctTick.style.left = `calc(${mctPct}% )`
+
+    // confidence
+    els.confNum.innerHTML = `${st.conf}<small>%</small>`
+    els.confNum.style.color = st.conf >= 85 ? 'var(--jade)' : (st.conf >= 60 ? 'var(--solar-hi)' : 'var(--signal)')
+    els.confSub.textContent = st.resolved ? 'on the new plan · SA 254' : 'connection holds · from inbound position'
+    drawSpark(t)
+
+    // ledger
+    let lastShown = null
+    LEDGER.forEach(e => {
+      const show = t >= e.at
+      e.el.classList.toggle('show', show)
+      if (show) lastShown = e.el
+    })
+    if (lastShown) lastShown.scrollIntoView({ block:'nearest' })
+
+    // lock screen
+    const L = LOCK[st.phase]
+    els.idot.style.background = L.dot
+    els.itxt.innerHTML = L.island
+    els.laState.textContent = L.st[0]
+    els.laState.style.color = L.st[1]
+    els.laMain.innerHTML = L.main
+    els.laSub.textContent = L.sub
+    els.laBtns.hidden = !L.btns
+
+    drawRail(st)
+  }
+
+  // ── wiring ──────────────────────────────────
+  const slider = $('scrub')
+  slider.addEventListener('input', () => { stopPlay(); update(parseFloat(slider.value)) })
+
+  let playing = false, rafId = 0, lastTick = 0
+  const playBtn = $('play'), playIco = $('play-ico')
+  const setIco = () => { playIco.innerHTML = playing ? '<rect x="5" y="4" width="5" height="16"/><rect x="14" y="4" width="5" height="16"/>' : '<path d="M7 4l13 8-13 8z"/>' }
+  function stopPlay(){ playing = false; cancelAnimationFrame(rafId); setIco() }
+  function tick(now){
+    if (!playing) return
+    const dt = (now - lastTick) / 1000; lastTick = now
+    let t = parseFloat(slider.value) + dt * 22        // ~7s for the full afternoon
+    if (t >= 150) { t = 150; stopPlay() }
+    slider.value = t; update(t)
+    if (playing) rafId = requestAnimationFrame(tick)
+  }
+  playBtn.addEventListener('click', () => {
+    if (playing) { stopPlay(); return }
+    if (parseFloat(slider.value) >= 149.5) slider.value = 0
+    playing = true; setIco(); lastTick = performance.now()
+    rafId = requestAnimationFrame(tick)
+  })
+
+  // fake QR for the pre-landing study (deterministic, decorative)
+  const qr = $('qr')
+  if (qr) {
+    const ctx = qr.getContext('2d'), n = 21
+    ctx.fillStyle = '#EEF2F7'; ctx.fillRect(0,0,n,n)
+    ctx.fillStyle = '#0C121B'
+    let seed = 42
+    const rnd = () => (seed = (seed * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff
+    for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) if (rnd() < .45) ctx.fillRect(x, y, 1, 1)
+    const finder = (ox, oy) => {
+      ctx.fillStyle = '#0C121B'; ctx.fillRect(ox, oy, 7, 7)
+      ctx.fillStyle = '#EEF2F7'; ctx.fillRect(ox+1, oy+1, 5, 5)
+      ctx.fillStyle = '#0C121B'; ctx.fillRect(ox+2, oy+2, 3, 3)
+    }
+    finder(0,0); finder(n-7,0); finder(0,n-7)
+  }
+
+  update(0)
+})()
+</script>
