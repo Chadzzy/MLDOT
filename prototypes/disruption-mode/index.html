@@ -1,0 +1,945 @@
+<title>Disruption Mode — Sun Airlines</title>
+
+<style>
+  :root{
+    --night:#080C12; --night-2:#0C121B; --panel:#141C27; --panel-2:#1B2531;
+    --line:#25313F; --line-soft:#1B2531;
+    --ink:#EEF2F7; --muted:#8A97A8; --faint:#5C6A7B;
+    --solar:#F5A524; --solar-hi:#FFC978; --solar-dim:rgba(245,165,36,.14);
+    --signal:#F0575C; --signal-dim:rgba(240,87,92,.13);
+    --jade:#3DD68C; --jade-dim:rgba(61,214,140,.12);
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+    --mono:ui-monospace,"SF Mono",SFMono-Regular,"Cascadia Mono","Roboto Mono",Menlo,Consolas,monospace;
+    --sans:"Avenir Next","Segoe UI",system-ui,-apple-system,sans-serif;
+  }
+
+  *{box-sizing:border-box;margin:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--night); color:var(--ink); font-family:var(--sans);
+    -webkit-font-smoothing:antialiased; overflow-x:hidden;
+  }
+  /* atmospheric ground: high-altitude night, sun just below horizon */
+  body::before{
+    content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
+    background:
+      radial-gradient(90% 55% at 78% -8%, rgba(245,165,36,.10) 0%, transparent 62%),
+      radial-gradient(70% 50% at 8% 4%, rgba(240,87,92,.07) 0%, transparent 60%),
+      linear-gradient(180deg,#0A1017 0%, #080C12 45%, #06090E 100%);
+  }
+  /* fine grain so the flats never read as plastic */
+  body::after{
+    content:""; position:fixed; inset:0; z-index:1; pointer-events:none; opacity:.035;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  .wrap{position:relative; z-index:2}
+
+  /* ─── type ─────────────────────────────────────────────── */
+  .kicker{
+    font-family:var(--mono); font-size:11px; letter-spacing:.34em; text-transform:uppercase;
+    color:var(--solar); font-weight:500;
+  }
+  h1,h2{font-family:var(--serif); font-weight:400; letter-spacing:-.015em; line-height:1.02}
+
+  /* ─── masthead ─────────────────────────────────────────── */
+  .mast{
+    max-width:1400px; margin:0 auto; padding:64px 48px 40px;
+    border-bottom:1px solid var(--line-soft);
+  }
+  .mark{display:flex; align-items:center; gap:13px; margin-bottom:52px}
+  .sun{
+    width:26px; height:26px; border-radius:50%; flex:none; position:relative;
+    background:radial-gradient(circle at 34% 30%, var(--solar-hi), var(--solar) 58%, #B8761A 100%);
+    box-shadow:0 0 22px rgba(245,165,36,.42);
+  }
+  .sun::after{
+    content:""; position:absolute; inset:-7px; border-radius:50%;
+    border:1px solid rgba(245,165,36,.26);
+  }
+  .mark-txt{font-family:var(--mono); font-size:12px; letter-spacing:.3em; text-transform:uppercase; color:var(--ink)}
+  .mark-txt span{color:var(--faint)}
+
+  .mast h1{font-size:clamp(46px,6.6vw,88px); max-width:17ch; margin:20px 0 26px}
+  .mast h1 em{font-style:italic; color:var(--solar-hi)}
+  .lede{
+    font-size:17.5px; line-height:1.62; color:var(--muted); max-width:62ch;
+  }
+  .lede b{color:var(--ink); font-weight:600}
+  .provenance{
+    margin-top:34px; padding:16px 20px; border-left:2px solid var(--solar);
+    background:linear-gradient(90deg, var(--solar-dim), transparent 78%);
+    font-family:var(--mono); font-size:12.5px; line-height:1.85; color:var(--muted);
+    max-width:76ch;
+  }
+  .provenance b{color:var(--solar-hi); font-weight:500}
+
+  /* ─── stepper ──────────────────────────────────────────── */
+  .stepper{
+    position:sticky; top:0; z-index:40;
+    background:rgba(8,12,18,.9); backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line-soft);
+  }
+  .stepper-in{
+    max-width:1400px; margin:0 auto; padding:17px 48px;
+    display:flex; align-items:center; gap:0;
+  }
+  .step{
+    display:flex; align-items:center; gap:11px; text-decoration:none;
+    font-family:var(--mono); font-size:12.5px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--faint); transition:color .25s;
+  }
+  .step:hover{color:var(--muted)}
+  .step .num{
+    width:25px; height:25px; border-radius:50%; flex:none;
+    display:grid; place-items:center; font-size:11px;
+    border:1px solid var(--line); color:var(--faint); transition:all .25s;
+  }
+  .step.on{color:var(--ink)}
+  .step.on .num{background:var(--signal); border-color:var(--signal); color:#fff; box-shadow:0 0 16px var(--signal-dim)}
+  .step-rule{flex:1; height:1px; background:var(--line-soft); margin:0 18px; min-width:14px}
+
+  /* ─── stage ────────────────────────────────────────────── */
+  .stage{
+    max-width:1400px; margin:0 auto; padding:96px 48px 104px;
+    border-bottom:1px solid var(--line-soft); position:relative;
+    scroll-margin-top:60px; /* clear the sticky stepper */
+  }
+  .stage-head{margin-bottom:56px}
+  .stage-head h2{font-size:clamp(34px,4.4vw,58px); margin-top:15px; max-width:20ch}
+  .stage-head .sub{margin-top:17px; font-size:16px; line-height:1.6; color:var(--muted); max-width:56ch}
+
+  .grid{
+    display:grid; grid-template-columns:1fr 400px; gap:40px; align-items:start;
+    position:relative;
+  }
+  .wires{position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:1; overflow:visible}
+  .wires path{fill:none; stroke:var(--line); stroke-width:1}
+  .wires circle{fill:var(--line)}
+
+  /* annotations */
+  .annos{display:flex; flex-direction:column; gap:34px; padding-top:8px; position:relative; z-index:2}
+  .anno{display:flex; gap:20px; align-items:flex-start}
+  .anno .dot{
+    width:31px; height:31px; border-radius:50%; flex:none; margin-top:1px;
+    display:grid; place-items:center; font-family:var(--mono); font-size:12.5px;
+    background:var(--panel); border:1px solid var(--line); color:var(--muted);
+  }
+  .anno.hi .dot{background:var(--jade-dim); border-color:var(--jade); color:var(--jade)}
+  .anno h3{font-size:19px; font-weight:600; letter-spacing:-.01em; margin-bottom:7px; line-height:1.28}
+  .anno.hi h3{color:var(--jade)}
+  .anno p{font-size:14.8px; line-height:1.6; color:var(--muted); max-width:44ch}
+  .anno .src{
+    display:inline-block; margin-top:9px; font-family:var(--mono); font-size:11px;
+    letter-spacing:.06em; color:var(--faint);
+    padding:3px 9px; border:1px solid var(--line-soft); border-radius:3px;
+  }
+
+  /* ─── phone ────────────────────────────────────────────── */
+  .phone-col{position:relative; z-index:2; display:flex; justify-content:center}
+  .phone{
+    width:376px; border-radius:44px; padding:11px; flex:none;
+    background:linear-gradient(160deg,#2A3542,#10161F 42%,#232D39);
+    box-shadow:0 42px 90px -22px rgba(0,0,0,.9), 0 0 0 1px rgba(255,255,255,.05);
+  }
+  .screen{
+    background:linear-gradient(178deg,#0E141D 0%, #0A0F16 100%);
+    border-radius:34px; overflow:hidden; position:relative;
+    border:1px solid rgba(255,255,255,.05);
+  }
+  .notch{
+    position:absolute; top:0; left:50%; transform:translateX(-50%);
+    width:112px; height:26px; background:#0A0F16; border-radius:0 0 15px 15px; z-index:5;
+  }
+  .statusbar{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:13px 24px 7px; font-size:12.5px; font-weight:600; color:var(--ink);
+    font-family:var(--mono); letter-spacing:.02em;
+  }
+  .bars{display:flex; gap:3px; align-items:flex-end}
+  .bars i{width:3px; background:var(--ink); border-radius:1px; display:block}
+  .apphead{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:9px 20px 15px; border-bottom:1px solid rgba(255,255,255,.05);
+  }
+  .apphead .brand{display:flex; align-items:center; gap:8px}
+  .apphead .sun{width:15px; height:15px; box-shadow:0 0 12px rgba(245,165,36,.4)}
+  .apphead .sun::after{inset:-4px}
+  .apphead .brand span{font-family:var(--mono); font-size:10.5px; letter-spacing:.26em; text-transform:uppercase}
+  .ico{width:17px; height:17px; stroke:var(--muted); fill:none; stroke-width:1.7}
+  .body{padding:19px 18px 15px; min-height:474px}
+  .screen-title{font-family:var(--serif); font-size:25px; margin-bottom:16px; letter-spacing:-.01em}
+
+  /* cards */
+  .card{
+    background:var(--panel); border:1px solid var(--line-soft);
+    border-radius:15px; padding:15px 16px; margin-bottom:11px; position:relative;
+  }
+  .card.alert{
+    background:linear-gradient(155deg, rgba(240,87,92,.11), var(--panel) 62%);
+    border-color:rgba(240,87,92,.32);
+  }
+  .card.good{
+    background:linear-gradient(155deg, rgba(61,214,140,.10), var(--panel) 62%);
+    border-color:rgba(61,214,140,.3);
+  }
+  .card.solar{
+    background:linear-gradient(155deg, rgba(245,165,36,.10), var(--panel) 62%);
+    border-color:rgba(245,165,36,.3);
+  }
+  .card-top{display:flex; justify-content:space-between; align-items:center; margin-bottom:11px}
+  .tag{
+    font-family:var(--mono); font-size:9.5px; letter-spacing:.17em; text-transform:uppercase;
+    color:var(--signal); font-weight:600;
+  }
+  .tag.j{color:var(--jade)} .tag.s{color:var(--solar)} .tag.m{color:var(--faint)}
+  .pill{
+    font-family:var(--mono); font-size:9.5px; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--signal); display:flex; align-items:center; gap:5px;
+  }
+  .pill::before{content:""; width:5px; height:5px; border-radius:50%; background:var(--signal)}
+
+  .swap{display:flex; align-items:center; gap:13px; margin-bottom:5px}
+  .swap .from{
+    font-family:var(--serif); font-size:33px; color:var(--faint);
+    text-decoration:line-through; text-decoration-thickness:2px;
+  }
+  .swap .to{font-family:var(--serif); font-size:33px; color:var(--signal)}
+  .swap .arw{stroke:var(--muted); width:19px; height:19px; fill:none; stroke-width:2}
+  .swap-lab{display:flex; gap:13px; font-family:var(--mono); font-size:9.5px; color:var(--faint); letter-spacing:.06em}
+  .swap-lab span:first-child{width:74px}
+
+  .row{display:flex; align-items:flex-end; justify-content:space-between; gap:14px; margin-top:14px}
+  .metric{display:block; min-width:0}
+  .metric .big{font-family:var(--serif); font-size:27px; color:var(--ink); line-height:1}
+  .metric .big.bad{color:var(--signal)}
+  .metric .unit{font-size:12.5px; color:var(--muted); margin-left:6px}
+  .metric .sub{
+    display:block; font-family:var(--mono); font-size:9.5px; color:var(--faint);
+    letter-spacing:.05em; margin-top:7px; white-space:nowrap;
+  }
+
+  .rule-line{
+    margin-top:12px; padding-top:10px; border-top:1px dashed rgba(240,87,92,.28);
+    font-family:var(--mono); font-size:10px; letter-spacing:.06em; color:var(--muted);
+  }
+  .btn{
+    background:var(--signal); color:#fff; border:none; border-radius:9px;
+    padding:10px 15px; font-size:13.5px; font-weight:600; font-family:var(--sans);
+    display:flex; align-items:center; gap:6px; cursor:pointer; white-space:nowrap;
+  }
+  .btn.ghost{background:transparent; border:1px solid var(--line); color:var(--ink)}
+  .btn.wide{width:100%; justify-content:center; background:var(--panel-2); border:1px solid var(--line); margin-top:5px}
+  .btn.solar{background:var(--solar); color:#25190A}
+
+  .listrow{display:flex; align-items:flex-start; gap:12px}
+  .listrow .lico{
+    width:31px; height:31px; border-radius:9px; flex:none; display:grid; place-items:center;
+    background:var(--panel-2); border:1px solid var(--line-soft);
+  }
+  .listrow .lico svg{width:15px; height:15px; stroke:var(--muted); fill:none; stroke-width:1.8}
+  .listrow h4{font-size:13.5px; font-weight:600; margin-bottom:3px}
+  .listrow p{font-size:11.8px; line-height:1.45; color:var(--faint)}
+  .chev{width:14px; height:14px; stroke:var(--faint); fill:none; stroke-width:2; flex:none; margin-top:8px}
+
+  .note{font-family:var(--mono); font-size:10px; color:var(--jade); letter-spacing:.05em; margin-top:9px}
+
+  /* option ranking rows (stage 3) */
+  .opt{display:flex; gap:12px; align-items:center; padding:12px 0; border-bottom:1px solid var(--line-soft)}
+  .opt:last-child{border-bottom:none}
+  .opt .rank{
+    width:22px; height:22px; border-radius:50%; flex:none; display:grid; place-items:center;
+    font-family:var(--mono); font-size:10.5px; background:var(--panel-2); color:var(--muted); border:1px solid var(--line)
+  }
+  .opt.held .rank{background:var(--jade-dim); border-color:var(--jade); color:var(--jade)}
+  .opt .fl{flex:1}
+  .opt .fl b{font-size:14px; display:block; margin-bottom:2px}
+  .opt .fl span{font-family:var(--mono); font-size:10px; color:var(--faint); letter-spacing:.05em}
+  .opt .delta{
+    font-family:var(--mono); font-size:11.5px; color:var(--muted);
+    text-align:right; white-space:nowrap; flex:none; min-width:52px;
+  }
+  .opt.held .delta{color:var(--jade)}
+
+  /* map (stage 2) */
+  .map{
+    height:206px; border-radius:13px; overflow:hidden; position:relative; margin-bottom:11px;
+    background:radial-gradient(120% 90% at 30% 20%, #16202C, #0B1119 70%);
+    border:1px solid var(--line-soft);
+  }
+  .map svg{position:absolute; inset:0; width:100%; height:100%}
+  .maplab{
+    position:absolute; bottom:9px; left:11px; font-family:var(--mono);
+    font-size:9.5px; letter-spacing:.13em; text-transform:uppercase; color:var(--faint);
+  }
+
+  /* bottom nav */
+  .nav{
+    display:flex; border-top:1px solid rgba(255,255,255,.05);
+    padding:11px 8px 15px; background:rgba(10,15,22,.65);
+  }
+  .nav div{flex:1; text-align:center; position:relative}
+  .nav svg{width:19px; height:19px; stroke:var(--faint); fill:none; stroke-width:1.7; margin-bottom:4px}
+  .nav span{display:block; font-size:9.5px; color:var(--faint); font-family:var(--mono); letter-spacing:.07em}
+  .nav .act svg{stroke:var(--solar)} .nav .act span{color:var(--solar)}
+  .nav .act::after{
+    content:""; position:absolute; bottom:-6px; left:50%; transform:translateX(-50%);
+    width:17px; height:2px; background:var(--solar); border-radius:2px;
+  }
+
+  /* ─── closing ──────────────────────────────────────────── */
+  .close{max-width:1400px; margin:0 auto; padding:84px 48px 110px}
+  .close h2{font-size:clamp(28px,3.4vw,42px); max-width:22ch; margin-bottom:26px}
+  .thesis{
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(258px,1fr)); gap:1px;
+    background:var(--line-soft); border:1px solid var(--line-soft); border-radius:11px; overflow:hidden;
+  }
+  .thesis div{background:var(--night-2); padding:26px 24px}
+  .thesis h4{
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.2em; text-transform:uppercase;
+    color:var(--solar); margin-bottom:11px; font-weight:500;
+  }
+  .thesis p{font-size:14.5px; line-height:1.62; color:var(--muted)}
+  .thesis code{font-family:var(--mono); font-size:12.5px; color:var(--ink); background:var(--panel); padding:1px 5px; border-radius:3px}
+
+  @media (max-width:1080px){
+    .grid{grid-template-columns:1fr; gap:52px}
+    .wires{display:none}
+    .phone-col{order:-1}
+    .mast,.stage,.close,.stepper-in{padding-left:26px; padding-right:26px}
+    .step span.lbl{display:none}
+    .step-rule{margin:0 9px}
+  }
+</style>
+
+<div class="wrap">
+
+<!-- ═══ MASTHEAD ═══ -->
+<header class="mast">
+  <div class="mark">
+    <div class="sun"></div>
+    <div class="mark-txt">Sun Airlines <span>· Disruption Mode</span></div>
+  </div>
+
+  <div class="kicker">Concept walkthrough · Four stages</div>
+  <h1>The flight broke. The <em>journey</em> shouldn't.</h1>
+  <p class="lede">
+    Disruption Mode is what the passenger sees when the network has already moved on without them.
+    It assumes the recovery has <b>already happened</b> — the airline's job on the glass is not to ask
+    the passenger to solve it, but to show them it is solved, and where to walk.
+  </p>
+
+  <div class="provenance">
+    Every number, rule and threshold on these screens is taken from <b>frank-morales2020/MLxDL</b> —
+    principally <b>DEEPSEEK_RECOVERAI_AGENT_PAXDEMO.ipynb</b>, whose <b>RAI_PROFILE</b> defines the
+    carrier (Sun Airlines), its fleet, its home bases and its minimum connection times.
+    The passenger-facing layer is the new work; the operating logic underneath is the notebook's.
+  </div>
+</header>
+
+<!-- ═══ STEPPER ═══ -->
+<nav class="stepper">
+  <div class="stepper-in">
+    <a class="step on" href="#s1"><span class="num">1</span><span class="lbl">Disruption</span></a>
+    <div class="step-rule"></div>
+    <a class="step" href="#s2"><span class="num">2</span><span class="lbl">Navigate</span></a>
+    <div class="step-rule"></div>
+    <a class="step" href="#s3"><span class="num">3</span><span class="lbl">Support</span></a>
+    <div class="step-rule"></div>
+    <a class="step" href="#s4"><span class="num">4</span><span class="lbl">Arrival</span></a>
+  </div>
+</nav>
+
+<!-- ═══ STAGE 1 ═══ -->
+<section class="stage" id="s1">
+  <div class="stage-head">
+    <div class="kicker">Disruption · The journey begins</div>
+    <h2>Everything she needs, in one place</h2>
+    <p class="sub">
+      Maya is airborne on SA 118 into Frankfurt when the inbound slips 47 minutes. Her connection to
+      Cancún no longer clears the airline's own minimum. She finds out before she lands.
+    </p>
+  </div>
+
+  <div class="grid" data-wire>
+    <svg class="wires"></svg>
+
+    <div class="annos">
+      <div class="anno" data-anno="1">
+        <div class="dot">1</div>
+        <div>
+          <h3>SA 118 is 47 minutes late</h3>
+          <p>The change, stated plainly the moment operations knows it — not on arrival, not at the gate.</p>
+        </div>
+      </div>
+      <div class="anno" data-anno="2">
+        <div class="dot">2</div>
+        <div>
+          <h3>23 min to connect · 30 min required</h3>
+          <p>The one number that decides everything, shown against the rule it breaks rather than left for her to work out.</p>
+          <span class="src">RAI_PROFILE.connection_times.international</span>
+        </div>
+      </div>
+      <div class="anno hi" data-anno="3">
+        <div class="dot">3</div>
+        <div>
+          <h3>Backup already secured</h3>
+          <p>A seat on SA 261 is held in her cabin before she is told anything is wrong. No action needed.</p>
+          <span class="src">RAI_PROFILE.protect_pnr = True</span>
+        </div>
+      </div>
+      <div class="anno" data-anno="4">
+        <div class="dot">4</div>
+        <div>
+          <h3>One place to act</h3>
+          <p>Share status, ask for more time, or reach a human — without leaving the screen that told her.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="phone-col">
+      <div class="phone"><div class="screen">
+        <div class="notch"></div>
+        <div class="statusbar"><span>09:24</span>
+          <span class="bars"><i style="height:4px"></i><i style="height:6px"></i><i style="height:8px"></i><i style="height:10px"></i></span>
+        </div>
+        <div class="apphead">
+          <svg class="ico" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+          <div class="brand"><div class="sun"></div><span>Sun Airlines</span></div>
+          <svg class="ico" viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 01-3.4 0"/></svg>
+        </div>
+
+        <div class="body">
+          <div class="screen-title">Here's what changed</div>
+
+          <div class="card alert" data-target="1">
+            <div class="card-top">
+              <span class="tag">Inbound delayed</span>
+              <span class="pill">Tight connection</span>
+            </div>
+            <div class="swap">
+              <span class="from">09:05</span>
+              <svg class="arw" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              <span class="to">09:52</span>
+            </div>
+            <div class="swap-lab"><span>Scheduled</span><span>New arrival · SA 118</span></div>
+
+            <div class="row" data-target="2">
+              <div class="metric">
+                <span class="big bad">23</span><span class="unit">min to connect</span>
+              </div>
+              <button class="btn">View route
+                <svg style="width:13px;height:13px;stroke:#fff;fill:none;stroke-width:2.4" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </button>
+            </div>
+            <div class="rule-line">Minimum for international · 30 min</div>
+          </div>
+
+          <div class="card good" data-target="3">
+            <div class="listrow">
+              <div class="lico" style="background:var(--jade-dim);border-color:rgba(61,214,140,.3)">
+                <svg viewBox="0 0 24 24" style="stroke:var(--jade)"><path d="M12 3l7 3v6c0 5-3 8-7 9-4-1-7-4-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>
+              </div>
+              <div style="flex:1">
+                <h4 style="color:var(--jade)">You're protected</h4>
+                <p>SA 261 to Cancún is held in Economy under your PNR, if you need it.</p>
+                <div class="note">No action needed</div>
+              </div>
+              <svg class="chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+            </div>
+          </div>
+
+          <div class="card" data-target="4">
+            <div class="listrow">
+              <div class="lico"><svg viewBox="0 0 24 24"><path d="M4 12v7a1 1 0 001 1h14a1 1 0 001-1v-7"/><path d="M16 6l-4-4-4 4M12 2v13"/></svg></div>
+              <div style="flex:1"><h4>Share trip status</h4><p>Keep family updated on the new arrival time.</p></div>
+              <svg class="chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="listrow">
+              <div class="lico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+              <div style="flex:1"><h4>Need more time?</h4><p>Request mobility support or tell the gate you're coming.</p></div>
+              <svg class="chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+            </div>
+          </div>
+
+          <button class="btn wide">
+            <svg style="width:15px;height:15px;stroke:var(--ink);fill:none;stroke-width:1.8" viewBox="0 0 24 24"><path d="M21 12a8 8 0 01-8 8H5l-2 2V12a8 8 0 018-8h2a8 8 0 018 8z"/></svg>
+            Talk to someone
+          </button>
+        </div>
+
+        <div class="nav">
+          <div class="act"><svg viewBox="0 0 24 24"><path d="M17 10l4-2-1-3-5 2-6-4-2 1 4 5-3 2-3-1-1 2 4 3 3 4 2-1-1-3 2-3 5 4 1-2-4-6z"/></svg><span>Trip</span></div>
+          <div><svg viewBox="0 0 24 24"><path d="M9 4L3 7v13l6-3 6 3 6-3V4l-6 3-6-3z"/><path d="M9 4v13M15 7v13"/></svg><span>Map</span></div>
+          <div><svg viewBox="0 0 24 24"><path d="M4 14v-3a8 8 0 0116 0v3"/><path d="M4 14h3v5H5a1 1 0 01-1-1v-4zM20 14h-3v5h2a1 1 0 001-1v-4z"/></svg><span>Support</span></div>
+          <div><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0116 0"/></svg><span>You</span></div>
+        </div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ STAGE 2 ═══ -->
+<section class="stage" id="s2">
+  <div class="stage-head">
+    <div class="kicker">Navigate · Getting there</div>
+    <h2>The walk, timed from where she stands</h2>
+    <p class="sub">
+      A gate number is not directions. Once she lands, the screen turns into the one instruction that
+      matters — which way, and whether the clock allows it.
+    </p>
+  </div>
+
+  <div class="grid" data-wire>
+    <svg class="wires"></svg>
+
+    <div class="annos">
+      <div class="anno" data-anno="1">
+        <div class="dot">1</div>
+        <div>
+          <h3>Z22 → B48, drawn not described</h3>
+          <p>The terminal path is rendered from the same coordinate plan the operation uses for the flight itself.</p>
+          <span class="src">orcestra.flightplan · LatLon</span>
+        </div>
+      </div>
+      <div class="anno" data-anno="2">
+        <div class="dot">2</div>
+        <div>
+          <h3>14 min walk vs 23 min held</h3>
+          <p>Not "hurry" — the actual margin, recalculated as she moves. Nine minutes of slack, and she can see it.</p>
+        </div>
+      </div>
+      <div class="anno hi" data-anno="3">
+        <div class="dot">3</div>
+        <div>
+          <h3>The gate knows she's coming</h3>
+          <p>Her position is shared with the departure gate, so the decision to hold is made on data, not hope.</p>
+        </div>
+      </div>
+      <div class="anno" data-anno="4">
+        <div class="dot">4</div>
+        <div>
+          <h3>The fallback stays visible</h3>
+          <p>SA 261 remains held the whole way. Missing the run is an outcome, not a failure.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="phone-col">
+      <div class="phone"><div class="screen">
+        <div class="notch"></div>
+        <div class="statusbar"><span>09:58</span>
+          <span class="bars"><i style="height:4px"></i><i style="height:6px"></i><i style="height:8px"></i><i style="height:10px"></i></span>
+        </div>
+        <div class="apphead">
+          <svg class="ico" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+          <div class="brand"><div class="sun"></div><span>Sun Airlines</span></div>
+          <svg class="ico" viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 01-3.4 0"/></svg>
+        </div>
+
+        <div class="body">
+          <div class="screen-title">Walk to B48</div>
+
+          <div class="map" data-target="1">
+            <svg viewBox="0 0 340 206" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="rt" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0" stop-color="#F5A524" stop-opacity=".25"/>
+                  <stop offset="1" stop-color="#F5A524" stop-opacity="1"/>
+                </linearGradient>
+              </defs>
+              <!-- concourse blocks -->
+              <rect x="18" y="24" width="126" height="42" rx="6" fill="#1A2532" stroke="#25313F"/>
+              <rect x="18" y="138" width="90" height="44" rx="6" fill="#1A2532" stroke="#25313F"/>
+              <rect x="196" y="118" width="128" height="64" rx="6" fill="#1A2532" stroke="#25313F"/>
+              <rect x="214" y="26" width="110" height="40" rx="6" fill="#161F2B" stroke="#212C38"/>
+              <text x="30" y="42" fill="#5C6A7B" font-size="10" font-family="ui-monospace,monospace" letter-spacing="1.5">CONCOURSE Z</text>
+              <text x="208" y="176" fill="#5C6A7B" font-size="10" font-family="ui-monospace,monospace" letter-spacing="1.5">CONCOURSE B</text>
+              <!-- walking route -->
+              <path d="M52 58 C 62 96, 96 104, 132 108 S 214 122, 252 146"
+                    stroke="url(#rt)" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-dasharray="7 6">
+                <animate attributeName="stroke-dashoffset" from="52" to="0" dur="1.6s" repeatCount="indefinite"/>
+              </path>
+              <!-- origin -->
+              <circle cx="52" cy="58" r="7" fill="#0E141D" stroke="#8A97A8" stroke-width="2"/>
+              <circle cx="52" cy="58" r="2.5" fill="#8A97A8"/>
+              <text x="66" y="62" fill="#8A97A8" font-size="11" font-family="ui-monospace,monospace">Z22</text>
+              <!-- destination -->
+              <circle cx="252" cy="146" r="11" fill="rgba(245,165,36,.16)"/>
+              <circle cx="252" cy="146" r="6.5" fill="#F5A524"/>
+              <text x="252" y="130" fill="#FFC978" font-size="12" font-family="ui-monospace,monospace" font-weight="600" text-anchor="middle">B48</text>
+            </svg>
+            <div class="maplab">Frankfurt · Terminal 1</div>
+          </div>
+
+          <div class="card solar" data-target="2">
+            <div class="card-top">
+              <span class="tag s">On foot</span>
+              <span class="pill" style="color:var(--jade)"><span></span>9 min spare</span>
+            </div>
+            <div class="row" style="margin-top:0">
+              <div class="metric">
+                <span class="big" style="color:var(--solar-hi)">14</span><span class="unit">min walk</span>
+                <span class="sub">From your location</span>
+              </div>
+              <button class="btn solar">Start
+                <svg style="width:13px;height:13px;stroke:#25190A;fill:none;stroke-width:2.4" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="card" data-target="3">
+            <div class="listrow">
+              <div class="lico"><svg viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11a7 7 0 10-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
+              <div style="flex:1">
+                <h4>Gate B48 has been told</h4>
+                <p>SA 245 · boarding 10:02 · your position shared</p>
+                <div class="note">Hold decision with the gate</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card good" data-target="4">
+            <div class="listrow">
+              <div class="lico" style="background:var(--jade-dim);border-color:rgba(61,214,140,.3)">
+                <svg viewBox="0 0 24 24" style="stroke:var(--jade)"><path d="M12 3l7 3v6c0 5-3 8-7 9-4-1-7-4-7-9V6l7-3z"/></svg>
+              </div>
+              <div style="flex:1"><h4 style="color:var(--jade)">SA 261 still held</h4><p>If you don't make it, you're already on the next one.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="nav">
+          <div><svg viewBox="0 0 24 24"><path d="M17 10l4-2-1-3-5 2-6-4-2 1 4 5-3 2-3-1-1 2 4 3 3 4 2-1-1-3 2-3 5 4 1-2-4-6z"/></svg><span>Trip</span></div>
+          <div class="act"><svg viewBox="0 0 24 24"><path d="M9 4L3 7v13l6-3 6 3 6-3V4l-6 3-6-3z"/><path d="M9 4v13M15 7v13"/></svg><span>Map</span></div>
+          <div><svg viewBox="0 0 24 24"><path d="M4 14v-3a8 8 0 0116 0v3"/><path d="M4 14h3v5H5a1 1 0 01-1-1v-4zM20 14h-3v5h2a1 1 0 001-1v-4z"/></svg><span>Support</span></div>
+          <div><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0116 0"/></svg><span>You</span></div>
+        </div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ STAGE 3 ═══ -->
+<section class="stage" id="s3">
+  <div class="stage-head">
+    <div class="kicker">Support · When it doesn't work</div>
+    <h2>Options ranked before she asks</h2>
+    <p class="sub">
+      She misses it. The screen does not apologise and offer a phone number — it shows the search the
+      recovery agent already ran, in the order the agent ranked it.
+    </p>
+  </div>
+
+  <div class="grid" data-wire>
+    <svg class="wires"></svg>
+
+    <div class="annos">
+      <div class="anno hi" data-anno="1">
+        <div class="dot">1</div>
+        <div>
+          <h3>Own metal first</h3>
+          <p>The agent searches Sun Airlines flights before anything else, filtered to the same city pair and a seat free in her cabin.</p>
+          <span class="src">find_alternative_flight() · step 1</span>
+        </div>
+      </div>
+      <div class="anno" data-anno="2">
+        <div class="dot">2</div>
+        <div>
+          <h3>Then reserve aircraft</h3>
+          <p>The fleet keeps spare metal for exactly this. It ranks second because it costs the operation more.</p>
+          <span class="src">RAI_PROFILE.reserve_crew_and_aircraft</span>
+        </div>
+      </div>
+      <div class="anno" data-anno="3">
+        <div class="dot">3</div>
+        <div>
+          <h3>Partner carriers last</h3>
+          <p>Interline is the final resort, not the first offer — and she can see why it's ranked below the others.</p>
+          <span class="src">OAG fallback · step 3</span>
+        </div>
+      </div>
+      <div class="anno" data-anno="4">
+        <div class="dot">4</div>
+        <div>
+          <h3>A 24-hour window, stated</h3>
+          <p>The search bounds are visible. Nothing beyond tomorrow is being quietly hidden from her.</p>
+          <span class="src">departure BETWEEN arrival AND +24h</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="phone-col">
+      <div class="phone"><div class="screen">
+        <div class="notch"></div>
+        <div class="statusbar"><span>10:11</span>
+          <span class="bars"><i style="height:4px"></i><i style="height:6px"></i><i style="height:8px"></i><i style="height:10px"></i></span>
+        </div>
+        <div class="apphead">
+          <svg class="ico" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+          <div class="brand"><div class="sun"></div><span>Sun Airlines</span></div>
+          <svg class="ico" viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 01-3.4 0"/></svg>
+        </div>
+
+        <div class="body">
+          <div class="screen-title">Three ways to Cancún</div>
+
+          <div class="card good" style="margin-bottom:14px">
+            <div class="listrow">
+              <div class="lico" style="background:var(--jade-dim);border-color:rgba(61,214,140,.3)">
+                <svg viewBox="0 0 24 24" style="stroke:var(--jade)"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+              </div>
+              <div style="flex:1">
+                <h4 style="color:var(--jade)">You're already on option 1</h4>
+                <p>Confirmed while you were walking. Change it only if you'd rather.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card" style="padding:6px 16px 10px">
+            <div class="opt held" data-target="1">
+              <span class="rank">1</span>
+              <div class="fl"><b>SA 261 · 12:40</b><span>Sun Airlines · B787 · Economy</span></div>
+              <div class="delta">+2h 25<br><span style="font-size:9.5px;letter-spacing:.1em">HELD</span></div>
+            </div>
+            <div class="opt" data-target="2">
+              <span class="rank">2</span>
+              <div class="fl"><b>SA 9012 · 15:05</b><span>Reserve aircraft · A320</span></div>
+              <div class="delta">+4h 50</div>
+            </div>
+            <div class="opt" data-target="3">
+              <span class="rank">3</span>
+              <div class="fl"><b>Partner · 18:20</b><span>Interline · one stop via MAD</span></div>
+              <div class="delta">+8h 05</div>
+            </div>
+          </div>
+
+          <div class="card m" data-target="4" style="background:transparent;border-style:dashed">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <span class="tag m">Search window</span>
+              <span style="font-family:var(--mono);font-size:11px;color:var(--muted)">Next 24 hours</span>
+            </div>
+            <p style="font-size:11.5px;color:var(--faint);line-height:1.5;margin-top:8px">
+              Scheduled departures only, same city pair, seat free in your cabin.
+            </p>
+          </div>
+
+          <button class="btn wide">
+            <svg style="width:15px;height:15px;stroke:var(--ink);fill:none;stroke-width:1.8" viewBox="0 0 24 24"><path d="M21 12a8 8 0 01-8 8H5l-2 2V12a8 8 0 018-8h2a8 8 0 018 8z"/></svg>
+            Talk to someone
+          </button>
+        </div>
+
+        <div class="nav">
+          <div><svg viewBox="0 0 24 24"><path d="M17 10l4-2-1-3-5 2-6-4-2 1 4 5-3 2-3-1-1 2 4 3 3 4 2-1-1-3 2-3 5 4 1-2-4-6z"/></svg><span>Trip</span></div>
+          <div><svg viewBox="0 0 24 24"><path d="M9 4L3 7v13l6-3 6 3 6-3V4l-6 3-6-3z"/><path d="M9 4v13M15 7v13"/></svg><span>Map</span></div>
+          <div class="act"><svg viewBox="0 0 24 24"><path d="M4 14v-3a8 8 0 0116 0v3"/><path d="M4 14h3v5H5a1 1 0 01-1-1v-4zM20 14h-3v5h2a1 1 0 001-1v-4z"/></svg><span>Support</span></div>
+          <div><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0116 0"/></svg><span>You</span></div>
+        </div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ STAGE 4 ═══ -->
+<section class="stage" id="s4">
+  <div class="stage-head">
+    <div class="kicker">Arrival · Closing the loop</div>
+    <h2>Landed, and the bag already knows</h2>
+    <p class="sub">
+      The disruption ends when the passenger has everything back — not when the aircraft is on stand.
+      The last screen is the one most airlines never build.
+    </p>
+  </div>
+
+  <div class="grid" data-wire>
+    <svg class="wires"></svg>
+
+    <div class="annos">
+      <div class="anno hi" data-anno="1">
+        <div class="dot">1</div>
+        <div>
+          <h3>The bag was re-tagged too</h3>
+          <p>Rebooking a passenger without their bag isn't recovery. The belt is named before she asks.</p>
+        </div>
+      </div>
+      <div class="anno" data-anno="2">
+        <div class="dot">2</div>
+        <div>
+          <h3>Downstream was told</h3>
+          <p>The transfer she booked for 14:00 was moved when the flight was, not when she landed.</p>
+        </div>
+      </div>
+      <div class="anno" data-anno="3">
+        <div class="dot">3</div>
+        <div>
+          <h3>Compensation offered, not claimed</h3>
+          <p>The airline knows what it owes. Making her prove it is a choice, and this screen declines to make it.</p>
+        </div>
+      </div>
+      <div class="anno" data-anno="4">
+        <div class="dot">4</div>
+        <div>
+          <h3>An honest account</h3>
+          <p>What broke, what was done, how long it cost her — so the next trip is booked with open eyes.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="phone-col">
+      <div class="phone"><div class="screen">
+        <div class="notch"></div>
+        <div class="statusbar"><span>18:47</span>
+          <span class="bars"><i style="height:4px"></i><i style="height:6px"></i><i style="height:8px"></i><i style="height:10px"></i></span>
+        </div>
+        <div class="apphead">
+          <svg class="ico" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+          <div class="brand"><div class="sun"></div><span>Sun Airlines</span></div>
+          <svg class="ico" viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 01-3.4 0"/></svg>
+        </div>
+
+        <div class="body">
+          <div class="screen-title">Welcome to Cancún</div>
+
+          <div class="card good" data-target="1">
+            <div class="card-top">
+              <span class="tag j">Baggage</span>
+              <span style="font-family:var(--mono);font-size:9.5px;color:var(--jade);letter-spacing:.1em">ON BELT 4</span>
+            </div>
+            <div class="swap" style="margin-bottom:4px">
+              <span class="to" style="color:var(--jade);font-size:29px">Belt 4</span>
+            </div>
+            <div class="swap-lab"><span style="width:auto">SUN0447821 · re-tagged to SA 261</span></div>
+          </div>
+
+          <div class="card" data-target="2">
+            <div class="listrow">
+              <div class="lico"><svg viewBox="0 0 24 24"><path d="M5 17h14M6 17V9l2-4h8l2 4v8"/><circle cx="8.5" cy="17" r="1.8"/><circle cx="15.5" cy="17" r="1.8"/></svg></div>
+              <div style="flex:1">
+                <h4>Your transfer was moved</h4>
+                <p>Now 19:15 at Arrivals · driver notified at 10:14</p>
+                <div class="note">Rebooked automatically</div>
+              </div>
+              <svg class="chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+            </div>
+          </div>
+
+          <div class="card solar" data-target="3">
+            <div class="card-top"><span class="tag s">Delay compensation</span></div>
+            <div class="row" style="margin-top:0">
+              <div class="metric">
+                <span class="big" style="color:var(--solar-hi)">€600</span>
+                <span class="sub">Arrived 5h 12m late</span>
+              </div>
+              <button class="btn solar">Accept</button>
+            </div>
+          </div>
+
+          <div class="card" data-target="4">
+            <div class="listrow">
+              <div class="lico"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4zM8 9h8M8 13h8M8 17h4"/></svg></div>
+              <div style="flex:1">
+                <h4>What happened today</h4>
+                <p>Inbound delay 47m · connection missed · rebooked SA 261 · +5h 12m total</p>
+              </div>
+              <svg class="chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="nav">
+          <div class="act"><svg viewBox="0 0 24 24"><path d="M17 10l4-2-1-3-5 2-6-4-2 1 4 5-3 2-3-1-1 2 4 3 3 4 2-1-1-3 2-3 5 4 1-2-4-6z"/></svg><span>Trip</span></div>
+          <div><svg viewBox="0 0 24 24"><path d="M9 4L3 7v13l6-3 6 3 6-3V4l-6 3-6-3z"/><path d="M9 4v13M15 7v13"/></svg><span>Map</span></div>
+          <div><svg viewBox="0 0 24 24"><path d="M4 14v-3a8 8 0 0116 0v3"/><path d="M4 14h3v5H5a1 1 0 01-1-1v-4zM20 14h-3v5h2a1 1 0 001-1v-4z"/></svg><span>Support</span></div>
+          <div><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0116 0"/></svg><span>You</span></div>
+        </div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CLOSING ═══ -->
+<section class="close">
+  <div class="kicker">The argument</div>
+  <h2>Disruption Mode is a posture, not a screen</h2>
+  <div class="thesis">
+    <div>
+      <h4>Solve, then tell</h4>
+      <p>The recovery agent runs before the passenger is notified. <code>protect_pnr</code> means the seat exists by the time the phone buzzes — so the message is "you're covered", never "please rebook".</p>
+    </div>
+    <div>
+      <h4>Show the rule, not just the result</h4>
+      <p><code>23 min</code> is meaningless alone. Against a stated <code>30 min</code> minimum it becomes a decision she can understand and argue with.</p>
+    </div>
+    <div>
+      <h4>Rank in the open</h4>
+      <p>Own metal, then reserve, then interline — the agent's real search order, shown as the passenger's real menu. The ranking is the airline's economics; hiding it is what breeds distrust.</p>
+    </div>
+    <div>
+      <h4>End at the belt</h4>
+      <p>A journey isn't recovered until the bag, the transfer and the money are settled. Most apps stop at the new boarding pass.</p>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<script>
+// Leader lines: connect each annotation dot to its counterpart element in the phone.
+// Drawn per-stage into that stage's <svg class="wires">, recomputed on resize/font-load.
+function drawWires(){
+  document.querySelectorAll('[data-wire]').forEach(grid => {
+    const svg = grid.querySelector('.wires');
+    if (!svg) return;
+    svg.innerHTML = '';
+    if (window.innerWidth <= 1080) return;
+
+    const box = grid.getBoundingClientRect();
+    svg.setAttribute('viewBox', `0 0 ${box.width} ${box.height}`);
+
+    grid.querySelectorAll('[data-anno]').forEach(anno => {
+      const key = anno.getAttribute('data-anno');
+      const target = grid.querySelector(`[data-target="${key}"]`);
+      if (!target) return;
+
+      const d = anno.querySelector('.dot').getBoundingClientRect();
+      const t = target.getBoundingClientRect();
+
+      // start just right of the annotation block, end at the target's left edge
+      const annoBox = anno.getBoundingClientRect();
+      const x1 = annoBox.right - box.left + 14;
+      const y1 = d.top + d.height / 2 - box.top;
+      const x2 = t.left - box.left - 6;
+      const y2 = t.top + Math.min(t.height / 2, 30) - box.top;
+
+      if (x2 <= x1) return;
+      const mid = x1 + (x2 - x1) * 0.55;
+
+      const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      p.setAttribute('d', `M${x1} ${y1} C ${mid} ${y1}, ${mid} ${y2}, ${x2} ${y2}`);
+      svg.appendChild(p);
+
+      const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      c.setAttribute('cx', x1); c.setAttribute('cy', y1); c.setAttribute('r', 2.5);
+      svg.appendChild(c);
+    });
+  });
+}
+
+drawWires();
+addEventListener('resize', drawWires);
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(drawWires);
+
+// Stepper reflects the stage in view.
+const steps = [...document.querySelectorAll('.step')];
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    const i = ['s1','s2','s3','s4'].indexOf(e.target.id);
+    steps.forEach((s, n) => s.classList.toggle('on', n === i));
+  });
+}, { rootMargin: '-45% 0px -45% 0px' });
+['s1','s2','s3','s4'].forEach(id => obs.observe(document.getElementById(id)));
+</script>
