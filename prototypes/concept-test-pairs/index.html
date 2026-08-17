@@ -1,0 +1,1159 @@
+<title>Disruption Concept Test — Paired Variants</title>
+
+<style>
+  /* ───────────────────────────────────────────────
+     SHEET tokens — the research apparatus. Theme-aware.
+     ─────────────────────────────────────────────── */
+  :root{
+    --sheet-bg:#F7F9F9;
+    --sheet-surface:#FFFFFF;
+    --sheet-sunk:#EFF3F3;
+    --sheet-ink:#121B1A;
+    --sheet-muted:#5C6866;
+    --sheet-faint:#8B9795;
+    --sheet-line:#E0E7E6;
+    --sheet-line-strong:#C9D4D2;
+    --accent:#00645F;
+    --accent-tint:#E9F3F1;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --sheet-bg:#0D1312;
+      --sheet-surface:#141C1B;
+      --sheet-sunk:#1A2423;
+      --sheet-ink:#E9F0EE;
+      --sheet-muted:#93A19E;
+      --sheet-faint:#6E7C7A;
+      --sheet-line:#243130;
+      --sheet-line-strong:#31403E;
+      --accent:#4FB3A6;
+      --accent-tint:#16302C;
+    }
+  }
+  :root[data-theme="dark"]{
+    --sheet-bg:#0D1312;
+    --sheet-surface:#141C1B;
+    --sheet-sunk:#1A2423;
+    --sheet-ink:#E9F0EE;
+    --sheet-muted:#93A19E;
+    --sheet-faint:#6E7C7A;
+    --sheet-line:#243130;
+    --sheet-line-strong:#31403E;
+    --accent:#4FB3A6;
+    --accent-tint:#16302C;
+  }
+
+  /* ───────────────────────────────────────────────
+     PRODUCT tokens — the Cathay UI itself.
+     Deliberately fixed: the stimulus must not change
+     with the viewer's theme, or the test changes too.
+     ─────────────────────────────────────────────── */
+  :root{
+    --cx-teal:#00645F;
+    --cx-teal-deep:#004B47;
+    --cx-teal-tint:#EAF3F2;
+    --cx-white:#FFFFFF;
+    --cx-ink:#14201E;
+    --cx-grey:#5F6B69;
+    --cx-grey-2:#8E9A98;
+    --cx-line:#E3E9E8;
+    --cx-sunk:#F5F8F7;
+    --cx-amber:#A8650B;
+    --cx-amber-tint:#FBF2E5;
+    --font-ui:"Avenir Next","Segoe UI Variable Text","Segoe UI",system-ui,-apple-system,sans-serif;
+    --font-mono:ui-monospace,"SF Mono",SFMono-Regular,"Cascadia Mono","Roboto Mono",Menlo,Consolas,monospace;
+  }
+
+  *{box-sizing:border-box; margin:0}
+  body{
+    background:var(--sheet-bg); color:var(--sheet-ink);
+    font-family:var(--font-ui); -webkit-font-smoothing:antialiased;
+  }
+  .num{font-variant-numeric:tabular-nums}
+  :focus-visible{outline:2px solid var(--accent); outline-offset:3px}
+
+  .sheet{max-width:1320px; margin:0 auto; padding:0 40px}
+
+  /* ─── masthead ─── */
+  .mast{padding:64px 0 44px}
+  .mast-top{
+    display:flex; align-items:baseline; gap:16px; flex-wrap:wrap;
+    padding-bottom:22px; border-bottom:2px solid var(--sheet-ink); margin-bottom:30px;
+  }
+  .doc-type{
+    font-family:var(--font-mono); font-size:11px; letter-spacing:.24em;
+    text-transform:uppercase; color:var(--accent); font-weight:600;
+  }
+  .doc-meta{
+    margin-left:auto; font-family:var(--font-mono); font-size:11px;
+    letter-spacing:.1em; color:var(--sheet-faint);
+  }
+  .mast h1{
+    font-size:clamp(34px,4.6vw,54px); font-weight:600; letter-spacing:-.025em;
+    line-height:1.05; max-width:19ch; margin-bottom:20px; text-wrap:balance;
+  }
+  .mast .intro{font-size:16.5px; line-height:1.65; color:var(--sheet-muted); max-width:66ch}
+  .mast .intro b{color:var(--sheet-ink); font-weight:600}
+  .mast .intro + .intro{margin-top:14px}
+
+  /* index */
+  .index{
+    margin-top:36px; border:1px solid var(--sheet-line); border-radius:10px;
+    background:var(--sheet-surface); overflow:hidden;
+  }
+  .index-row{
+    display:grid; grid-template-columns:52px 108px 1fr 1fr;
+    gap:20px; padding:13px 20px; border-bottom:1px solid var(--sheet-line);
+    font-size:13.5px; align-items:center;
+  }
+  .index-row:last-child{border-bottom:none}
+  .index-row.head{
+    font-family:var(--font-mono); font-size:10px; letter-spacing:.18em;
+    text-transform:uppercase; color:var(--sheet-faint); background:var(--sheet-sunk);
+  }
+  .index-row .n{font-family:var(--font-mono); color:var(--sheet-faint); font-size:12px}
+  .index-row .var{font-weight:600}
+  .index-row .sm{color:var(--sheet-muted); font-size:12.5px}
+  .imp{
+    display:inline-block; font-family:var(--font-mono); font-size:9.5px;
+    letter-spacing:.14em; text-transform:uppercase; padding:3px 9px;
+    border-radius:3px; border:1px solid currentColor; font-weight:600;
+  }
+  .imp.low{color:#3F7D4E} .imp.med{color:#A8650B} .imp.high{color:#B0453E}
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]) .imp.low{color:#67B87A}
+    :root:not([data-theme="light"]) .imp.med{color:#D9A05B}
+    :root:not([data-theme="light"]) .imp.high{color:#E08078}
+  }
+  :root[data-theme="dark"] .imp.low{color:#67B87A}
+  :root[data-theme="dark"] .imp.med{color:#D9A05B}
+  :root[data-theme="dark"] .imp.high{color:#E08078}
+
+  /* ─── scenario band ─── */
+  .band{padding:60px 0 12px; border-top:1px solid var(--sheet-line-strong)}
+  .band-head{margin-bottom:38px}
+  .band-eyebrow{display:flex; align-items:center; gap:13px; margin-bottom:14px; flex-wrap:wrap}
+  .band-no{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:.16em;
+    color:var(--sheet-faint); font-weight:600;
+  }
+  .band-head h2{font-size:clamp(25px,3vw,35px); font-weight:600; letter-spacing:-.02em; margin-bottom:12px}
+  .band-head .situation{font-size:15.5px; line-height:1.6; color:var(--sheet-muted); max-width:62ch}
+  .isolates{
+    margin-top:16px; display:inline-flex; align-items:baseline; gap:9px;
+    padding:8px 14px; border-radius:6px; background:var(--accent-tint);
+    font-size:13px; color:var(--sheet-ink);
+  }
+  .isolates span{
+    font-family:var(--font-mono); font-size:9.5px; letter-spacing:.16em;
+    text-transform:uppercase; color:var(--accent); font-weight:600;
+  }
+
+  /* ─── specimen pair ─── */
+  .pair{display:grid; grid-template-columns:1fr 1fr; gap:34px; align-items:start}
+  .spec{min-width:0}
+  .spec-head{
+    display:flex; align-items:flex-start; gap:12px; margin-bottom:8px;
+    padding-bottom:11px; border-bottom:1px solid var(--sheet-line);
+  }
+  .spec-letter{
+    width:26px; height:26px; border-radius:50%; flex:none; display:grid; place-items:center;
+    font-family:var(--font-mono); font-size:12px; font-weight:700;
+    background:var(--sheet-ink); color:var(--sheet-bg);
+  }
+  .spec-head h3{font-size:16.5px; font-weight:600; letter-spacing:-.01em; padding-top:3px}
+  .spec-why{font-size:13.5px; line-height:1.6; color:var(--sheet-muted); margin:11px 0 20px; min-height:63px}
+  .spec-stage{display:flex; justify-content:center}
+
+  /* ─── watch-for ─── */
+  .watch{
+    margin-top:34px; display:flex; gap:16px; align-items:flex-start;
+    padding:18px 22px; border-left:3px solid var(--accent); background:var(--sheet-surface);
+    border-radius:0 8px 8px 0;
+  }
+  .watch .lab{
+    font-family:var(--font-mono); font-size:9.5px; letter-spacing:.18em; text-transform:uppercase;
+    color:var(--accent); font-weight:600; flex:none; padding-top:3px; width:78px;
+  }
+  .watch p{font-size:14.2px; line-height:1.62; color:var(--sheet-muted); max-width:88ch}
+  .watch p b{color:var(--sheet-ink); font-weight:600}
+
+  /* ═══════════════════════════════════════════════
+     PHONE — fixed Cathay light UI
+     ═══════════════════════════════════════════════ */
+  .phone{
+    width:334px; flex:none; border-radius:42px; padding:9px;
+    background:linear-gradient(165deg,#4A5654,#20302D 45%,#3B4846);
+    box-shadow:0 26px 54px -20px rgba(6,26,24,.42), 0 0 0 1px rgba(0,0,0,.07);
+  }
+  .cx{
+    background:var(--cx-white); border-radius:34px; overflow:hidden;
+    height:812px; display:flex; flex-direction:column; position:relative;
+    color:var(--cx-ink); font-size:14px;
+  }
+  /* status bar */
+  .cx-status{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:12px 22px 6px; font-size:12.5px; font-weight:600;
+    color:var(--cx-white); font-family:var(--font-mono); letter-spacing:.02em; flex:none;
+  }
+  .cx-bars{display:flex; gap:2.5px; align-items:flex-end}
+  .cx-bars i{width:2.5px; background:var(--cx-white); border-radius:1px; display:block}
+  /* teal header */
+  .cx-head{
+    background:var(--cx-teal); padding-bottom:14px; flex:none;
+    display:flex; flex-direction:column;
+  }
+  .cx-brandrow{display:flex; align-items:center; padding:2px 18px 0; gap:12px}
+  .cx-back{width:19px; height:19px; stroke:var(--cx-white); fill:none; stroke-width:2; flex:none}
+  .cx-word{
+    flex:1; text-align:center; display:flex; align-items:center; justify-content:center; gap:7px;
+    font-size:11px; letter-spacing:.22em; color:var(--cx-white); font-weight:600;
+  }
+  .cx-swoosh{width:17px; height:11px; flex:none}
+  .cx-spacer-ico{width:19px; flex:none}
+  /* body */
+  .cx-body{flex:1; overflow:hidden; padding:18px 17px 8px; display:flex; flex-direction:column}
+  .cx-body.pad0{padding-left:0; padding-right:0}
+
+  /* flight strip */
+  .cx-strip{
+    display:flex; align-items:center; gap:8px; font-size:12px; color:var(--cx-grey);
+    font-family:var(--font-mono); letter-spacing:.04em; margin-bottom:14px;
+  }
+  .cx-strip b{color:var(--cx-ink); font-weight:700}
+
+  /* status banner */
+  .cx-banner{
+    border-radius:11px; padding:14px 15px; margin-bottom:13px;
+    background:var(--cx-amber-tint); border:1px solid #EFDFC4;
+  }
+  .cx-banner.ok{background:var(--cx-teal-tint); border-color:#CBE3E0}
+  .cx-banner-lab{
+    font-family:var(--font-mono); font-size:9.5px; letter-spacing:.17em;
+    text-transform:uppercase; color:var(--cx-amber); font-weight:700; margin-bottom:9px;
+  }
+  .cx-banner.ok .cx-banner-lab{color:var(--cx-teal)}
+  .cx-times{display:flex; align-items:baseline; gap:11px}
+  .cx-was{font-size:19px; color:var(--cx-grey-2); text-decoration:line-through; text-decoration-thickness:1.5px}
+  .cx-now{font-size:29px; font-weight:600; letter-spacing:-.02em}
+  .cx-times-sub{font-size:11.5px; color:var(--cx-grey); margin-top:5px}
+
+  /* generic card */
+  .cx-card{
+    border:1px solid var(--cx-line); border-radius:11px; padding:12px 14px; margin-bottom:9px;
+  }
+  .cx-card.flat{border:none; background:var(--cx-sunk); }
+  .cx-card-lab{
+    font-family:var(--font-mono); font-size:9px; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--cx-grey-2); font-weight:600; margin-bottom:7px;
+  }
+  .cx-card p{font-size:13.2px; line-height:1.5; color:var(--cx-ink)}
+  .cx-card p.dim{color:var(--cx-grey); font-size:12.5px}
+  .cx-card h4{font-size:14px; font-weight:600; margin-bottom:3px}
+
+  .cx-rowitem{display:flex; gap:11px; align-items:flex-start}
+  .cx-rowitem svg{width:16px; height:16px; stroke:var(--cx-teal); fill:none; stroke-width:1.7; flex:none; margin-top:1px}
+  .cx-rowitem .g{flex:1; min-width:0}
+
+  /* buttons */
+  .cx-btn{
+    display:block; width:100%; text-align:center; padding:13px; border-radius:8px;
+    background:var(--cx-teal); color:var(--cx-white); border:none;
+    font-family:var(--font-ui); font-size:14.5px; font-weight:600; cursor:pointer; margin-top:4px;
+  }
+  .cx-btn.ghost{background:transparent; border:1.5px solid var(--cx-teal); color:var(--cx-teal)}
+  .cx-link{
+    display:flex; align-items:center; justify-content:center; gap:6px; margin-top:13px;
+    font-size:13.5px; color:var(--cx-teal); font-weight:600; cursor:pointer;
+  }
+  .cx-link.quiet{color:var(--cx-grey); font-weight:500; font-size:13px}
+  .cx-link svg{width:13px; height:13px; stroke:currentColor; fill:none; stroke-width:2.2}
+
+  /* B-variant hero statement */
+  .cx-statement{
+    font-size:22.5px; line-height:1.42; font-weight:500; letter-spacing:-.015em; margin-bottom:14px;
+  }
+  .cx-statement b{font-weight:700}
+  .cx-substatement{font-size:14.5px; line-height:1.55; color:var(--cx-grey)}
+  .cx-grow{flex:1}
+
+  /* map */
+  .cx-map{
+    height:158px; border-radius:11px; background:var(--cx-sunk);
+    border:1px solid var(--cx-line); position:relative; overflow:hidden; margin-bottom:13px;
+  }
+  .cx-map svg{position:absolute; inset:0; width:100%; height:100%}
+  .cx-map-tag{
+    position:absolute; right:11px; bottom:9px; font-family:var(--font-mono);
+    font-size:9px; letter-spacing:.13em; text-transform:uppercase; color:var(--cx-grey-2);
+  }
+
+  /* connection saver */
+  .cx-gates{display:flex; align-items:center; gap:10px; margin:14px 0 4px}
+  .cx-gate{flex:1; text-align:center}
+  .cx-gate .gl{font-family:var(--font-mono); font-size:9px; letter-spacing:.14em; color:var(--cx-grey-2); text-transform:uppercase; margin-bottom:4px}
+  .cx-gate .gv{font-size:20px; font-weight:700; letter-spacing:-.01em}
+  .cx-walk{flex:none; text-align:center; color:var(--cx-teal)}
+  .cx-walk svg{width:18px; height:18px; stroke:currentColor; fill:none; stroke-width:1.7}
+  .cx-walk span{display:block; font-family:var(--font-mono); font-size:9px; letter-spacing:.06em; margin-top:2px}
+
+  /* option list */
+  .cx-chips{display:flex; gap:7px; margin-bottom:13px; padding:0 17px}
+  .cx-chip{
+    font-size:11.5px; padding:6px 12px; border-radius:99px; border:1px solid var(--cx-line);
+    color:var(--cx-grey); white-space:nowrap;
+  }
+  .cx-chip.on{background:var(--cx-teal); border-color:var(--cx-teal); color:var(--cx-white); font-weight:600}
+  .cx-search{
+    margin:0 17px 13px; display:flex; align-items:center; gap:9px; padding:10px 13px;
+    border-radius:8px; background:var(--cx-sunk); border:1px solid var(--cx-line);
+    font-size:13px; color:var(--cx-grey-2);
+  }
+  .cx-search svg{width:15px; height:15px; stroke:var(--cx-grey-2); fill:none; stroke-width:2}
+  .cx-opt{
+    display:flex; gap:12px; padding:13px 17px; border-top:1px solid var(--cx-line); align-items:center;
+  }
+  .cx-opt.rec{background:var(--cx-teal-tint)}
+  .cx-opt .radio{
+    width:19px; height:19px; border-radius:50%; border:1.8px solid var(--cx-line);
+    flex:none; display:grid; place-items:center;
+  }
+  .cx-opt.rec .radio{border-color:var(--cx-teal)}
+  .cx-opt.rec .radio::after{content:""; width:9px; height:9px; border-radius:50%; background:var(--cx-teal)}
+  .cx-opt .info{flex:1; min-width:0}
+  .cx-opt .t{display:flex; align-items:baseline; gap:8px; margin-bottom:3px}
+  .cx-opt .t b{font-size:15px; font-weight:700; letter-spacing:-.01em}
+  .cx-opt .t em{font-style:normal; font-size:11.5px; color:var(--cx-grey); font-family:var(--font-mono)}
+  .cx-opt .m{font-size:11.5px; color:var(--cx-grey); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+  .cx-badge{
+    font-family:var(--font-mono); font-size:8.5px; letter-spacing:.13em; text-transform:uppercase;
+    background:var(--cx-teal); color:var(--cx-white); padding:3px 7px; border-radius:3px; font-weight:700;
+  }
+  .cx-opt .price{font-size:11.5px; color:var(--cx-grey); font-family:var(--font-mono); flex:none}
+
+  /* trade-off block */
+  .cx-tradeoff{
+    border-radius:11px; padding:13px 14px; background:var(--cx-teal-tint);
+    border:1px solid #CBE3E0; margin-top:2px;
+  }
+  .cx-tradeoff .cx-card-lab{color:var(--cx-teal)}
+  .cx-tradeoff p{font-size:13.2px; line-height:1.55}
+
+  /* bottom nav */
+  .cx-nav{
+    display:flex; border-top:1px solid var(--cx-line); padding:9px 4px 14px; flex:none; background:var(--cx-white);
+  }
+  .cx-nav div{flex:1; text-align:center}
+  .cx-nav svg{width:19px; height:19px; stroke:var(--cx-grey-2); fill:none; stroke-width:1.6; margin-bottom:3px}
+  .cx-nav span{display:block; font-size:9.5px; color:var(--cx-grey-2)}
+  .cx-nav .on svg{stroke:var(--cx-teal)} .cx-nav .on span{color:var(--cx-teal); font-weight:600}
+
+  /* ─── footer ─── */
+  .foot{
+    padding:56px 0 90px; margin-top:52px; border-top:1px solid var(--sheet-line-strong);
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:32px;
+  }
+  .foot h4{
+    font-family:var(--font-mono); font-size:10px; letter-spacing:.19em; text-transform:uppercase;
+    color:var(--accent); margin-bottom:10px; font-weight:600;
+  }
+  .foot p{font-size:13.5px; line-height:1.65; color:var(--sheet-muted)}
+
+  @media (max-width:1020px){
+    .pair{grid-template-columns:1fr; gap:44px; justify-items:center}
+    .spec{max-width:420px; width:100%}
+    .spec-why{min-height:0}
+    .index-row{grid-template-columns:40px 92px 1fr; }
+    .index-row .sm{grid-column:1/-1; padding-left:0}
+  }
+  @media (max-width:640px){
+    .sheet{padding:0 20px}
+    .phone{width:100%; max-width:334px}
+  }
+</style>
+
+<div class="sheet">
+
+<!-- ═══ MASTHEAD ═══ -->
+<header class="mast">
+  <div class="mast-top">
+    <span class="doc-type">Concept test · Stimulus sheet</span>
+    <span class="doc-meta">DISRUPTION UI · 4 PAIRS · 8 SCREENS</span>
+  </div>
+  <h1>Same information. Opposite instincts.</h1>
+  <p class="intro">
+    Four disruption scenarios, each built twice. In every pair the <b>underlying facts are identical</b> —
+    the same delay, the same connection, the same rebooking. What changes is a single deliberate
+    contradiction in how the airline chooses to behave.
+  </p>
+  <p class="intro">
+    Show A and B to different participants, never the same one. The variable under test is named on
+    each band, and the thing to measure is stated at the foot of it. Screens are drawn in the current
+    Cathay Pacific visual language so that participants react to the <b>behaviour</b>, not to unfamiliar styling.
+  </p>
+
+  <div class="index">
+    <div class="index-row head">
+      <span>No.</span><span>Impact</span><span>Variable isolated</span><span>The contradiction</span>
+    </div>
+    <div class="index-row">
+      <span class="n">01</span>
+      <span><span class="imp low">Low</span></span>
+      <span class="var">Information volume</span>
+      <span class="sm">Share everything · vs · Share what matters</span>
+    </div>
+    <div class="index-row">
+      <span class="n">02</span>
+      <span><span class="imp med">Medium</span></span>
+      <span class="var">Speed vs accuracy</span>
+      <span class="sm">Tell her early and unsure · vs · Tell her late and certain</span>
+    </div>
+    <div class="index-row">
+      <span class="n">03</span>
+      <span><span class="imp high">High</span></span>
+      <span class="var">Autonomy</span>
+      <span class="sm">One best answer · vs · The full list, she chooses</span>
+    </div>
+    <div class="index-row">
+      <span class="n">04</span>
+      <span><span class="imp high">High</span></span>
+      <span class="var">Perceived effort</span>
+      <span class="sm">Bare outcome · vs · Outcome with the trade-off named</span>
+    </div>
+  </div>
+</header>
+
+
+<!-- ══════════════════════════════════════════════
+     01 · INFORMATION VOLUME
+     ══════════════════════════════════════════════ -->
+<section class="band">
+  <div class="band-head">
+    <div class="band-eyebrow">
+      <span class="band-no">01</span>
+      <span class="imp low">Low impact</span>
+    </div>
+    <h2>Information volume &amp; reading behaviour</h2>
+    <p class="situation">
+      Single leg, CX 255 Hong Kong to London. Three-hour delay, cause known, no connection at stake.
+      Deliberately simple, so that density is the only thing being tested — not complexity.
+    </p>
+    <div class="isolates"><span>Isolates</span> how much is surfaced first, with the same second layer available to both.</div>
+  </div>
+
+  <div class="pair">
+    <!-- ── 01 A ── -->
+    <div class="spec">
+      <div class="spec-head"><span class="spec-letter">A</span><h3>Share everything</h3></div>
+      <p class="spec-why">
+        Everything the airline knows, on one card: the delay, the specific engineering fault, the new
+        departure, when the next update lands, lounge eligibility, what is open nearby, and a way to reach a person.
+      </p>
+      <div class="spec-stage">
+        <div class="phone"><div class="cx">
+          <div class="cx-status" style="background:var(--cx-teal)">
+            <span>17:12</span>
+            <span class="cx-bars"><i style="height:4px"></i><i style="height:6px"></i><i style="height:8px"></i><i style="height:10px"></i></span>
+          </div>
+          <div class="cx-head">
+            <div class="cx-brandrow">
+              <svg class="cx-back" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+              <div class="cx-word">
+                <svg class="cx-swoosh" viewBox="0 0 34 22"><path d="M1 20C9 20 15 15 20 9c3.5-4.2 7-7.4 13-8-4 3-6.5 6.6-9.5 10.5C18.5 18 11 21.5 1 20z" fill="#fff"/></svg>
+                CATHAY PACIFIC
+              </div>
+              <span class="cx-spacer-ico"></span>
+            </div>
+          </div>
+          <div class="cx-body">
+            <div class="cx-strip num"><b>CX 255</b> · HKG → LHR · Sat 11 May</div>
+
+            <div class="cx-banner">
+              <div class="cx-banner-lab">Delayed · 3 hours</div>
+              <div class="cx-times num"><span class="cx-was">17:40</span><span class="cx-now">20:40</span></div>
+              <div class="cx-times-sub">Estimated departure · Hong Kong time</div>
+            </div>
+
+            <div class="cx-card">
+              <div class="cx-card-lab">Why</div>
+              <p>Engineering are replacing a cabin air filtration unit. Your aircraft is at the gate.</p>
+            </div>
+
+            <div class="cx-card">
+              <div class="cx-rowitem">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                <div class="g"><h4>Next update by 18:00</h4><p class="dim">We'll tell you either way, even if nothing has changed.</p></div>
+              </div>
+            </div>
+
+            <div class="cx-card">
+              <div class="cx-rowitem">
+                <svg viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11a7 7 0 10-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg>
+                <div class="g"><h4>Gate 23 · boarding from 20:05</h4><p class="dim">Gate may change. We'll alert you.</p></div>
+              </div>
+            </div>
+
+            <div class="cx-card">
+              <div class="cx-rowitem">
+                <svg viewBox="0 0 24 24"><path d="M18 8h1a3 3 0 010 6h-1M4 8h14v6a5 5 0 01-5 5H9a5 5 0 01-5-5zM6 2v3M10 2v3M14 2v3"/></svg>
+                <div class="g"><h4>The Wing, Business · Gate 1</h4><p class="dim">Your delay qualifies you for lounge access.</p></div>
+              </div>
+            </div>
+
+            <div class="cx-card flat">
+              <div class="cx-card-lab">Open near you</div>
+              <p class="dim">The Deck (L6) · Pret A Manger (L6) · Popeyes (L7)</p>
+            </div>
+
+            <button class="cx-btn ghost">Message us</button>
+          </div>
+          <div class="cx-nav">
+            <div><svg viewBox="0 0 24 24"><path d="M17 10l4-2-1-3-5 2-6-4-2 1 4 5-3 2-3-1-1 2 4 3 3 4 2-1-1-3 2-3 5 4 1-2-4-6z"/></svg><span>Flights</span></div>
+            <div><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span>Schedule</span></div>
+            <div class="on"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2"/></svg><span>My Trips</span></div>
+            <div><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0116 0"/></svg><span>Profile</span></div>
+          </div>
+        </div></div>
+      </div>
+    </div>
+
+    <!-- ── 01 B ── -->
+    <div class="spec">
+      <div class="spec-head"><span class="spec-letter">B</span><h3>Share what matters</h3></div>
+      <p class="spec-why">
+        One sentence carrying the decision-relevant facts, one sentence setting expectation, and a quiet
+        route to everything else. The same second layer exists — it simply is not pushed.
+      </p>
+      <div class="spec-stage">
+        <div class="phone"><div class="cx">
+          <div class="cx-status" style="background:var(--cx-teal)">
+            <span>17:12</span>
+            <span class="cx-bars"><i style="height:4px"></i><i style="height:6px"></i><i style="height:8px"></i><i style="height:10px"></i></span>
+          </div>
+          <div class="cx-head">
+            <div class="cx-brandrow">
+              <svg class="cx-back" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+              <div class="cx-word">
+                <svg class="cx-swoosh" viewBox="0 0 34 22"><path d="M1 20C9 20 15 15 20 9c3.5-4.2 7-7.4 13-8-4 3-6.5 6.6-9.5 10.5C18.5 18 11 21.5 1 20z" fill="#fff"/></svg>
+                CATHAY PACIFIC
+              </div>
+              <span class="cx-spacer-ico"></span>
+            </div>
+          </div>
+          <div class="cx-body">
+            <div class="cx-strip num"><b>CX 255</b> · HKG → LHR · Sat 11 May</div>
+            <div style="height:26px"></div>
+            <div class="cx-statement">
+              Your flight is delayed 3 hours, now departing <b class="num">20:40</b>.
+            </div>
+            <div class="cx-substatement">We'll update you by 18:00.</div>
+
+            <div class="cx-link quiet" style="justify-content:flex-start; margin-top:26px">
+              More detail
+              <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+            </div>
+
+            <div class="cx-grow"></div>
+          </div>
+          <div class="cx-nav">
+            <div><svg viewBox="0 0 24 24"><path d="M17 10l4-2-1-3-5 2-6-4-2 1 4 5-3 2-3-1-1 2 4 3 3 4 2-1-1-3 2-3 5 4 1-2-4-6z"/></svg><span>Flights</span></div>
+            <div><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span>Schedule</span></div>
+            <div class="on"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2"/></svg><span>My Trips</span></div>
+            <div><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0116 0"/></svg><span>Profile</span></div>
+          </div>
+        </div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="watch">
+    <span class="lab">Watch for</span>
+    <p>
+      <b>Whether B's users ever find the second layer.</b> Log taps on "More detail" and time-to-tap. If
+      fewer than one in five open it and reported confidence matches A, then A's density is costing
+      attention without buying trust. Also ask both groups to recall the reason for the delay — if A's
+      users cannot repeat it either, the engineering detail is decoration in both.
+    </p>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     02 · SPEED VS ACCURACY
+     ══════════════════════════════════════════════ -->
+<section class="band">
+  <div class="band-head">
+    <div class="band-eyebrow">
+      <span class="band-no">02</span>
+      <span class="imp med">Medium impact</span>
+    </div>
+    <h2>Speed versus accuracy</h2>
+    <p class="situation">
+      Transit passenger. Inbound CX 715 from Singapore is running late; the Zurich connection at
+      Hong Kong is tight but not yet lost. This is the uncertainty scenario — at the moment of the
+      alert, the airline genuinely does not know the answer.
+    </p>
+    <div class="isolates"><span>Isolates</span> whether to speak while unsure, or stay silent until certain.</div>
+  </div>
+
+  <div class="pair">
+    <!-- ── 02 A ── -->
+    <div class="spec">
+      <div class="spec-head"><span class="spec-letter">A</span><h3>Fast, and uncertain</h3></div>
+      <p class="spec-why">
+        Told at 17:50, the moment the risk is detected. She can see the aircraft and where it is. The
+        airline admits it does not yet know the outcome, and commits to a time by which it will.
+      </p>
+      <div class="spec-stage">
+        <div class="phone"><div class="cx">
+          <div class="cx-status" style="background:var(--cx-teal)">
+            <span>17:50</span>
+            <span class="cx-bars"><i style="height:4px"></i><i style="height:6px"></i><i style="height:8px"></i><i style="height:10px"></i></span>
+          </div>
+          <div class="cx-head">
+            <div class="cx-brandrow">
+              <svg class="cx-back" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+              <div class="cx-word">
+                <svg class="cx-swoosh" viewBox="0 0 34 22"><path d="M1 20C9 20 15 15 20 9c3.5-4.2 7-7.4 13-8-4 3-6.5 6.6-9.5 10.5C18.5 18 11 21.5 1 20z" fill="#fff"/></svg>
+                CATHAY PACIFIC
+              </div>
+              <span class="cx-spacer-ico"></span>
+            </div>
+          </div>
+          <div class="cx-body">
+            <div class="cx-strip num"><b>CX 715</b> · SIN → HKG · in the air</div>
+
+            <div class="cx-map">
+              <svg viewBox="0 0 300 158" preserveAspectRatio="none">
+                <path d="M34 112 C 90 100, 150 72, 262 34" stroke="#C9D9D7" stroke-width="1.6"
+                      fill="none" stroke-dasharray="4 5"/>
+                <path d="M34 112 C 74 104, 112 90, 154 70" stroke="#00645F" stroke-width="2.2" fill="none"/>
+                <circle cx="34" cy="112" r="4.5" fill="#8E9A98"/>
+                <text x="34" y="130" fill="#5F6B69" font-size="10" text-anchor="middle" font-family="ui-monospace,monospace">SIN</text>
+                <g transform="translate(154 70) rotate(-28)">
+                  <path d="M0 -7 L2.6 0 L9 3 L9 5 L2.6 3.6 L1.6 8 L4 10 L4 11.4 L0 10.4 L-4 11.4 L-4 10 L-1.6 8 L-2.6 3.6 L-9 5 L-9 3 L-2.6 0 Z" fill="#00645F"/>
+                </g>
+                <circle cx="262" cy="34" r="5" fill="#00645F"/>
+                <circle cx="262" cy="34" r="10" fill="none" stroke="#00645F" stroke-width="1" opacity=".35"/>
+                <text x="262" y="20" fill="#14201E" font-size="10.5" text-anchor="middle" font-weight="600" font-family="ui-monospace,monospace">HKG</text>
+              </svg>
+              <span class="cx-map-tag">Live position · 40 min behind</span>
+            </div>
+
+            <div class="cx-banner">
+              <div class="cx-banner-lab">Connection may be at risk</div>
+              <p style="font-size:14.5px; line-height:1.5; font-weight:500">
+                Your inbound is running about 40 minutes late.
+              </p>
+              <div class="cx-times-sub">Arriving Hong Kong 22:55 instead of 22:15</div>
+            </div>
+
+            <div class="cx-card">
+              <div class="cx-card-lab">Your connection</div>
+              <h4 class="num">CX 383 · Zurich · 23:55</h4>
+              <p class="dim" style="margin-top:4px">We're checking options now and will update you by <b style="color:var(--cx-ink)">18:30</b>.</p>
+            </div>
+
+            <div class="cx-link quiet" style="justify-content:flex-start">
+              What happens if I miss it?
+              <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+            </div>
+
+            <div class="cx-grow"></div>
+          </div>
+          <div class="cx-nav">
+            <div><svg viewBox="0 0 24 24"><path d="M17 10l4-2-1-3-5 2-6-4-2 1 4 5-3 2-3-1-1 2 4 3 3 4 2-1-1-3 2-3 5 4 1-2-4-6z"/></svg><span>Flights</span></div>
+            <div><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span>Schedule</span></div>
+            <div class="on"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2"/></svg><span>My Trips</span></div>
+            <div><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0116 0"/></svg><span>Profile</span></div>
+          </div>
+        </div></div>
+      </div>
+    </div>
+
+    <!-- ── 02 B ── -->
+    <div class="spec">
+      <div class="spec-head"><span class="spec-letter">B</span><h3>Slower, and certain</h3></div>
+      <p class="spec-why">
+        Silence through the uncertain window. Nothing at 17:50, nothing at 18:00. At 18:26, once it is
+        actually true, a single resolved answer — with the walk, the gate and the bag already settled.
+      </p>
+      <div class="spec-stage">
+        <div class="phone"><div class="cx">
+          <div class="cx-status" style="background:var(--cx-teal)">
+            <span>18:26</span>
+            <span class="cx-bars"><i style="height:4px"></i><i style="height:6px"></i><i style="height:8px"></i><i style="height:10px"></i></span>
+          </div>
+          <div class="cx-head">
+            <div class="cx-brandrow">
+              <svg class="cx-back" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+              <div class="cx-word">
+                <svg class="cx-swoosh" viewBox="0 0 34 22"><path d="M1 20C9 20 15 15 20 9c3.5-4.2 7-7.4 13-8-4 3-6.5 6.6-9.5 10.5C18.5 18 11 21.5 1 20z" fill="#fff"/></svg>
+                CATHAY PACIFIC
+              </div>
+              <span class="cx-spacer-ico"></span>
+            </div>
+          </div>
+          <div class="cx-body">
+            <div class="cx-strip num"><b>CX 715</b> → <b>CX 383</b> · Zurich</div>
+
+            <div class="cx-banner ok">
+              <div class="cx-banner-lab">Connection protected</div>
+              <p style="font-size:14.5px; line-height:1.5; font-weight:500">
+                You'll have <b class="num">23 minutes</b> at Hong Kong. That's enough.
+              </p>
+            </div>
+
+            <div class="cx-card">
+              <div class="cx-gates">
+                <div class="cx-gate">
+                  <div class="gl">Arrive</div>
+                  <div class="gv num">Gate 15</div>
+                </div>
+                <div class="cx-walk">
+                  <svg viewBox="0 0 24 24"><circle cx="13" cy="4" r="2"/><path d="M12 8l-3 4 2 3 1 6M12 8l4 3 3-1M11 12l-4 2-1 5"/></svg>
+                  <span>15 MIN</span>
+                </div>
+                <div class="cx-gate">
+                  <div class="gl">Depart</div>
+                  <div class="gv num">Gate 23</div>
+                </div>
+              </div>
+              <p class="dim" style="text-align:center; margin-top:8px">Same terminal · no train, no re-screening</p>
+            </div>
+
+            <div class="cx-card">
+              <div class="cx-rowitem">
+                <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+                <div class="g"><h4>Your bags transfer automatically</h4><p class="dim">Nothing to collect in Hong Kong. Next seen in Zurich.</p></div>
+              </div>
+            </div>
+
+            <div class="cx-card">
+              <div class="cx-rowitem">
+                <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+                <div class="g"><h4>Seat 15A held</h4><p class="dim">Boarding pass updates automatically.</p></div>
+              </div>
+            </div>
+
+            <div class="cx-grow"></div>
+            <button class="cx-btn">Show me the way</button>
+          </div>
+          <div class="cx-nav">
+            <div><svg viewBox="0 0 24 24"><path d="M17 10l4-2-1-3-5 2-6-4-2 1 4 5-3 2-3-1-1 2 4 3 3 4 2-1-1-3 2-3 5 4 1-2-4-6z"/></svg><span>Flights</span></div>
+            <div><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span>Schedule</span></div>
+            <div class="on"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2"/></svg><span>My Trips</span></div>
+            <div><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0116 0"/></svg><span>Profile</span></div>
+          </div>
+        </div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="watch">
+    <span class="lab">Watch for</span>
+    <p>
+      <b>Whether early-and-unsure buys trust or manufactures dread.</b> A gives her 36 minutes of
+      knowing-but-not-knowing; B gives her 36 minutes of not knowing there was anything to know.
+      Sample anxiety at 18:00 — mid-window — not just at the end, or you will miss the entire cost of A.
+      Then ask the decisive question: <b>"Would you rather have been told at 17:50?"</b> B's users are
+      answering hypothetically, so weight their answer accordingly.
+    </p>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     03 · AUTONOMY
+     ══════════════════════════════════════════════ -->
+<section class="band">
+  <div class="band-head">
+    <div class="band-eyebrow">
+      <span class="band-no">03</span>
+      <span class="imp high">High impact</span>
+    </div>
+    <h2>Autonomy</h2>
+    <p class="situation">
+      Diamond member, connection missed, overnight in Hong Kong required. The full recovery scenario:
+      a hotel, a car and a seat all need to exist by morning. The airline has already found the answer —
+      the question is whether it presents one, or many.
+    </p>
+    <div class="isolates"><span>Isolates</span> who makes the choice, when a good choice already exists.</div>
+  </div>
+
+  <div class="pair">
+    <!-- ── 03 A ── -->
+    <div class="spec">
+      <div class="spec-head"><span class="spec-letter">A</span><h3>The best match</h3></div>
+      <p class="spec-why">
+        One flight, already assembled with hotel and transport. A single primary action to accept it,
+        and a quiet way out for anyone who wants to look at the rest.
+      </p>
+      <div class="spec-stage">
+        <div class="phone"><div class="cx">
+          <div class="cx-status" style="background:var(--cx-teal)">
+            <span>21:48</span>
+            <span class="cx-bars"><i style="height:4px"></i><i style="height:6px"></i><i style="height:8px"></i><i style="height:10px"></i></span>
+          </div>
+          <div class="cx-head">
+            <div class="cx-brandrow">
+              <svg class="cx-back" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+              <div class="cx-word">
+                <svg class="cx-swoosh" viewBox="0 0 34 22"><path d="M1 20C9 20 15 15 20 9c3.5-4.2 7-7.4 13-8-4 3-6.5 6.6-9.5 10.5C18.5 18 11 21.5 1 20z" fill="#fff"/></svg>
+                CATHAY PACIFIC
+              </div>
+              <span class="cx-spacer-ico"></span>
+            </div>
+          </div>
+          <div class="cx-body">
+            <div class="cx-strip num">Diamond · <b>Michael McGill</b></div>
+
+            <div class="cx-banner ok">
+              <div class="cx-banner-lab">We've rebooked you</div>
+              <p style="font-size:14.5px; line-height:1.5; font-weight:500">
+                You're on the <b class="num">09:00</b> tomorrow to Zurich.
+              </p>
+            </div>
+
+            <div class="cx-card">
+              <div class="cx-card-lab">Your new flight</div>
+              <h4 class="num" style="font-size:16px">CX 383 · 09:00 → 15:35</h4>
+              <p class="dim" style="margin-top:4px">Hong Kong → Zurich · Business · Seat 15A</p>
+            </div>
+
+            <div class="cx-card">
+              <div class="cx-rowitem">
+                <svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V8l7-5 7 5v13M10 21v-6h4v6"/></svg>
+                <div class="g"><h4>Regal Airport Hotel</h4><p class="dim">Room confirmed · check in from 22:30</p></div>
+              </div>
+            </div>
+
+            <div class="cx-card">
+              <div class="cx-rowitem">
+                <svg viewBox="0 0 24 24"><path d="M5 17h14M6 17V9l2-4h8l2 4v8"/><circle cx="8.5" cy="17" r="1.7"/><circle cx="15.5" cy="17" r="1.7"/></svg>
+                <div class="g"><h4>Car to your hotel</h4><p class="dim">22:15 from Arrivals Hall A · driver notified</p></div>
+              </div>
+            </div>
+
+            <div class="cx-grow"></div>
+            <button class="cx-btn">Confirm</button>
+            <div class="cx-link quiet">See other options</div>
+          </div>
+          <div class="cx-nav">
+            <div><svg viewBox="0 0 24 24"><path d="M17 10l4-2-1-3-5 2-6-4-2 1 4 5-3 2-3-1-1 2 4 3 3 4 2-1-1-3 2-3 5 4 1-2-4-6z"/></svg><span>Flights</span></div>
+            <div><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span>Schedule</span></div>
+            <div class="on"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2"/></svg><span>My Trips</span></div>
+            <div><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0116 0"/></svg><span>Profile</span></div>
+          </div>
+        </div></div>
+      </div>
+    </div>
+
+    <!-- ── 03 B ── -->
+    <div class="spec">
+      <div class="spec-head"><span class="spec-letter">B</span><h3>The full list</h3></div>
+      <p class="spec-why">
+        Every alternative the recovery search returned, filterable, with the same flight badged as
+        recommended. Nothing is decided until she decides it.
+      </p>
+      <div class="spec-stage">
+        <div class="phone"><div class="cx">
+          <div class="cx-status" style="background:var(--cx-teal)">
+            <span>21:48</span>
+            <span class="cx-bars"><i style="height:4px"></i><i style="height:6px"></i><i style="height:8px"></i><i style="height:10px"></i></span>
+          </div>
+          <div class="cx-head">
+            <div class="cx-brandrow">
+              <svg class="cx-back" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+              <div class="cx-word">
+                <svg class="cx-swoosh" viewBox="0 0 34 22"><path d="M1 20C9 20 15 15 20 9c3.5-4.2 7-7.4 13-8-4 3-6.5 6.6-9.5 10.5C18.5 18 11 21.5 1 20z" fill="#fff"/></svg>
+                CATHAY PACIFIC
+              </div>
+              <span class="cx-spacer-ico"></span>
+            </div>
+          </div>
+          <div class="cx-body pad0">
+            <div style="padding:0 17px">
+              <div class="cx-strip num">Diamond · <b>Michael McGill</b></div>
+              <h4 style="font-size:19px; font-weight:600; letter-spacing:-.015em; margin-bottom:4px">Choose your flight to Zurich</h4>
+              <p style="font-size:12.5px; color:var(--cx-grey); margin-bottom:14px">4 options · hotel and transport included with any</p>
+            </div>
+
+            <div class="cx-search">
+              <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5L21 21"/></svg>
+              Search flights, dates or airlines
+            </div>
+
+            <div class="cx-chips">
+              <span class="cx-chip on">Recommended</span>
+              <span class="cx-chip">Earliest</span>
+              <span class="cx-chip">Business</span>
+            </div>
+
+            <div class="cx-opt rec">
+              <span class="radio"></span>
+              <div class="info">
+                <div class="t"><b class="num">09:00</b><em>→ 15:35</em><span class="cx-badge">Recommended</span></div>
+                <div class="m num">CX 383 · Direct · Business</div>
+              </div>
+            </div>
+            <div class="cx-opt">
+              <span class="radio"></span>
+              <div class="info">
+                <div class="t"><b class="num">06:05</b><em>→ 12:20</em></div>
+                <div class="m num">LX 139 · Direct · Economy</div>
+              </div>
+              <span class="price">3h earlier</span>
+            </div>
+            <div class="cx-opt">
+              <span class="radio"></span>
+              <div class="info">
+                <div class="t"><b class="num">11:40</b><em>→ 21:05</em></div>
+                <div class="m num">CX 255 + LX · via London</div>
+              </div>
+              <span class="price">+5h 30m</span>
+            </div>
+            <div class="cx-opt">
+              <span class="radio"></span>
+              <div class="info">
+                <div class="t"><b class="num">23:55</b><em>→ 09:40</em></div>
+                <div class="m num">Tonight · via FRA · Economy</div>
+              </div>
+              <span class="price">No hotel</span>
+            </div>
+
+            <div class="cx-grow"></div>
+            <div style="padding:12px 17px 0; border-top:1px solid var(--cx-line)">
+              <button class="cx-btn">Select this flight</button>
+            </div>
+          </div>
+          <div class="cx-nav">
+            <div><svg viewBox="0 0 24 24"><path d="M17 10l4-2-1-3-5 2-6-4-2 1 4 5-3 2-3-1-1 2 4 3 3 4 2-1-1-3 2-3 5 4 1-2-4-6z"/></svg><span>Flights</span></div>
+            <div><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span>Schedule</span></div>
+            <div class="on"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2"/></svg><span>My Trips</span></div>
+            <div><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0116 0"/></svg><span>Profile</span></div>
+          </div>
+        </div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="watch">
+    <span class="lab">Watch for</span>
+    <p>
+      <b>Whether one answer reads as care or as control.</b> The tell in A is the tap rate on
+      "See other options" — high tap-through means the single answer is landing as withholding, not
+      service. In B, measure how long she deliberates and whether she ends on the badged flight anyway:
+      if nearly everyone picks the recommendation after ninety seconds of scanning, the list bought
+      nothing but delay. Segment by tier — Diamond members may expect the choice specifically <b>because</b>
+      they are Diamond.
+    </p>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     04 · PERCEIVED EFFORT
+     ══════════════════════════════════════════════ -->
+<section class="band">
+  <div class="band-head">
+    <div class="band-eyebrow">
+      <span class="band-no">04</span>
+      <span class="imp high">High impact</span>
+    </div>
+    <h2>Perceived effort</h2>
+    <p class="situation">
+      Same passenger, same night, same rebooking as scenario 03. The only difference between these two
+      screens is one sentence. Everything else — flight, seat, hotel, car — is identical, deliberately,
+      so that the sentence is the entire experiment.
+    </p>
+    <div class="isolates"><span>Isolates</span> whether naming the trade-off makes the work visible, or makes the outcome look worse.</div>
+  </div>
+
+  <div class="pair">
+    <!-- ── 04 A ── -->
+    <div class="spec">
+      <div class="spec-head"><span class="spec-letter">A</span><h3>Bare outcome</h3></div>
+      <p class="spec-why">
+        The rebooking, confirmed, and nothing else. No reasoning, no alternatives, no evidence of the
+        search that produced it. The work is invisible by design.
+      </p>
+      <div class="spec-stage">
+        <div class="phone"><div class="cx">
+          <div class="cx-status" style="background:var(--cx-teal)">
+            <span>21:48</span>
+            <span class="cx-bars"><i style="height:4px"></i><i style="height:6px"></i><i style="height:8px"></i><i style="height:10px"></i></span>
+          </div>
+          <div class="cx-head">
+            <div class="cx-brandrow">
+              <svg class="cx-back" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+              <div class="cx-word">
+                <svg class="cx-swoosh" viewBox="0 0 34 22"><path d="M1 20C9 20 15 15 20 9c3.5-4.2 7-7.4 13-8-4 3-6.5 6.6-9.5 10.5C18.5 18 11 21.5 1 20z" fill="#fff"/></svg>
+                CATHAY PACIFIC
+              </div>
+              <span class="cx-spacer-ico"></span>
+            </div>
+          </div>
+          <div class="cx-body">
+            <div class="cx-strip num">Diamond · <b>Michael McGill</b></div>
+
+            <div class="cx-banner ok">
+              <div class="cx-banner-lab">Confirmed</div>
+              <p style="font-size:14.5px; line-height:1.5; font-weight:500">
+                You're rebooked on the <b class="num">09:00</b> to Zurich.
+              </p>
+            </div>
+
+            <div class="cx-card">
+              <div class="cx-card-lab">Your new flight</div>
+              <h4 class="num" style="font-size:16px">CX 383 · 09:00 → 15:35</h4>
+              <p class="dim" style="margin-top:4px">Hong Kong → Zurich · Business · Seat 15A</p>
+            </div>
+
+            <div class="cx-card">
+              <div class="cx-rowitem">
+                <svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V8l7-5 7 5v13M10 21v-6h4v6"/></svg>
+                <div class="g"><h4>Regal Airport Hotel</h4><p class="dim">Room confirmed · check in from 22:30</p></div>
+              </div>
+            </div>
+
+            <div class="cx-card">
+              <div class="cx-rowitem">
+                <svg viewBox="0 0 24 24"><path d="M5 17h14M6 17V9l2-4h8l2 4v8"/><circle cx="8.5" cy="17" r="1.7"/><circle cx="15.5" cy="17" r="1.7"/></svg>
+                <div class="g"><h4>Car to your hotel</h4><p class="dim">22:15 from Arrivals Hall A · driver notified</p></div>
+              </div>
+            </div>
+
+            <div class="cx-grow"></div>
+            <button class="cx-btn">View boarding pass</button>
+          </div>
+          <div class="cx-nav">
+            <div><svg viewBox="0 0 24 24"><path d="M17 10l4-2-1-3-5 2-6-4-2 1 4 5-3 2-3-1-1 2 4 3 3 4 2-1-1-3 2-3 5 4 1-2-4-6z"/></svg><span>Flights</span></div>
+            <div><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span>Schedule</span></div>
+            <div class="on"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2"/></svg><span>My Trips</span></div>
+            <div><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0116 0"/></svg><span>Profile</span></div>
+          </div>
+        </div></div>
+      </div>
+    </div>
+
+    <!-- ── 04 B ── -->
+    <div class="spec">
+      <div class="spec-head"><span class="spec-letter">B</span><h3>Named trade-off</h3></div>
+      <p class="spec-why">
+        Identical rebooking, plus one sentence explaining what was optimised for — and openly admitting
+        a faster option exists in a lower cabin, with a way to take it.
+      </p>
+      <div class="spec-stage">
+        <div class="phone"><div class="cx">
+          <div class="cx-status" style="background:var(--cx-teal)">
+            <span>21:48</span>
+            <span class="cx-bars"><i style="height:4px"></i><i style="height:6px"></i><i style="height:8px"></i><i style="height:10px"></i></span>
+          </div>
+          <div class="cx-head">
+            <div class="cx-brandrow">
+              <svg class="cx-back" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+              <div class="cx-word">
+                <svg class="cx-swoosh" viewBox="0 0 34 22"><path d="M1 20C9 20 15 15 20 9c3.5-4.2 7-7.4 13-8-4 3-6.5 6.6-9.5 10.5C18.5 18 11 21.5 1 20z" fill="#fff"/></svg>
+                CATHAY PACIFIC
+              </div>
+              <span class="cx-spacer-ico"></span>
+            </div>
+          </div>
+          <div class="cx-body">
+            <div class="cx-strip num">Diamond · <b>Michael McGill</b></div>
+
+            <div class="cx-banner ok">
+              <div class="cx-banner-lab">Confirmed</div>
+              <p style="font-size:14.5px; line-height:1.5; font-weight:500">
+                You're rebooked on the <b class="num">09:00</b> to Zurich.
+              </p>
+            </div>
+
+            <div class="cx-card">
+              <div class="cx-card-lab">Your new flight</div>
+              <h4 class="num" style="font-size:16px">CX 383 · 09:00 → 15:35</h4>
+              <p class="dim" style="margin-top:4px">Hong Kong → Zurich · Business · Seat 15A</p>
+            </div>
+
+            <div class="cx-tradeoff">
+              <div class="cx-card-lab">Why this one</div>
+              <p>
+                This gets you to Zurich earliest and keeps your Business cabin. There's a Swiss option
+                3 hours earlier in Economy if you'd prefer.
+              </p>
+              <div class="cx-link" style="justify-content:flex-start; margin-top:10px">
+                Show me that option
+                <svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg>
+              </div>
+            </div>
+
+            <div class="cx-card" style="margin-top:10px">
+              <div class="cx-rowitem">
+                <svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V8l7-5 7 5v13M10 21v-6h4v6"/></svg>
+                <div class="g"><h4>Regal Airport Hotel</h4><p class="dim">Room confirmed · check in from 22:30</p></div>
+              </div>
+            </div>
+
+            <div class="cx-card">
+              <div class="cx-rowitem">
+                <svg viewBox="0 0 24 24"><path d="M5 17h14M6 17V9l2-4h8l2 4v8"/><circle cx="8.5" cy="17" r="1.7"/><circle cx="15.5" cy="17" r="1.7"/></svg>
+                <div class="g"><h4>Car to your hotel</h4><p class="dim">22:15 from Arrivals Hall A</p></div>
+              </div>
+            </div>
+
+            <div class="cx-grow"></div>
+            <button class="cx-btn">View boarding pass</button>
+          </div>
+          <div class="cx-nav">
+            <div><svg viewBox="0 0 24 24"><path d="M17 10l4-2-1-3-5 2-6-4-2 1 4 5-3 2-3-1-1 2 4 3 3 4 2-1-1-3 2-3 5 4 1-2-4-6z"/></svg><span>Flights</span></div>
+            <div><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span>Schedule</span></div>
+            <div class="on"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2"/></svg><span>My Trips</span></div>
+            <div><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0116 0"/></svg><span>Profile</span></div>
+          </div>
+        </div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="watch">
+    <span class="lab">Watch for</span>
+    <p>
+      <b>Whether admitting the alternative reads as honesty or as a downgrade.</b> B is the riskier
+      screen: it tells her something faster exists, which can convert a solved problem back into an
+      open decision. Measure perceived effort — "how hard do you think Cathay worked on this?" — against
+      satisfaction with the outcome. The failure mode to look for is the two diverging: <b>effort
+      perceived as higher, satisfaction lower</b>. If that happens, the trade-off is better placed one
+      layer down, on request, rather than on the confirmation itself.
+    </p>
+  </div>
+</section>
+
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="foot">
+  <div>
+    <h4>How to run these</h4>
+    <p>Between-subjects, never within. A participant who sees A and then B is no longer reacting to
+    either — they are reacting to the comparison, which no real passenger ever gets.</p>
+  </div>
+  <div>
+    <h4>Hold the facts constant</h4>
+    <p>Every pair carries identical underlying facts: same flight numbers, same times, same seat, same
+    hotel. If a participant's preference tracks a fact rather than the behaviour, the pair is broken.</p>
+  </div>
+  <div>
+    <h4>Scenario 02 is asymmetric</h4>
+    <p>A and B are shown at different clock times by design — 17:50 versus 18:26. The 36-minute gap
+    <em>is</em> the variable. Do not equalise it.</p>
+  </div>
+  <div>
+    <h4>On these mockups</h4>
+    <p>Styling approximates the Cathay Pacific app for familiarity; the wing mark is a placeholder
+    rather than the production asset. Not an official Cathay Pacific artefact — internal concept
+    stimulus only.</p>
+  </div>
+</footer>
+
+</div>
