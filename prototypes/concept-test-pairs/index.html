@@ -44,7 +44,7 @@
   }
 
   /* ───────────────────────────────────────────────
-     PRODUCT tokens — the Cathay UI itself.
+     PRODUCT tokens — the airline UI itself.
      Deliberately fixed: the stimulus must not change
      with the viewer's theme, or the test changes too.
      ─────────────────────────────────────────────── */
@@ -179,7 +179,7 @@
   .watch p b{color:var(--sheet-ink); font-weight:600}
 
   /* ═══════════════════════════════════════════════
-     PHONE — fixed Cathay light UI
+     PHONE — fixed light airline UI
      ═══════════════════════════════════════════════ */
   .phone{
     width:334px; flex:none; border-radius:42px; padding:9px;
@@ -207,10 +207,9 @@
   .cx-brandrow{display:flex; align-items:center; padding:2px 18px 0; gap:12px}
   .cx-back{width:19px; height:19px; stroke:var(--cx-white); fill:none; stroke-width:2; flex:none}
   .cx-word{
-    flex:1; text-align:center; display:flex; align-items:center; justify-content:center; gap:7px;
-    font-size:11px; letter-spacing:.22em; color:var(--cx-white); font-weight:600;
+    flex:1; text-align:center; font-size:14.5px; color:var(--cx-white); font-weight:600;
+    letter-spacing:-.005em;
   }
-  .cx-swoosh{width:17px; height:11px; flex:none}
   .cx-spacer-ico{width:19px; flex:none}
   /* body */
   .cx-body{flex:1; overflow:hidden; padding:18px 17px 8px; display:flex; flex-direction:column}
@@ -389,8 +388,7 @@
   </p>
   <p class="intro">
     Show A and B to different participants, never the same one. The variable under test is named on
-    each band, and the thing to measure is stated at the foot of it. Screens are drawn in the current
-    Cathay Pacific visual language so that participants react to the <b>behaviour</b>, not to unfamiliar styling.
+    each band, and the thing to measure is stated at the foot of it. Screens carry no airline name or logo, so that participants react to the <b>behaviour</b> rather than to a brand they already have feelings about.
   </p>
 
   <div class="index">
@@ -436,7 +434,7 @@
     </div>
     <h2>Information volume &amp; reading behaviour</h2>
     <p class="situation">
-      Single leg, CX 255 Hong Kong to London. Three-hour delay, cause known, no connection at stake.
+      Single leg, Flight 255 Hong Kong to London. Three-hour delay, cause known, no connection at stake.
       Deliberately simple, so that density is the only thing being tested — not complexity.
     </p>
     <div class="isolates"><span>Isolates</span> how much is surfaced first, with the same second layer available to both.</div>
@@ -459,15 +457,12 @@
           <div class="cx-head">
             <div class="cx-brandrow">
               <svg class="cx-back" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
-              <div class="cx-word">
-                <svg class="cx-swoosh" viewBox="0 0 34 22"><path d="M1 20C9 20 15 15 20 9c3.5-4.2 7-7.4 13-8-4 3-6.5 6.6-9.5 10.5C18.5 18 11 21.5 1 20z" fill="#fff"/></svg>
-                CATHAY PACIFIC
-              </div>
+              <div class="cx-word">Flight status</div>
               <span class="cx-spacer-ico"></span>
             </div>
           </div>
           <div class="cx-body">
-            <div class="cx-strip num"><b>CX 255</b> · HKG → LHR · Sat 11 May</div>
+            <div class="cx-strip num"><b>Flight 255</b> · HKG → LHR · Sat 11 May</div>
 
             <div class="cx-banner">
               <div class="cx-banner-lab">Delayed · 3 hours</div>
@@ -497,13 +492,13 @@
             <div class="cx-card">
               <div class="cx-rowitem">
                 <svg viewBox="0 0 24 24"><path d="M18 8h1a3 3 0 010 6h-1M4 8h14v6a5 5 0 01-5 5H9a5 5 0 01-5-5zM6 2v3M10 2v3M14 2v3"/></svg>
-                <div class="g"><h4>The Wing, Business · Gate 1</h4><p class="dim">Your delay qualifies you for lounge access.</p></div>
+                <div class="g"><h4>Business lounge · Gate 1</h4><p class="dim">Your delay qualifies you for lounge access.</p></div>
               </div>
             </div>
 
             <div class="cx-card flat">
               <div class="cx-card-lab">Open near you</div>
-              <p class="dim">The Deck (L6) · Pret A Manger (L6) · Popeyes (L7)</p>
+              <p class="dim">Café (L6) · Noodle bar (L6) · Deli (L7)</p>
             </div>
 
             <button class="cx-btn ghost">Message us</button>
@@ -534,15 +529,12 @@
           <div class="cx-head">
             <div class="cx-brandrow">
               <svg class="cx-back" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
-              <div class="cx-word">
-                <svg class="cx-swoosh" viewBox="0 0 34 22"><path d="M1 20C9 20 15 15 20 9c3.5-4.2 7-7.4 13-8-4 3-6.5 6.6-9.5 10.5C18.5 18 11 21.5 1 20z" fill="#fff"/></svg>
-                CATHAY PACIFIC
-              </div>
+              <div class="cx-word">Flight status</div>
               <span class="cx-spacer-ico"></span>
             </div>
           </div>
           <div class="cx-body">
-            <div class="cx-strip num"><b>CX 255</b> · HKG → LHR · Sat 11 May</div>
+            <div class="cx-strip num"><b>Flight 255</b> · HKG → LHR · Sat 11 May</div>
             <div style="height:26px"></div>
             <div class="cx-statement">
               Your flight is delayed 3 hours, now departing <b class="num">20:40</b>.
@@ -590,7 +582,7 @@
     </div>
     <h2>Speed versus accuracy</h2>
     <p class="situation">
-      Transit passenger. Inbound CX 715 from Singapore is running late; the Zurich connection at
+      Transit passenger. Inbound Flight 715 from Singapore is running late; the Zurich connection at
       Hong Kong is tight but not yet lost. This is the uncertainty scenario — at the moment of the
       alert, the airline genuinely does not know the answer.
     </p>
@@ -614,15 +606,12 @@
           <div class="cx-head">
             <div class="cx-brandrow">
               <svg class="cx-back" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
-              <div class="cx-word">
-                <svg class="cx-swoosh" viewBox="0 0 34 22"><path d="M1 20C9 20 15 15 20 9c3.5-4.2 7-7.4 13-8-4 3-6.5 6.6-9.5 10.5C18.5 18 11 21.5 1 20z" fill="#fff"/></svg>
-                CATHAY PACIFIC
-              </div>
+              <div class="cx-word">Flight status</div>
               <span class="cx-spacer-ico"></span>
             </div>
           </div>
           <div class="cx-body">
-            <div class="cx-strip num"><b>CX 715</b> · SIN → HKG · in the air</div>
+            <div class="cx-strip num"><b>Flight 715</b> · SIN → HKG · in the air</div>
 
             <div class="cx-map">
               <svg viewBox="0 0 300 158" preserveAspectRatio="none">
@@ -651,7 +640,7 @@
 
             <div class="cx-card">
               <div class="cx-card-lab">Your connection</div>
-              <h4 class="num">CX 383 · Zurich · 23:55</h4>
+              <h4 class="num">Flight 383 · Zurich · 23:55</h4>
               <p class="dim" style="margin-top:4px">We're checking options now and will update you by <b style="color:var(--cx-ink)">18:30</b>.</p>
             </div>
 
@@ -688,15 +677,12 @@
           <div class="cx-head">
             <div class="cx-brandrow">
               <svg class="cx-back" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
-              <div class="cx-word">
-                <svg class="cx-swoosh" viewBox="0 0 34 22"><path d="M1 20C9 20 15 15 20 9c3.5-4.2 7-7.4 13-8-4 3-6.5 6.6-9.5 10.5C18.5 18 11 21.5 1 20z" fill="#fff"/></svg>
-                CATHAY PACIFIC
-              </div>
+              <div class="cx-word">Your connection</div>
               <span class="cx-spacer-ico"></span>
             </div>
           </div>
           <div class="cx-body">
-            <div class="cx-strip num"><b>CX 715</b> → <b>CX 383</b> · Zurich</div>
+            <div class="cx-strip num"><b>Flight 715</b> → <b>Flight 383</b> · Zurich</div>
 
             <div class="cx-banner ok">
               <div class="cx-banner-lab">Connection protected</div>
@@ -775,7 +761,7 @@
     </div>
     <h2>Autonomy</h2>
     <p class="situation">
-      Diamond member, connection missed, overnight in Hong Kong required. The full recovery scenario:
+      Top-tier member, connection missed, overnight in Hong Kong required. The full recovery scenario:
       a hotel, a car and a seat all need to exist by morning. The airline has already found the answer —
       the question is whether it presents one, or many.
     </p>
@@ -799,15 +785,12 @@
           <div class="cx-head">
             <div class="cx-brandrow">
               <svg class="cx-back" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
-              <div class="cx-word">
-                <svg class="cx-swoosh" viewBox="0 0 34 22"><path d="M1 20C9 20 15 15 20 9c3.5-4.2 7-7.4 13-8-4 3-6.5 6.6-9.5 10.5C18.5 18 11 21.5 1 20z" fill="#fff"/></svg>
-                CATHAY PACIFIC
-              </div>
+              <div class="cx-word">Rebooking</div>
               <span class="cx-spacer-ico"></span>
             </div>
           </div>
           <div class="cx-body">
-            <div class="cx-strip num">Diamond · <b>Michael McGill</b></div>
+            <div class="cx-strip num">Top tier · <b>Michael McGill</b></div>
 
             <div class="cx-banner ok">
               <div class="cx-banner-lab">We've rebooked you</div>
@@ -818,7 +801,7 @@
 
             <div class="cx-card">
               <div class="cx-card-lab">Your new flight</div>
-              <h4 class="num" style="font-size:16px">CX 383 · 09:00 → 15:35</h4>
+              <h4 class="num" style="font-size:16px">Flight 383 · 09:00 → 15:35</h4>
               <p class="dim" style="margin-top:4px">Hong Kong → Zurich · Business · Seat 15A</p>
             </div>
 
@@ -866,16 +849,13 @@
           <div class="cx-head">
             <div class="cx-brandrow">
               <svg class="cx-back" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
-              <div class="cx-word">
-                <svg class="cx-swoosh" viewBox="0 0 34 22"><path d="M1 20C9 20 15 15 20 9c3.5-4.2 7-7.4 13-8-4 3-6.5 6.6-9.5 10.5C18.5 18 11 21.5 1 20z" fill="#fff"/></svg>
-                CATHAY PACIFIC
-              </div>
+              <div class="cx-word">Rebooking</div>
               <span class="cx-spacer-ico"></span>
             </div>
           </div>
           <div class="cx-body pad0">
             <div style="padding:0 17px">
-              <div class="cx-strip num">Diamond · <b>Michael McGill</b></div>
+              <div class="cx-strip num">Top tier · <b>Michael McGill</b></div>
               <h4 style="font-size:19px; font-weight:600; letter-spacing:-.015em; margin-bottom:4px">Choose your flight to Zurich</h4>
               <p style="font-size:12.5px; color:var(--cx-grey); margin-bottom:14px">4 options · hotel and transport included with any</p>
             </div>
@@ -895,14 +875,14 @@
               <span class="radio"></span>
               <div class="info">
                 <div class="t"><b class="num">09:00</b><em>→ 15:35</em><span class="cx-badge">Recommended</span></div>
-                <div class="m num">CX 383 · Direct · Business</div>
+                <div class="m num">Flight 383 · Direct · Business</div>
               </div>
             </div>
             <div class="cx-opt">
               <span class="radio"></span>
               <div class="info">
                 <div class="t"><b class="num">06:05</b><em>→ 12:20</em></div>
-                <div class="m num">LX 139 · Direct · Economy</div>
+                <div class="m num">Partner airline · Direct · Economy</div>
               </div>
               <span class="price">3h earlier</span>
             </div>
@@ -910,7 +890,7 @@
               <span class="radio"></span>
               <div class="info">
                 <div class="t"><b class="num">11:40</b><em>→ 21:05</em></div>
-                <div class="m num">CX 255 + LX · via London</div>
+                <div class="m num">Flight 255 + partner · via London</div>
               </div>
               <span class="price">+5h 30m</span>
             </div>
@@ -946,8 +926,8 @@
       "See other options" — high tap-through means the single answer is landing as withholding, not
       service. In B, measure how long she deliberates and whether she ends on the badged flight anyway:
       if nearly everyone picks the recommendation after ninety seconds of scanning, the list bought
-      nothing but delay. Segment by tier — Diamond members may expect the choice specifically <b>because</b>
-      they are Diamond.
+      nothing but delay. Segment by tier — top-tier members may expect the choice specifically <b>because</b>
+      of that status.
     </p>
   </div>
 </section>
@@ -988,15 +968,12 @@
           <div class="cx-head">
             <div class="cx-brandrow">
               <svg class="cx-back" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
-              <div class="cx-word">
-                <svg class="cx-swoosh" viewBox="0 0 34 22"><path d="M1 20C9 20 15 15 20 9c3.5-4.2 7-7.4 13-8-4 3-6.5 6.6-9.5 10.5C18.5 18 11 21.5 1 20z" fill="#fff"/></svg>
-                CATHAY PACIFIC
-              </div>
+              <div class="cx-word">Rebooking</div>
               <span class="cx-spacer-ico"></span>
             </div>
           </div>
           <div class="cx-body">
-            <div class="cx-strip num">Diamond · <b>Michael McGill</b></div>
+            <div class="cx-strip num">Top tier · <b>Michael McGill</b></div>
 
             <div class="cx-banner ok">
               <div class="cx-banner-lab">Confirmed</div>
@@ -1007,7 +984,7 @@
 
             <div class="cx-card">
               <div class="cx-card-lab">Your new flight</div>
-              <h4 class="num" style="font-size:16px">CX 383 · 09:00 → 15:35</h4>
+              <h4 class="num" style="font-size:16px">Flight 383 · 09:00 → 15:35</h4>
               <p class="dim" style="margin-top:4px">Hong Kong → Zurich · Business · Seat 15A</p>
             </div>
 
@@ -1054,15 +1031,12 @@
           <div class="cx-head">
             <div class="cx-brandrow">
               <svg class="cx-back" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
-              <div class="cx-word">
-                <svg class="cx-swoosh" viewBox="0 0 34 22"><path d="M1 20C9 20 15 15 20 9c3.5-4.2 7-7.4 13-8-4 3-6.5 6.6-9.5 10.5C18.5 18 11 21.5 1 20z" fill="#fff"/></svg>
-                CATHAY PACIFIC
-              </div>
+              <div class="cx-word">Rebooking</div>
               <span class="cx-spacer-ico"></span>
             </div>
           </div>
           <div class="cx-body">
-            <div class="cx-strip num">Diamond · <b>Michael McGill</b></div>
+            <div class="cx-strip num">Top tier · <b>Michael McGill</b></div>
 
             <div class="cx-banner ok">
               <div class="cx-banner-lab">Confirmed</div>
@@ -1073,14 +1047,14 @@
 
             <div class="cx-card">
               <div class="cx-card-lab">Your new flight</div>
-              <h4 class="num" style="font-size:16px">CX 383 · 09:00 → 15:35</h4>
+              <h4 class="num" style="font-size:16px">Flight 383 · 09:00 → 15:35</h4>
               <p class="dim" style="margin-top:4px">Hong Kong → Zurich · Business · Seat 15A</p>
             </div>
 
             <div class="cx-tradeoff">
               <div class="cx-card-lab">Why this one</div>
               <p>
-                This gets you to Zurich earliest and keeps your Business cabin. There's a Swiss option
+                This gets you to Zurich earliest and keeps your Business cabin. There's a partner airline option
                 3 hours earlier in Economy if you'd prefer.
               </p>
               <div class="cx-link" style="justify-content:flex-start; margin-top:10px">
@@ -1122,7 +1096,7 @@
     <p>
       <b>Whether admitting the alternative reads as honesty or as a downgrade.</b> B is the riskier
       screen: it tells her something faster exists, which can convert a solved problem back into an
-      open decision. Measure perceived effort — "how hard do you think Cathay worked on this?" — against
+      open decision. Measure perceived effort — "how hard do you think the airline worked on this?" — against
       satisfaction with the outcome. The failure mode to look for is the two diverging: <b>effort
       perceived as higher, satisfaction lower</b>. If that happens, the trade-off is better placed one
       layer down, on request, rather than on the confirmation itself.
@@ -1149,10 +1123,8 @@
     <em>is</em> the variable. Do not equalise it.</p>
   </div>
   <div>
-    <h4>On these mockups</h4>
-    <p>Styling approximates the Cathay Pacific app for familiarity; the wing mark is a placeholder
-    rather than the production asset. Not an official Cathay Pacific artefact — internal concept
-    stimulus only.</p>
+    <h4>Deliberately unbranded</h4>
+    <p>No airline name, logo or flight prefix appears on any screen. Carrier identity is left to be inferred from styling alone, so brand affinity cannot contaminate a reaction to the behaviour.</p>
   </div>
 </footer>
 
