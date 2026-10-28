@@ -293,7 +293,7 @@ export function LiveFlightLookup() {
                           ? `${minutes} min until estimated boarding`
                           : "Estimated boarding time reached; check airport displays."}
                       <small>
-                        Demo estimate: scheduled departure minus 40 min.
+                        Estimated boarding: 40 min before scheduled departure.
                       </small>
                     </span>
                   </div>

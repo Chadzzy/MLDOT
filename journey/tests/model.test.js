@@ -74,7 +74,7 @@ test("a recovery needs a cancellation and a recognised option", () => {
   );
   const recovered = reducer(cancelled, { type: "RECOVER", id: "earliest" });
   assert.equal(deriveJourney(recovered).passState, "superseded");
-  assert.match(deriveJourney(recovered).detail, /simulated/);
+  assert.match(deriveJourney(recovered).detail, /confirmation is pending/);
   assert.equal(deriveJourney(recovered).recovery.via, "HEL");
 });
 

@@ -138,7 +138,7 @@ export function saveNativePreferences(priority, text) {
       resolve({
         ok: false,
         message:
-          "Saving is taking longer than expected. Check Journey simulation before retrying.",
+          "Saving is taking longer than expected. Check your connection before retrying.",
       });
     }, 35000);
     preferenceRequests.set(requestID, { resolve, timeout });

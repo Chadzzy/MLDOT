@@ -44,7 +44,9 @@ recorded asset gap; no replacement was introduced in this work.
 
 The IFE code and paired-screen state are visual examples. No camera scan, backend
 pairing, real screen acknowledgement, aircraft seat binding or content transfer
-occurs. The UI labels the action **Show paired-screen mockup**.
+occurs. The customer action is **View my selections**; its result shows saved selections,
+with seatback connection still pending. Technical simulation explanations stay in
+this document and the presenter controls, rather than the passenger copy.
 
 Letterboxd account access, Uber booking, meal orders and assistance requests are
 not connected. Family/support and meal selections are preferences, not confirmed
@@ -68,3 +70,12 @@ for source `a526b0d` ([CI evidence](https://github.com/Chadzzy/MLDOT/actions/run
 The published HTML Preview page opened, rendered the new flow and saved a choice
 without page errors; the published design-board image matches the reviewed file.
 Physical-device verification is not inferred from Chromium or simulator unit tests.
+
+## Passenger copy · 28 October 2026
+
+Removed demo/simulation, sample and mockup labels throughout the passenger journey,
+including preparation, weather, boarding passes, recovery, sharing and arrival.
+Estimated times and pending confirmations remain explicit. The customer-copy
+audit covered all 30 passenger routes; presenter controls and the decision inspector
+retain source/provenance explanations. The original components and interactions
+remain in use.

@@ -78,7 +78,7 @@ function Save({ values, children = "Save to my journey" }) {
         className="primary-button"
         onClick={() => {
           dispatch({ type: "PREPARATION", values });
-          toast("Saved for this demonstration journey");
+          toast("Saved to your journey");
           close();
         }}
       >
@@ -214,8 +214,7 @@ function Overview() {
         I’m exhausted. Help me decide.
       </button>
       <Footer>
-        Your choices are optional and editable. Design preview · preferences
-        stay on this device; no service requests are sent.
+        Your choices are optional. You can change them at any time.
       </Footer>
     </>
   );
@@ -313,7 +312,7 @@ function Transport() {
       </div>
       {minutes && (
         <div className="prep-time-card">
-          <small>EXAMPLE FROM CENTRAL</small>
+          <small>FROM CENTRAL</small>
           <strong>Allow around {minutes} minutes</strong>
           <p>
             For the journey to HKIA. Recheck traffic or train information before
@@ -327,14 +326,13 @@ function Transport() {
       )}
       {choice === "car" && (
         <Note title="A ride handoff, when you’re ready">
-          Your pickup and destination would carry into your chosen ride app.
-          This preview does not book or price a ride.
+          Confirm your pickup, destination and fare in your chosen ride app.
         </Note>
       )}
       <Save values={{ transport: choice }} />
       <Footer>
-        Travel times are demo allowances from Central, not a live route or an
-        airport check-in deadline.
+        Estimated travel times from Central. Allow extra time for check-in and
+        security.
       </Footer>
     </>
   );
@@ -409,8 +407,7 @@ function Family() {
       </div>
       {assistance && assistance !== "none" && (
         <Note title="Preference saved when you continue">
-          This design preview does not send an assistance request. Confirm
-          support with the airline before travel.
+          Confirm your assistance arrangements with the airline before travel.
         </Note>
       )}
       <Save values={{ family, buggy, assistance }} />
@@ -466,7 +463,7 @@ function Food() {
               <small>YOUR INCLUDED CATHAY LOUNGE</small>
               <h3>A meal before you fly</h3>
               <p>
-                The Pier, First is included for your demo Diamond profile. Check
+                The Pier, First is included for your Diamond membership. Check
                 your time before heading over.
               </p>
               <button
@@ -481,8 +478,8 @@ function Food() {
       )}
       <Save values={{ meal: choice }} />
       <Footer>
-        A preference is not a meal order. Special meal availability and
-        confirmation are not connected in this preview.
+        Your meal preference is saved separately from your order. Confirm
+        special meal availability with the airline.
       </Footer>
     </>
   );
@@ -643,16 +640,15 @@ function Media() {
         ))}
       </div>
       <Note title="Bring your film tastes with you" icon="film">
-        A future Letterboxd connection could use favourites and watchlists. For
-        now, explore by mood; no account has been connected.
+        Explore films and music by mood, and save your favourites for the
+        journey.
       </Note>
       <button className="primary-button" onClick={() => open("prep-onboard")}>
-        Preview on board · {state.saved.length} saved{" "}
-        <Icon name="arrow" size={18} />
+        On board · {state.saved.length} saved <Icon name="arrow" size={18} />
       </button>
       <Footer>
-        Example entertainment catalogue, not verified availability on this
-        flight. Selections are saved; media is not downloaded.
+        Onboard availability may vary. Your selections are saved; media is not
+        downloaded.
       </Footer>
     </>
   );
@@ -667,26 +663,24 @@ function Onboard() {
   return (
     <>
       <Heading
-        eyebrow="ONBOARD DESIGN PREVIEW"
+        eyebrow="ON BOARD"
         title={
-          paired
-            ? "Your choices, on your screen."
-            : "Pick up where you left off."
+          paired ? "Your choices, together." : "Pick up where you left off."
         }
       >
         {paired
-          ? "This is how your saved queue could appear after pairing."
+          ? "Your films and music, saved in one place."
           : "When you’re on board, link your saved selections to your seatback screen."}
       </Heading>
       <div className={`prep-seatback ${paired ? "paired" : ""}`}>
         <div className="prep-seatback-top">
-          <span>STUDIO CX · CONCEPT</span>
+          <span>STUDIO CX</span>
           <span>{flight.seat ? `Seat ${flight.seat}` : "Seat pending"}</span>
         </div>
         {paired ? (
           <>
             <span className="prep-connected">
-              <Icon name="check" size={17} /> Pairing preview
+              <Icon name="check" size={17} /> Saved selections
             </span>
             <h3>Your flight playlist</h3>
             <div className="prep-seatback-queue">
@@ -705,7 +699,7 @@ function Onboard() {
             <h3>Make yourself at home.</h3>
             <p>Your films and music, ready to choose.</p>
             <div className="prep-pair-code">
-              <small>EXAMPLE PAIRING CODE</small>
+              <small>PAIRING CODE</small>
               <strong>JOURNEY</strong>
             </div>
           </>
@@ -727,7 +721,7 @@ function Onboard() {
       </div>
       {saved.length ? (
         <button className="primary-button" onClick={() => setPaired(!paired)}>
-          {paired ? "Reset pairing preview" : "Show paired-screen mockup"}
+          {paired ? "Back to pairing" : "View my selections"}
         </button>
       ) : (
         <button className="primary-button" onClick={() => open("prep-media")}>
@@ -739,12 +733,11 @@ function Onboard() {
           className="secondary-button"
           onClick={() => open("prep-arrival")}
         >
-          Preview your arrival <Icon name="arrow" size={17} />
+          Your arrival <Icon name="arrow" size={17} />
         </button>
       )}
       <Footer>
-        Visual simulation only. The code is not scannable; no screen is paired,
-        no content is transferred and no seat assignment is changed.
+        Your selections are saved on this device. Seatback connection pending.
       </Footer>
     </>
   );
@@ -755,10 +748,7 @@ function Arrival() {
   const [ready, setReady] = useState(false);
   return (
     <>
-      <Heading
-        eyebrow="ARRIVAL DESIGN PREVIEW"
-        title="A gentler start in Zurich."
-      >
+      <Heading eyebrow="YOUR ARRIVAL" title="A gentler start in Zurich.">
         Keep the next few steps simple, then make the day your own.
       </Heading>
       <div className="prep-time-card">
@@ -800,9 +790,8 @@ function Arrival() {
         I’m ready to leave
       </button>
       {ready && (
-        <Note title="Ride handoff preview" icon="pin">
-          A ride app would open with your confirmed pickup point. No Uber
-          request or payment has been made.
+        <Note title="Your onward ride" icon="pin">
+          Confirm your pickup point and fare in your ride app when you’re ready.
         </Note>
       )}
       <button
@@ -811,10 +800,7 @@ function Arrival() {
       >
         Reflect on your journey
       </button>
-      <Footer>
-        This previews the arrival stage. It does not change the journey clock or
-        mark the live flight as arrived.
-      </Footer>
+      <Footer>Check local pickup signs after collecting your bags.</Footer>
     </>
   );
 }
@@ -835,8 +821,8 @@ function Feedback() {
               eyebrow="THANK YOU"
               title="A little better, every journey."
             >
-              Your response is saved in this preview. Thank you for helping
-              shape the experience.
+              Your response is saved. Thank you for helping shape the
+              experience.
             </Heading>
           </div>
           <button className="secondary-button" onClick={() => setSent(false)}>
@@ -901,10 +887,7 @@ function Feedback() {
           </button>
         </>
       )}
-      <Footer>
-        Feedback stays on this device in the prototype. Nothing is sent to
-        Cathay or an analytics service.
-      </Footer>
+      <Footer>Your feedback is saved on this device.</Footer>
     </>
   );
 }
@@ -922,7 +905,7 @@ function Ready() {
       </Heading>
       <div className="prep-section-heading">
         <h3>Your flight</h3>
-        <span>Scenario information</span>
+        <span>Journey information</span>
       </div>
       <Note
         title={journey.status}

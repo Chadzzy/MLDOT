@@ -59,7 +59,7 @@ export const MODAL_TITLES = {
   profile: "Your preferences",
   notifications: "Journey updates",
   research: "Demo controls",
-  activity: "Live Activity preview",
+  activity: "Live Activity",
   seat: "Your seat",
   upgrade: "Your cabin",
   explore: "A little inspiration",
@@ -179,7 +179,7 @@ function Weather() {
           ))}
         </div>
       ))}
-      <p className="weather-source">Illustrative weather · scenario data</p>
+      <p className="weather-source">Weather outlook</p>
     </>
   );
 }
@@ -234,9 +234,8 @@ function Connection() {
         Let someone follow your journey
       </button>
       <p className="subtle small">
-        Illustrative arrival and gates. Allow for disembarkation, transfer
-        checks and movement between gates; the countdown does not verify that
-        the connection is achievable.
+        Allow for disembarkation, transfer checks and movement between gates;
+        the countdown does not verify that the connection is achievable.
       </p>
     </>
   );
@@ -253,7 +252,7 @@ function Transport() {
       <div className="white-card">
         <span className="mini-eyebrow">YOUR JOURNEY TO HKIA</span>
         <h3>Leave at 22:10 · Arrive around 22:55</h3>
-        <p>By car · 45 minutes in this scenario</p>
+        <p>By car · Around 45 minutes</p>
       </div>
       <div className="gentle-note">
         <Icon name="ticket" />
@@ -274,9 +273,8 @@ function Transport() {
         onClick={() => open("live")}
       />
       <p className="subtle small">
-        The car journey is illustrated, with no location or traffic service
-        connected. Live trains use the current time, independently of the
-        scenario clock.
+        Car travel time is estimated. Check traffic before leaving. Train
+        departures show current service information.
       </p>
     </>
   );
@@ -346,7 +344,7 @@ function Entertainment() {
       <p className="subtle small">
         {tab === "saved"
           ? `${entertainmentMinutes(state.saved)} minutes selected · saved on this device`
-          : "A sample collection to help you plan. Onboard availability is not verified."}
+          : "Choose something for your flight. Onboard availability may vary."}
       </p>
       <div className="media-list">
         {ordered.map((item, index) => {
@@ -628,7 +626,7 @@ function LoungeDirections() {
           Follow airport signs towards Gate 63, then The Pier, First on Level 6.
         </span>
       </div>
-      <div className="gate-map" aria-label="Illustrative lounge location">
+      <div className="gate-map" aria-label="Lounge location overview">
         <svg viewBox="0 0 327 187" role="img">
           <rect width="327" height="187" rx="15" fill="#f3f3f1" />
           <path
@@ -652,8 +650,8 @@ function LoungeDirections() {
         </svg>
       </div>
       <p className="subtle small">
-        Illustrative location, not a live indoor route. Follow airport signage
-        for the accessible route and level changes.
+        Location overview. Follow airport signage for the accessible route and
+        level changes.
       </p>
     </>
   );
@@ -669,7 +667,7 @@ function Directions() {
   const route = routes[state.preferences.location];
   return (
     <>
-      <SourceLabel>Illustrative route · not live navigation</SourceLabel>
+      <SourceLabel>Route overview</SourceLabel>
       <h2>
         Your next stop:
         <br />
@@ -697,7 +695,7 @@ function Directions() {
         <svg
           viewBox="0 0 340 230"
           role="img"
-          aria-label={`Schematic sample route from ${state.preferences.location} to Gate ${journey.flight.gate}`}
+          aria-label={`Route overview from ${state.preferences.location} to Gate ${journey.flight.gate}`}
         >
           <rect width="340" height="230" rx="18" fill="#f0f1ed" />
           <g fill="#e0e4df">
@@ -778,7 +776,7 @@ function Readiness() {
     <>
       <h2>Is my aircraft ready?</h2>
       <p className="readiness-progress">
-        Latest scenario update · {time(journey.clock)} HKT
+        Latest update · {time(journey.clock)} HKT
       </p>
       <TimingNote />
       <div className="readiness-list">
@@ -821,8 +819,8 @@ function Readiness() {
       <div className="gentle-note">
         <Icon name="info" />
         <p>
-          Simulated operational updates. Weather observations alone do not
-          confirm an aircraft fault, flight delay or completion time.
+          Weather observations alone do not confirm an aircraft fault, flight
+          delay or completion time.
         </p>
       </div>
     </>
@@ -888,7 +886,7 @@ function Recovery() {
     if (journey.recovery)
       return (
         <>
-          <SourceLabel>Simulated recovery · no ticket issued</SourceLabel>
+          <SourceLabel>Airline confirmation pending</SourceLabel>
           <div className="success-circle">
             <Icon name="check" size={34} />
           </div>
@@ -900,11 +898,11 @@ function Recovery() {
           <div className="confirmation-timeline">
             <p>
               <Icon name="circleCheck" />
-              Recovery option selected in demo
+              Preferred recovery option saved
             </p>
             <p>
               <Icon name="clock" />
-              Airline confirmation simulated; no actual booking
+              Awaiting airline confirmation
             </p>
             <p>
               <Icon name="ticket" />
@@ -940,18 +938,18 @@ function Recovery() {
         <>
           <h2>Recovery, when you need it.</h2>
           <p className="intro">
-            Your current scenario does not have a cancellation. Use the demo
-            controls to explore recovery.
+            Your flight hasn’t been cancelled. We’ll help you find alternatives
+            if your plans change.
           </p>
-          <button className="primary-button" onClick={() => open("research")}>
-            Open demo controls
+          <button className="primary-button" onClick={() => open("flight")}>
+            View your flight
           </button>
         </>
       );
     if (choice)
       return (
         <>
-          <SourceLabel>No real booking will be made</SourceLabel>
+          <SourceLabel>Review your preferred option</SourceLabel>
           <h2>Does this work for you?</h2>
           <div className="white-card">
             <h3>
@@ -976,7 +974,7 @@ function Recovery() {
             className="primary-button"
             onClick={() => dispatch({ type: "RECOVER", id: choice.id })}
           >
-            Confirm demo recovery
+            Save this recovery option
             <Icon name="check" size={18} />
           </button>
           <button className="secondary-button" onClick={() => setChoice(null)}>
@@ -1071,8 +1069,8 @@ function Recovery() {
             </div>
             <p className="subtle small">
               {NATIVE_MODE
-                ? "Your preferences will be saved with this journey. The confirmed priority controls the comparison of demonstration options."
-                : "Your note is saved. The selected priority controls ranking in this prototype; no AI interpretation is connected."}
+                ? "Your preferences will be saved with this journey. Your selected priority guides the comparison."
+                : "Your note is saved. Your selected priority guides the comparison."}
             </p>
             {compareError && (
               <p role="alert" className="live-error">
@@ -1105,7 +1103,7 @@ function Recovery() {
                 ? "Business cabin first, then arrival time."
                 : "The earliest arrival first, with cabin trade-offs made clear."}
             </p>
-            <SourceLabel>Sample schedules · no live inventory</SourceLabel>
+            <SourceLabel>Availability to be confirmed</SourceLabel>
             {options.map((o, i) => (
               <RecoveryOption
                 key={o.id}
@@ -1138,7 +1136,7 @@ function Rest() {
   const arrival = journey.recovery?.arrival || journey.flight.arrival;
   return (
     <>
-      <SourceLabel>Exploratory rest concept</SourceLabel>
+      <SourceLabel>Your rest preferences</SourceLabel>
       <TimingNote />
       <div className="rest-hero">
         <Icon name="moon" size={42} />
@@ -1149,7 +1147,7 @@ function Rest() {
         <div>
           <span>HONG KONG</span>
           <strong>{time(journey.clock)}</strong>
-          <small>Your demo clock</small>
+          <small>Journey time</small>
         </div>
         <div>
           <span>ZURICH</span>
@@ -1169,8 +1167,8 @@ function Rest() {
             : journey.isUncertain
               ? "This is the original schedule; your updated arrival is not yet known."
               : journey.recovery
-                ? "Based on your selected demo recovery."
-                : "Based on the sample itinerary."}
+                ? "Based on your selected recovery option."
+                : "Based on your itinerary."}
         </p>
       </div>
       <div className="simple-timeline">
@@ -1213,8 +1211,8 @@ function Rest() {
         <Icon name="music" size={18} />
       </button>
       <p className="subtle small">
-        Jet-lag triggers and personalised sleep schedules are still to be
-        designed. This preview gives no timed light-exposure or medical advice.
+        Choose what feels comfortable for your journey. You can change your rest
+        preferences at any time.
       </p>
     </>
   );
@@ -1229,7 +1227,7 @@ function Documents() {
   });
   return (
     <>
-      <SourceLabel>Sample checklist · no requirements API</SourceLabel>
+      <SourceLabel>Travel checklist</SourceLabel>
       <h2>
         A little preparation.
         <br />
@@ -1277,8 +1275,8 @@ function Documents() {
       <div className="gentle-note">
         <Icon name="shield" />
         <p>
-          These are personal checkmarks, not travel clearance. Timatic or
-          another requirements service is not connected.
+          Use this checklist to keep track of your preparation. Confirm entry
+          and transit requirements with official sources before travel.
         </p>
       </div>
     </>
@@ -1291,7 +1289,7 @@ function SharePreview() {
   const [changes, setChanges] = useState(true);
   return (
     <>
-      <SourceLabel>Sharing preview · not published</SourceLabel>
+      <SourceLabel>Choose what to share</SourceLabel>
       <h2>
         A little reassurance
         <br />
@@ -1315,7 +1313,7 @@ function SharePreview() {
         />
       </label>
       <div className="shared-preview">
-        <span className="mini-eyebrow">EMMA’S JOURNEY · PREVIEW</span>
+        <span className="mini-eyebrow">EMMA’S JOURNEY</span>
         {times && (
           <>
             <h3>
@@ -1348,8 +1346,8 @@ function SharePreview() {
         {!times && !changes && <p>No journey details selected.</p>}
       </div>
       <p className="subtle small">
-        This demonstrates the recipient’s view. Secure sharing, expiry and
-        cross-device updates need a backend; no public link has been created.
+        Your sharing preferences stay on this device. Your journey hasn’t been
+        shared yet.
       </p>
     </>
   );
@@ -1381,7 +1379,7 @@ export function ModalContents({ type }) {
     case "flight":
       return (
         <>
-          <SourceLabel>Illustrative itinerary</SourceLabel>
+          <SourceLabel>Your itinerary</SourceLabel>
           <h2>
             Hong Kong
             <br />
@@ -1411,7 +1409,7 @@ export function ModalContents({ type }) {
           />
           <ModuleRow
             icon="share"
-            title="Share your journey · preview"
+            title="Share your journey"
             onClick={() => open("share")}
           />
         </>
@@ -1463,16 +1461,14 @@ export function ModalContents({ type }) {
     case "activity":
       return (
         <>
-          <SourceLabel>Web preview · not native iOS</SourceLabel>
+          <SourceLabel>Your journey at a glance</SourceLabel>
           <h2>
             Your next step,
             <br />
             at a glance.
           </h2>
           <ActivityPreview />
-          <p className="intro">
-            This preview follows the same scenario as your journey sheet.
-          </p>
+          <p className="intro">Your latest flight details, at a glance.</p>
         </>
       );
     case "profile":
@@ -1480,16 +1476,16 @@ export function ModalContents({ type }) {
         <>
           <div className="profile-avatar">EC</div>
           <h2>Emma Chan</h2>
-          <p className="intro">Diamond member · fictional demo profile</p>
+          <p className="intro">Diamond member</p>
           <div className="white-card">
             <div className="profile-numbers">
               <div>
                 <strong>19,932</strong>
-                <small>Asia Miles · demo</small>
+                <small>Asia Miles</small>
               </div>
               <div>
                 <strong>600</strong>
-                <small>Status points · demo</small>
+                <small>Status points</small>
               </div>
             </div>
           </div>
@@ -1537,7 +1533,7 @@ export function ModalContents({ type }) {
             <div>
               <strong>{journey.status}</strong>
               <p>{journey.message}</p>
-              <small>Scenario time · {time(journey.clock)} HKT</small>
+              <small>Updated · {time(journey.clock)} HKT</small>
             </div>
           </div>
           <button
@@ -1547,7 +1543,7 @@ export function ModalContents({ type }) {
             See my next step
           </button>
           <p className="subtle small">
-            Demo events only. No push notifications are being sent.
+            Your latest journey updates appear here.
           </p>
         </>
       );
@@ -1558,11 +1554,10 @@ export function ModalContents({ type }) {
           <div className="seat-display">
             <Icon name="seat" size={64} />
             <strong>{journey.flight.seat}</strong>
-            <span>{journey.flight.cabin} · Demo assignment</span>
+            <span>{journey.flight.cabin}</span>
           </div>
           <p className="intro">
-            This sample seat is consistent across your flight details and
-            boarding pass.
+            Find your seat on your flight details and boarding pass.
           </p>
           <button className="secondary-button" onClick={() => open("pass")}>
             View boarding pass
@@ -1577,7 +1572,7 @@ export function ModalContents({ type }) {
             <Icon name="seat" />
             <span>
               <strong>{journey.flight.cabin}</strong>
-              <small>Sample booking · Seat {journey.flight.seat}</small>
+              <small>Seat {journey.flight.seat}</small>
             </span>
           </div>
           <p className="intro">

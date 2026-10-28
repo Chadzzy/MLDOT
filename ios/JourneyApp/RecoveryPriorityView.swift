@@ -53,7 +53,7 @@ struct RecoveryPriorityView: View {
             saving = true
             let saved = await apply(priority)
             saving = false
-            if saved { dismiss() } else { explanation = "Your preference could not be saved. Reconnect using Journey simulation, then try again." }
+            if saved { dismiss() } else { explanation = "Your preference could not be saved. Check your connection, then try again." }
         }
     }
     @MainActor private func interpret() async {

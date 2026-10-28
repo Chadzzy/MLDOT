@@ -190,7 +190,7 @@ function HomeContent({ tab }) {
           <div className="profile-card">
             <div className="profile-avatar">EC</div>
             <h2>{journey.passenger.name}</h2>
-            <span className="gold-tag">Diamond · Demo profile</span>
+            <span className="gold-tag">Diamond</span>
           </div>
           <ModuleRow
             icon="settings"
@@ -201,7 +201,7 @@ function HomeContent({ tab }) {
           <ModuleRow
             icon="coffee"
             title="Explore lounge eligibility"
-            subtitle="Cathay lounges only · demo rules"
+            subtitle="Cathay lounges"
             onClick={() => open("lounge")}
           />
         </>
@@ -220,7 +220,7 @@ function HomeContent({ tab }) {
             <Icon name="arrow" size={18} />
           </button>
           <p className="subtle small">
-            Booking integrations are deferred in this prototype.
+            Your upcoming journeys will appear here.
           </p>
         </>
       ) : (
@@ -231,8 +231,8 @@ function HomeContent({ tab }) {
             ["coffee", "Cathay lounge access", "lounge"],
             ["shield", "Travel checklist", "documents"],
             ["headphones", "Entertainment plan", "entertainment"],
-            ["moon", "Rest-plan concept", "rest"],
-            ["share", "Sharing preview", "share"],
+            ["moon", "Rest preferences", "rest"],
+            ["share", "Share your journey", "share"],
             ["settings", "Demo controls", "research"],
           ].map(([i, t, m]) => (
             <ModuleRow key={m} icon={i} title={t} onClick={() => open(m)} />
@@ -507,7 +507,7 @@ function JourneySheet({ expanded, setExpanded }) {
 function GateDirections({ open, gate }) {
   return (
     <div className="gate-inline">
-      <div className="gate-map" aria-label="Illustrative route to the new gate">
+      <div className="gate-map" aria-label="Route overview to the new gate">
         <svg viewBox="0 0 327 187" role="img">
           <rect width="327" height="187" rx="15" fill="#f3f3f1" />
           <g fill="#e9e9e7">
@@ -825,11 +825,9 @@ function AppView() {
                         })
                       }
                     >
-                      Set up a demonstration trip
+                      Get ready for your journey
                     </button>
-                    <p className="small">
-                      Demonstration booking · no payment or ticket issued
-                    </p>
+                    <p className="small">Choose your journey to get started</p>
                   </section>
                 )}
                 <div
@@ -1007,7 +1005,7 @@ export default function App() {
       setSnapshot(result.data);
       setEvidence(result.evidence);
     } catch {
-      toast("Sample data could not be loaded. Please retry.");
+      toast("Journey information could not be loaded. Please retry.");
     } finally {
       setRefreshing(false);
     }

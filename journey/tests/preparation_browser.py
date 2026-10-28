@@ -31,12 +31,12 @@ with sync_playwright() as p:
  route('prep-rest');dialog().get_by_role('button',name='Settle in, then rest',exact=False).click();capture('06-rest')
  dialog().get_by_role('button',name='Save to my journey',exact=True).click();page.wait_for_timeout(300)
  route('prep-media');dialog().get_by_role('button',name='Rest',exact=True).click();dialog().get_by_role('button',name='Save Above the clouds',exact=True).click();dialog().get_by_role('button',name='Save Perfect Days',exact=True).click();capture('07-playlist')
- dialog().get_by_role('button',name='Preview on board · 2 saved').click();capture('08-onboard')
- dialog().get_by_role('button',name='Show paired-screen mockup').click();expect(dialog().locator('.prep-seatback')).to_contain_text('Perfect Days');capture('09-paired')
- dialog().get_by_role('button',name='Preview your arrival').click();capture('10-arrival')
- dialog().get_by_role('button',name='I’m ready to leave').click();expect(dialog()).to_contain_text('No Uber request')
+ dialog().get_by_role('button',name='On board · 2 saved').click();capture('08-onboard')
+ dialog().get_by_role('button',name='View my selections').click();expect(dialog().locator('.prep-seatback')).to_contain_text('Perfect Days');capture('09-paired')
+ dialog().get_by_role('button',name='Your arrival').click();capture('10-arrival')
+ dialog().get_by_role('button',name='I’m ready to leave').click();expect(dialog()).to_contain_text('Confirm your pickup point')
  dialog().get_by_role('button',name='Reflect on your journey').click();dialog().get_by_role('button',name='Some of the time',exact=False).click();dialog().locator('textarea').fill('The timing helped; I wanted a clearer buggy handover.');capture('11-feedback')
- dialog().get_by_role('button',name='Save my feedback').click();expect(dialog()).to_contain_text('response is saved in this preview');capture('12-thanks')
+ dialog().get_by_role('button',name='Save my feedback').click();expect(dialog()).to_contain_text('response is saved.');capture('12-thanks')
  route('cancelled');page.locator('.sheet-more .prep-entry').click();expect(dialog()).to_contain_text('Your choices stay with you');expect(dialog()).to_contain_text('Keep it easy');expect(dialog()).to_contain_text('2 selections saved')
  page.reload();expect(dialog()).to_have_count(0)
  route('prepare');expect(dialog()).to_contain_text('With a buggy');expect(dialog()).to_contain_text('Vegetarian preference');expect(dialog()).to_contain_text('2 selections saved')
@@ -51,7 +51,7 @@ with sync_playwright() as p:
  # Check the compact native host without the browser phone frame.
  native=b.new_page(viewport={'width':393,'height':780});native.on('pageerror',lambda e:errors.append(str(e)));native.add_init_script('window.webkit={messageHandlers:{journey:{postMessage:()=>{}}}};');native.goto(BASE+'?native=1');native.wait_for_function('typeof window.__journeyNativeReceive === "function"');native.evaluate('(v)=>window.__journeyNativeReceive(v)',{'version':1,'journeyID':'prep-review','booked':True,'phase':'pretravel','event':'','clock':'2026-10-27T14:10:00Z','revision':1});native.locator('.home-sections .prep-entry').click();expect(native.get_by_role('dialog')).to_contain_text('Make this journey yours');native.screenshot(path=str(OUT/'native-preparation.png'))
  assert not errors,errors
- report={'allElevenScreensReviewed':True,'originalFontAndModalShell':True,'progressiveChoicesAndBack':True,'transportChangesNextAction':True,'familyBranch':True,'mediaSharesExistingSavedState':True,'pairingClearlySimulated':True,'arrivalAndFeedback':True,'preservedThroughCancellationAndReload':True,'boardingPassShortcut':True,'noHorizontalOverflow':True,'nativeHostEntry':True,'errors':errors}
+ report={'allElevenScreensReviewed':True,'originalFontAndModalShell':True,'progressiveChoicesAndBack':True,'transportChangesNextAction':True,'familyBranch':True,'mediaSharesExistingSavedState':True,'savedSelectionsDoNotClaimTransfer':True,'arrivalAndFeedback':True,'preservedThroughCancellationAndReload':True,'boardingPassShortcut':True,'noHorizontalOverflow':True,'nativeHostEntry':True,'errors':errors}
  (OUT/'results.json').write_text(json.dumps(report,indent=2));print(json.dumps(report,indent=2))
  board=b.new_page(viewport={'width':1560,'height':1140},device_scale_factor=1)
  font=base64.b64encode((ROOT/'src/assets/gt-walsheim-regular.woff2').read_bytes()).decode()

@@ -14,7 +14,7 @@ with sync_playwright() as p:
  page.goto(f'http://127.0.0.1:{server.server_port}/journey.html?native=1')
  page.wait_for_function('typeof window.__journeyNativeReceive === "function"')
  expect(page.locator('.native-booking')).to_be_visible()
- page.get_by_role('button',name='Set up a demonstration trip').click()
+ page.get_by_role('button',name='Get ready for your journey',exact=True).click()
  assert page.evaluate('window.nativeMessages.at(-1).type')=='controls'
  assert not page.locator('.iphone-notch').is_visible()
  assert not page.locator('.trigger-navigation').is_visible()

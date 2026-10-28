@@ -9,7 +9,7 @@ import { Icon, Wing } from "./icons.jsx";
 import { time, date, fullDate, liveActivity, displayFlight } from "./model.js";
 import { SCENARIOS } from "./data.js";
 
-export function SourceLabel({ children = "Sample data" }) {
+export function SourceLabel({ children = "Journey information" }) {
   return (
     <span className="source-label">
       <span />
@@ -173,7 +173,7 @@ export function PassCard() {
               {journey.passState === "used"
                 ? "Your itinerary remains available throughout your journey."
                 : journey.recovery
-                  ? "Your replacement boarding pass is pending. The recovery is simulated."
+                  ? "Your replacement boarding pass is pending."
                   : "Open recovery options to choose your next step."}
             </p>
           </div>
@@ -333,7 +333,7 @@ export function ActivityPreview({ compact = false }) {
       <button
         className="reference-activity-action"
         onClick={() => open(journey.nextModal)}
-        aria-label="Open journey from Live Activity preview"
+        aria-label="Open journey from Live Activity"
       >
         <span>
           {changedGate ? (
@@ -428,7 +428,7 @@ export function RecoveryOption({ option, best, onSelect }) {
         <span className={best ? "best-label" : "eyebrow"}>
           {best ? "BEST MATCH FOR YOUR PRIORITY" : option.title}
         </span>
-        <span className="small-tag">Demo option</span>
+        <span className="small-tag">Alternative flight</span>
       </div>
       <h3>{option.airline}</h3>
       <div className="option-route">
@@ -468,7 +468,7 @@ export function RecoveryOption({ option, best, onSelect }) {
           className={best ? "primary-button" : "secondary-button"}
           onClick={() => onSelect(option)}
         >
-          Choose this demo option
+          Choose this option
           <Icon name="arrow" size={16} />
         </button>
       )}

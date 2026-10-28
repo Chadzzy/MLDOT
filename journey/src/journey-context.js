@@ -55,7 +55,7 @@ export function boardingContext(journey) {
     label: `${minutes} min until boarding · ${time(flight.boarding)} HKT`,
     detail:
       minutes > 25
-        ? `Allow 15 min to reach Gate ${flight.gate}, plus a 10 min buffer (demo planning estimates).`
+        ? `Allow 15 min to reach Gate ${flight.gate}, plus a 10 min buffer (estimated).`
         : `Head towards Gate ${flight.gate} now; keep your remaining time for the walk.`,
     availableMinutes: Math.max(0, minutes - 25),
     leaveBy: new Date(Date.parse(flight.boarding) - 25 * 60000).toISOString(),
@@ -74,10 +74,10 @@ export function weatherContext(journey) {
     stage: impacted ? "impact" : observation.stage,
     title: impacted ? "Weather is affecting your departure" : observation.title,
     detail: impacted
-      ? "The demonstration flight is delayed because of weather at Hong Kong. Revised boarding and departure times are unconfirmed."
+      ? "Your flight is delayed because of weather at Hong Kong. Revised boarding and departure times are unconfirmed."
       : observation.detail,
     // A warning never changes a flight status. Only an explicit flight event does.
-    source: "Scenario weather",
+    source: "Weather outlook",
   };
 }
 

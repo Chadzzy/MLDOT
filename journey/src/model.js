@@ -253,7 +253,7 @@ export function deriveJourney(state, snapshot = BASE_JOURNEY) {
       status: "Recovery selected",
       message: "Your new journey is taking shape.",
       detail:
-        "Your choice is saved in this demo. Booking and ticketing are simulated.",
+        "Your preferred option is saved. Airline confirmation is pending.",
       nextTitle: "Review your recovery plan",
       nextDetail: "Your replacement boarding pass is pending.",
       nextModal: "recovery",
@@ -298,7 +298,7 @@ export function deriveJourney(state, snapshot = BASE_JOURNEY) {
         detail:
           "Your boarding time is unchanged. Check the route from your selected location.",
         nextTitle: `Head to Gate ${flight.gate}`,
-        nextDetail: "Open the illustrative airport directions.",
+        nextDetail: "View directions to your gate.",
         nextModal: "directions",
         nextIcon: "sign",
         passState: "demo",
@@ -327,7 +327,7 @@ export function deriveJourney(state, snapshot = BASE_JOURNEY) {
         status: "Flight cancelled",
         message: "Let’s get your journey back on track.",
         detail:
-          "Your flight to Zurich has been cancelled in this scenario. Tell us what matters for your next flight.",
+          "Your flight to Zurich has been cancelled. Tell us what matters for your next flight.",
         nextTitle: "Find a recovery that works for you",
         nextDetail: "Compare arrival time, cabin and connections.",
         nextModal: "recovery",
@@ -382,7 +382,7 @@ export function liveActivity(journey) {
     return {
       title: "Recovery selected",
       value: time(journey.recovery.departure),
-      label: "New departure · demo",
+      label: "New departure",
       subtitle: "Replacement pass pending",
       icon: "check",
     };

@@ -37,21 +37,21 @@ export const BASE_JOURNEY = {
       at: "2026-10-27T14:10:00Z",
       stage: "clear",
       title: "Weather outlook is settled",
-      detail: "No weather concern in this demonstration yet.",
+      detail: "No weather concern at the moment.",
     },
     {
       at: "2026-10-27T14:55:00Z",
       stage: "watch",
       title: "Weather warning · flight unchanged",
       detail:
-        "A thunderstorm warning has been issued in this scenario. Your flight is still on schedule; keep your boarding time in view.",
+        "A thunderstorm warning has been issued. Your flight is still on schedule; keep your boarding time in view.",
     },
     {
       at: "2026-10-27T15:15:00Z",
       stage: "worsening",
       title: "Conditions are worsening",
       detail:
-        "Thunderstorms are moving closer in this scenario. Stay near your gate. No delay to your flight has been confirmed.",
+        "Thunderstorms are moving closer. Stay near your gate. No delay to your flight has been confirmed.",
     },
   ],
   weather: [
@@ -124,7 +124,7 @@ export const CATALOGUE = [
   {
     id: "clouds",
     title: "Above the clouds",
-    subtitle: "Ambient · example playlist",
+    subtitle: "Ambient · playlist",
     category: "music",
     duration: 45,
     style: "clouds",
@@ -134,7 +134,7 @@ export const CATALOGUE = [
   {
     id: "city",
     title: "City after dark",
-    subtitle: "Jazz · example playlist",
+    subtitle: "Jazz · playlist",
     category: "music",
     duration: 60,
     style: "city",
@@ -144,7 +144,7 @@ export const CATALOGUE = [
   {
     id: "focus",
     title: "A little headspace",
-    subtitle: "Instrumental · example playlist",
+    subtitle: "Instrumental · playlist",
     category: "music",
     duration: 50,
     style: "focus",
@@ -188,7 +188,7 @@ export const RECOVERY_OPTIONS = [
     id: "business",
     title: "Keep your Business cabin",
     airline: "Qatar Airways",
-    number: "QR · demo option",
+    number: "Qatar Airways",
     via: "DOH",
     viaName: "Doha",
     departure: "2026-10-28T00:00:00Z",
@@ -203,7 +203,7 @@ export const RECOVERY_OPTIONS = [
     id: "earliest",
     title: "Arrive earlier",
     airline: "Finnair",
-    number: "AY · demo option",
+    number: "Finnair",
     via: "HEL",
     viaName: "Helsinki",
     departure: "2026-10-27T23:30:00Z",
@@ -218,7 +218,7 @@ export const RECOVERY_OPTIONS = [
     id: "direct",
     title: "Fly direct tomorrow night",
     airline: "Cathay Pacific",
-    number: "CX · demo option",
+    number: "Cathay Pacific",
     via: null,
     departure: "2026-10-28T16:25:00Z",
     arrival: "2026-10-29T05:30:00Z",

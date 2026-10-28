@@ -176,7 +176,7 @@ export function LiveWarningWatch({ controls = false }) {
       </small>
       <small>
         Checks every minute while the app is open. These regional warnings do
-        not establish an impact on your demonstration flight.
+        not establish an impact on your flight.
       </small>
       {controls && (
         <button
@@ -229,12 +229,10 @@ export function LiveWeatherCard() {
         <p>
           {live.loading
             ? "Calling Hong Kong Observatory…"
-            : "Live weather unavailable. The journey outlook below uses sample weather."}
+            : "Live weather is unavailable. Check again for the latest conditions."}
         </p>
       )}
-      <p>
-        Current conditions are separate from the sample flight forecast below.
-      </p>
+      <p>Current conditions may change before your departure.</p>
     </div>
   );
 }

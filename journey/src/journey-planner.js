@@ -78,7 +78,7 @@ export function planJourney(journey, preferences, preparation = {}) {
       switchTo(
         "lounge",
         "Make the most of your airport time",
-        `${timing.label}. Up to ${timing.availableMinutes} min for a flexible lounge stop; leave by ${time(timing.leaveBy)} HKT (demo allowance).`,
+        `${timing.label}. Up to ${timing.availableMinutes} min for a flexible lounge stop; leave by ${time(timing.leaveBy)} HKT (estimated).`,
         "lounge",
         "coffee",
       );
@@ -119,7 +119,7 @@ export function planJourney(journey, preferences, preparation = {}) {
     reasons.push("CHOSEN_JOURNEY_PRIORITY");
   }
   if (action.id === "transport" && transportAllowance(preparation.transport)) {
-    action.detail = `You’re planning ${transportLabel(preparation.transport).toLowerCase()}. Allow around ${transportAllowance(preparation.transport)} min from Central (demo estimate); check current conditions before leaving.`;
+    action.detail = `You’re planning ${transportLabel(preparation.transport).toLowerCase()}. Allow around ${transportAllowance(preparation.transport)} min from Central (estimated); check current conditions before leaving.`;
     action.modal = "prep-transport";
     reasons.push(`CHOSEN_TRANSPORT_${preparation.transport.toUpperCase()}`);
   }

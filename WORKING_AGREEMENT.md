@@ -18,7 +18,7 @@ information and honest state handling are part of that quality.
   open, with boarding-pass access throughout the journey. Measure the actual tab
   bar and keep the sheet above it at every snap; do not leave a coloured footer gap.
 - Put boarding countdowns and leave-by context beside activity recommendations.
-  Reserve walking time and a buffer; label demo estimates. Unknown revised boarding
+  Reserve walking time and a buffer; label estimated times as estimates. Unknown revised boarding
   times must not create extra lounge or treatment time.
 - Readiness messages must follow a known disruption cause. Separate weather warnings,
   worsening conditions and confirmed flight impact; never infer a maintenance fault
@@ -32,6 +32,12 @@ information and honest state handling are part of that quality.
   a fake phone frame, fake status bar or external presenter navigation.
 - Account for scrolling, long copy, loading, errors, empty states, keyboard focus,
   touch targets, accessibility and reduced motion. These are designed states.
+
+- Customer-facing copy must not refer to demo, simulation, prototype, sample data,
+  mockups or implementation previews. Keep those explanations in presenter controls,
+  the decision inspector and technical documentation. Use normal product language;
+  preserve estimated times and pending/requested/confirmed states without inventing
+  completed bookings, service requests, rides or media transfers.
 
 ## 2. Change the existing implementation; do not restart it
 
