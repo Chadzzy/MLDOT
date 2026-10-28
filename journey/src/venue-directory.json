@@ -1,0 +1,211 @@
+{
+  "schemaVersion": 2,
+  "preparedAt": "2026-10-26T15:49:45.591043+00:00",
+  "status": "official_sources_curated",
+  "verifiedVenueCount": 6,
+  "activeListedVenueCount": 5,
+  "closedVenueCount": 1,
+  "description": "Six official venue pages verified, including one explicitly closed lounge. Five currently listed lounges have location/hours, but live opening, crowding and capacity remain unknown.",
+  "hubSourceUrl": "https://www.cathaypacific.com/cx/en_HK/destinations/lounges.html",
+  "venues": [
+    {
+      "id": "cathay-wing-first",
+      "name": "The Wing, First",
+      "category": "lounge",
+      "operator": "Cathay Pacific",
+      "airport": "HKG",
+      "loungeType": "first",
+      "officialSourceUrl": "https://www.cathaypacific.com/cx/en_HK/destinations/lounges/hong-kong-hkg/the-wing-first.html",
+      "verifiedAt": "2026-10-26T15:46:10.691254+00:00",
+      "verificationKind": "curated_public_page",
+      "terminal": "1",
+      "level": "7",
+      "nearestGate": "1–4",
+      "locationText": "Level 7, Terminal 1 near Gate 1-4",
+      "coordinates": null,
+      "hours": "05:30 until the last Cathay Pacific departure between 00:30-03:20",
+      "timezone": "Asia/Hong_Kong",
+      "operationalStatus": "listed_without_whole_lounge_closure_notice",
+      "openStatus": "unknown_live_status",
+      "amenities": [
+        "Atrium",
+        "Pantry",
+        "Dining Room",
+        "Retreat treatment booths",
+        "Alcove",
+        "Bureau workstations",
+        "Shower suites"
+      ],
+      "notices": [
+        {
+          "type": "temporary_access_restriction",
+          "summary": "During the initial reopening period, Cathay Pacific First class passengers and Cathay Diamond members are welcomed. oneworld Emerald members and First class passengers on non-Cathay-operated oneworld flights are directed to The Pier, First or other lounges.",
+          "sourceUrl": "https://www.cathaypacific.com/cx/en_HK/destinations/lounges/all-lounges-admittance.html"
+        }
+      ],
+      "eligibilitySourceUrl": "https://www.cathaypacific.com/cx/en_HK/destinations/lounges/all-lounges-admittance.html"
+    },
+    {
+      "id": "cathay-wing-business",
+      "name": "The Wing, Business",
+      "category": "lounge",
+      "operator": "Cathay Pacific",
+      "airport": "HKG",
+      "loungeType": "business",
+      "officialSourceUrl": "https://www.cathaypacific.com/cx/en_HK/destinations/lounges/hong-kong-hkg/the-wing.html",
+      "verifiedAt": "2026-10-26T15:46:10.795823+00:00",
+      "verificationKind": "curated_public_page",
+      "terminal": "1",
+      "level": null,
+      "nearestGate": "2",
+      "locationText": "Terminal 1, near gate 2",
+      "coordinates": null,
+      "hours": null,
+      "timezone": "Asia/Hong_Kong",
+      "operationalStatus": "temporarily_closed",
+      "openStatus": "closed_by_official_notice",
+      "amenities": [],
+      "notices": [
+        {
+          "type": "temporary_closure",
+          "summary": "Closed for an extensive transformation. The official page directs eligible passengers to The Deck, The Pier, Business or The Bridge.",
+          "sourceUrl": "https://www.cathaypacific.com/cx/en_HK/destinations/lounges/hong-kong-hkg/the-wing.html"
+        }
+      ],
+      "eligibilitySourceUrl": "https://www.cathaypacific.com/cx/en_HK/destinations/lounges/all-lounges-admittance.html"
+    },
+    {
+      "id": "cathay-pier-first",
+      "name": "The Pier, First",
+      "category": "lounge",
+      "operator": "Cathay Pacific",
+      "airport": "HKG",
+      "loungeType": "first",
+      "officialSourceUrl": "https://www.cathaypacific.com/cx/en_HK/destinations/lounges/hong-kong-hkg/the-pier-first.html",
+      "verifiedAt": "2026-10-26T15:46:10.142392+00:00",
+      "verificationKind": "curated_public_page",
+      "terminal": "1",
+      "level": "6",
+      "nearestGate": "63",
+      "locationText": "Level 6, Terminal 1, near Gate 63",
+      "coordinates": null,
+      "hours": "05:30-00:30, daily",
+      "timezone": "Asia/Hong_Kong",
+      "operationalStatus": "listed_without_whole_lounge_closure_notice",
+      "openStatus": "unknown_live_status",
+      "amenities": [
+        "Bar",
+        "Pantry",
+        "Retreat day suites",
+        "Dining Room",
+        "Massage service",
+        "Shower suites",
+        "Bureau work suites"
+      ],
+      "notices": [],
+      "eligibilitySourceUrl": "https://www.cathaypacific.com/cx/en_HK/destinations/lounges/all-lounges-admittance.html"
+    },
+    {
+      "id": "cathay-pier-business",
+      "name": "The Pier, Business",
+      "category": "lounge",
+      "operator": "Cathay Pacific",
+      "airport": "HKG",
+      "loungeType": "business",
+      "officialSourceUrl": "https://www.cathaypacific.com/cx/en_HK/destinations/lounges/hong-kong-hkg/the-pier.html",
+      "verifiedAt": "2026-10-26T15:46:10.140343+00:00",
+      "verificationKind": "curated_public_page",
+      "terminal": "1",
+      "level": "6",
+      "nearestGate": "65",
+      "locationText": "Level 6, Terminal 1 near Gate 65",
+      "coordinates": null,
+      "hours": "05:30 – 00:30, daily",
+      "timezone": "Asia/Hong_Kong",
+      "operationalStatus": "listed_without_whole_lounge_closure_notice",
+      "openStatus": "unknown_live_status",
+      "amenities": [
+        "Noodle Bar",
+        "Food Hall",
+        "Coffee Cart",
+        "Shower suites",
+        "Relaxation Room"
+      ],
+      "notices": [
+        {
+          "type": "facility_closure",
+          "summary": "The Bureau is temporarily closed. The Teahouse is temporarily closed from 4 October 2026. Neither should be recommended as currently available.",
+          "sourceUrl": "https://www.cathaypacific.com/cx/en_HK/destinations/lounges/hong-kong-hkg/the-pier.html"
+        }
+      ],
+      "eligibilitySourceUrl": "https://www.cathaypacific.com/cx/en_HK/destinations/lounges/all-lounges-admittance.html"
+    },
+    {
+      "id": "cathay-deck",
+      "name": "The Deck",
+      "category": "lounge",
+      "operator": "Cathay Pacific",
+      "airport": "HKG",
+      "loungeType": "business",
+      "officialSourceUrl": "https://www.cathaypacific.com/cx/en_HK/destinations/lounges/hong-kong-hkg/the-deck.html",
+      "verifiedAt": "2026-10-26T15:46:10.139485+00:00",
+      "verificationKind": "curated_public_page",
+      "terminal": "1",
+      "level": "7",
+      "nearestGate": "6",
+      "locationText": "Level 7, Terminal 1 near Gate 6",
+      "coordinates": null,
+      "hours": "05:30 – 00:30, daily",
+      "timezone": "Asia/Hong_Kong",
+      "operationalStatus": "listed_without_whole_lounge_closure_notice",
+      "openStatus": "unknown_live_status",
+      "amenities": [
+        "Terrace",
+        "Pantry",
+        "Noodle Bar",
+        "Beverage selection",
+        "Wi-Fi and work areas",
+        "Eight shower rooms"
+      ],
+      "notices": [],
+      "eligibilitySourceUrl": "https://www.cathaypacific.com/cx/en_HK/destinations/lounges/all-lounges-admittance.html"
+    },
+    {
+      "id": "cathay-bridge",
+      "name": "The Bridge",
+      "category": "lounge",
+      "operator": "Cathay Pacific",
+      "airport": "HKG",
+      "loungeType": "business",
+      "officialSourceUrl": "https://www.cathaypacific.com/cx/en_HK/destinations/lounges/hong-kong-hkg/the-bridge.html",
+      "verifiedAt": "2026-10-26T15:46:10.141365+00:00",
+      "verificationKind": "curated_public_page",
+      "terminal": "1",
+      "level": "6",
+      "nearestGate": "35",
+      "locationText": "Level 6, Terminal 1 near Gate 35",
+      "coordinates": null,
+      "hours": "05:00 until the last Cathay Pacific departure between 00:30-03:20",
+      "timezone": "Asia/Hong_Kong",
+      "operationalStatus": "listed_without_whole_lounge_closure_notice",
+      "openStatus": "unknown_live_status",
+      "amenities": [
+        "Noodle Bar",
+        "The Nook",
+        "Food Hall",
+        "Bar",
+        "Shower suites",
+        "Art displays"
+      ],
+      "notices": [
+        {
+          "type": "restricted_area",
+          "summary": "The private Exclusive retreat is reserved for Diamond members and First class passengers. oneworld Emerald status alone does not grant access to this area; Cathay retains the final eligibility decision.",
+          "sourceUrl": "https://www.cathaypacific.com/cx/en_HK/destinations/lounges/hong-kong-hkg/the-bridge.html"
+        }
+      ],
+      "eligibilitySourceUrl": "https://www.cathaypacific.com/cx/en_HK/destinations/lounges/all-lounges-admittance.html"
+    }
+  ],
+  "restaurantShopStatus": "official_pages_http_403"
+}

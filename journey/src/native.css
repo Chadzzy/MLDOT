@@ -1,0 +1,92 @@
+/* Device hosting mode only. The reviewed browser/iPhone mockup stays unchanged. */
+html.native-host,
+.native-host body,
+.native-host #root {
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  background: #f8f7f6;
+}
+.native-host .site-header,
+.native-host .trigger-navigation,
+.native-host .stage-title,
+.native-host .iphone-notch,
+.native-host .iphone-side-button,
+.native-host .home-indicator,
+.native-host .status-bar {
+  display: none;
+}
+.native-host .scenario-site,
+.native-host .site-body {
+  display: block;
+  height: 100%;
+  min-height: 0;
+}
+.native-host .scenario-stage {
+  position: relative;
+  padding: 0;
+  height: 100%;
+  display: block;
+}
+.native-host .iphone-footprint {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.native-host .iphone-frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 375px;
+  height: var(--native-height);
+  padding: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+  transform: scale(var(--native-scale));
+  transform-origin: top left;
+}
+.native-host .device {
+  width: 375px;
+  height: var(--native-height);
+  min-height: var(--native-height);
+  max-height: var(--native-height);
+  border-radius: 0;
+}
+.native-host .iphone-frame .bottom-nav {
+  padding-bottom: 12px;
+  height: 75px;
+}
+.native-booking {
+  position: absolute;
+  inset: 0;
+  z-index: 120;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 32px;
+  background: #f8f7f6;
+}
+.native-booking h1 {
+  font-size: 28px;
+  font-weight: 500;
+}
+.native-booking > .brand-wing {
+  color: #005e63;
+  margin-bottom: 30px;
+}
+.native-booking .flight-card {
+  margin: 16px 0 24px;
+  pointer-events: none;
+}
+.native-booking p {
+  font-size: 14px;
+}
+
+.native-host .used-pass .pass-invalid,
+.native-host .used-pass .pass-invalid > svg {
+  color: #005e63;
+}
+.native-host .used-pass .pass-invalid strong {
+  color: #005e63;
+}

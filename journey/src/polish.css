@@ -1,0 +1,724 @@
+/* Medium is the exact user-supplied OTF. Regular and Bold are Cathay-published
+   members of the same family; no synthetic weights or replacement typeface. */
+@font-face {
+  font-family: "GT Walsheim";
+  src: url("./assets/gt-walsheim-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: "GT Walsheim";
+  src: url("./assets/GTWalsheim-Medium.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: block;
+}
+@font-face {
+  font-family: "GT Walsheim";
+  src: url("./assets/gt-walsheim-bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: block;
+}
+:root {
+  --ease-sheet: cubic-bezier(0.22, 0.75, 0.23, 1);
+  --motion-sheet: 420ms;
+  font-synthesis: none;
+}
+.brand-wing {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 40px;
+  height: 32px;
+  background: currentColor;
+  mask-size: contain;
+  mask-position: center;
+  mask-repeat: no-repeat;
+  vertical-align: middle;
+}
+.hero-top > .brand-wing {
+  width: 30px;
+  height: 26px;
+}
+.member-gem .brand-wing {
+  width: 17px;
+  height: 14px;
+}
+.hero-top > div {
+  align-items: center;
+}
+.member-hero > img {
+  object-position: center 40%;
+}
+.hero-overlay {
+  background: linear-gradient(180deg, #041c3340, #0713219c);
+}
+.section-title .section-link {
+  font-size: 14px;
+  color: #367e81;
+}
+.bottom-nav > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  min-width: 48px;
+  font-size: 10px;
+  color: #696969;
+}
+.bottom-nav > div.active {
+  color: #367c7e;
+  font-weight: 700;
+}
+.bottom-nav > div.active svg {
+  fill: #367c7e;
+  stroke: white;
+  stroke-width: 0.6;
+}
+.pass-airline-logo {
+  width: 153px;
+  height: auto;
+  object-fit: contain;
+}
+.pass-alliance-logo {
+  width: 19px;
+  height: 19px;
+  object-fit: contain;
+}
+.pass-brand > span:first-child {
+  gap: 5px;
+}
+.pass-brand {
+  padding: 18px 15px 16px;
+}
+.pass-perks {
+  margin: 9px 0 17px;
+  gap: 5px;
+}
+.pass-perks > span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e6f1f1;
+  width: 36px;
+  height: 22px;
+  border-radius: 3px;
+  color: #005e63;
+}
+.pass-perks > .perk-member {
+  background: #005e63;
+  color: white;
+}
+.perk-member .brand-wing {
+  width: 15px;
+  height: 15px;
+}
+.pass-sequence {
+  text-align: center;
+  font-size: 10px;
+  color: #777;
+  margin-top: 12px;
+}
+.pass-route > svg {
+  transform: none;
+}
+/* One continuous surface: no mounting/unmounting content during the drag. */
+.journey-sheet,
+.journey-sheet.expanded {
+  bottom: 0;
+  left: var(--sheet-inset);
+  right: var(--sheet-inset);
+  height: var(--sheet-height);
+  padding-bottom: var(--sheet-footer);
+  border-radius: 24px 24px 0 0;
+  z-index: 35;
+  transition:
+    height var(--motion-sheet) var(--ease-sheet),
+    left var(--motion-sheet) var(--ease-sheet),
+    right var(--motion-sheet) var(--ease-sheet),
+    padding-bottom var(--motion-sheet) var(--ease-sheet),
+    background-color 300ms ease;
+}
+.journey-sheet .sheet-situation {
+  display: block;
+  height: var(--situation-height);
+  min-height: var(--situation-height);
+  padding: 0;
+  touch-action: none;
+  user-select: none;
+  cursor: grab;
+  transition:
+    height var(--motion-sheet) var(--ease-sheet),
+    min-height var(--motion-sheet) var(--ease-sheet),
+    background-color 300ms ease;
+}
+.sheet-situation .situation-compact {
+  display: block;
+  position: absolute;
+  inset: 6px 16px auto;
+  font-size: 12px;
+  opacity: calc(1 - var(--reveal));
+  transition: opacity 180ms ease;
+}
+.sheet-situation .situation-full {
+  display: block;
+  position: absolute;
+  inset: 27px 24px auto;
+  opacity: var(--reveal);
+  transition: opacity 240ms ease;
+}
+.situation-full small {
+  display: block;
+  font-size: 14px;
+  color: #c2e0e1;
+  margin-bottom: 7px;
+}
+.situation-full strong {
+  display: block;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.35;
+}
+.situation-full p {
+  color: white;
+  font-size: 12px;
+  margin-top: 6px;
+  line-height: 1.5;
+}
+.situation-full > svg {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 19px;
+  height: 19px;
+}
+.journey-sheet .sheet-summary {
+  position: relative;
+  top: auto;
+  right: auto;
+  border: 0;
+  border-radius: 16px 16px 0 0;
+  height: var(--summary-height);
+  min-height: var(--summary-height);
+  padding: 0 15px;
+  margin: 0;
+  background: white;
+  opacity: calc(1 - var(--reveal));
+  overflow: hidden;
+  transition:
+    height var(--motion-sheet) var(--ease-sheet),
+    min-height var(--motion-sheet) var(--ease-sheet),
+    opacity 180ms ease;
+}
+.journey-sheet .sheet-summary-main {
+  display: block;
+  touch-action: none;
+  user-select: none;
+  cursor: grab;
+  padding-right: 28px;
+  flex-shrink: 0;
+}
+.journey-sheet .sheet-summary-main strong {
+  font-size: 16px;
+}
+.journey-sheet .sheet-summary-main small {
+  font-size: 12px;
+  margin-top: 5px;
+}
+.journey-sheet .sheet-expand {
+  display: flex;
+  touch-action: none;
+}
+.journey-sheet .pass-shortcut {
+  position: absolute;
+  top: calc(38px - 19px * var(--reveal));
+  right: calc(43px + 9px * var(--reveal));
+  z-index: 4;
+  min-width: 32px;
+  min-height: 32px;
+  color: color-mix(in srgb, #fff calc(var(--reveal) * 100%), #333);
+  opacity: 1;
+  transition:
+    top var(--motion-sheet) var(--ease-sheet),
+    right var(--motion-sheet) var(--ease-sheet),
+    color 220ms ease;
+}
+.journey-sheet .pass-shortcut svg {
+  width: calc(28px - 9px * var(--reveal));
+  height: calc(28px - 9px * var(--reveal));
+}
+.journey-sheet .sheet-scroll {
+  opacity: var(--reveal);
+  transition: opacity 220ms ease;
+}
+.journey-sheet.dragging,
+.journey-sheet.dragging * {
+  transition: none !important;
+}
+.journey-sheet.dragging .sheet-situation {
+  cursor: grabbing;
+}
+.journey-backdrop {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--motion-sheet) ease;
+}
+.journey-backdrop.visible {
+  opacity: 1;
+}
+.detail-sheet {
+  animation: detail-enter 380ms var(--ease-sheet) both;
+  will-change: transform;
+}
+.modal-backdrop {
+  animation: veil-enter 280ms ease both;
+}
+.modal-layer.closing .detail-sheet {
+  animation: detail-exit 220ms ease-in both;
+  pointer-events: none;
+}
+.modal-layer.closing .modal-backdrop {
+  animation: veil-exit 220ms ease both;
+}
+@keyframes detail-enter {
+  from {
+    transform: translateY(64px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes detail-exit {
+  to {
+    transform: translateY(64px);
+    opacity: 0;
+  }
+}
+@keyframes veil-enter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes veil-exit {
+  to {
+    opacity: 0;
+  }
+}
+.device button {
+  transition:
+    background-color 150ms ease,
+    box-shadow 150ms ease,
+    opacity 150ms ease,
+    transform 150ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.device button:active:not(.sheet-situation):not(.sheet-summary-main) {
+  transform: scale(0.985);
+}
+.device button:disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+.lifestyle-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(transparent 20%, #0009);
+  pointer-events: none;
+}
+.lifestyle-photo > div {
+  z-index: 1;
+}
+.lounge-cover {
+  width: calc(100% + 48px);
+  max-width: none;
+  height: 180px;
+  object-fit: cover;
+  margin: -15px -24px 24px;
+}
+.included-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #005e63;
+  background: #e8f3f3;
+  padding: 12px;
+  border-radius: 8px;
+  margin: 18px 0;
+  font-size: 13px;
+}
+.lounge-highlights {
+  display: grid;
+  gap: 14px;
+  margin: 22px 0;
+}
+.lounge-highlights > div {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+}
+.lounge-highlights svg {
+  color: #367f83;
+}
+.lounge-list summary,
+.venue-details summary {
+  cursor: pointer;
+  font-size: 14px;
+  color: #005e63;
+  padding: 12px 0;
+}
+.busy-icon {
+  animation: busy-spin 900ms linear infinite;
+}
+@keyframes busy-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.step-content {
+  animation: detail-enter 260ms var(--ease-sheet) both;
+}
+.guided-journeys {
+  padding: 0 10px 18px;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 22px;
+}
+.guided-journeys > strong {
+  display: block;
+  font-size: 12px;
+  margin-bottom: 12px;
+}
+.guided-journeys button {
+  font-size: 12px;
+  border: 1px solid #ccdddd;
+  border-radius: 6px;
+  padding: 9px 10px;
+  text-align: left;
+  background: white;
+  display: block;
+  width: 100%;
+  margin: 8px 0;
+  color: #005e63;
+}
+.guided-journeys button[aria-pressed="true"] {
+  background: #e8f3f3;
+  border-color: #367f83;
+}
+.guided-step {
+  font-size: 11px;
+  line-height: 1.5;
+  color: #666;
+  margin-top: 16px;
+}
+.guided-step > div {
+  display: flex;
+  gap: 8px;
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+.journey-sheet[data-snap="0"]:not(.dragging) {
+  z-index: 22;
+}
+.journey-sheet .sheet-scroll {
+  padding-top: calc(24px * var(--reveal));
+  padding-bottom: calc(35px * var(--reveal));
+  transition:
+    opacity 220ms ease,
+    padding var(--motion-sheet) var(--ease-sheet);
+}
+@media (max-width: 760px) {
+  .guided-journeys {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin-bottom: 12px;
+    padding: 0 0 10px;
+  }
+  .guided-journeys > strong,
+  .guided-step {
+    grid-column: 1 / -1;
+  }
+  .guided-journeys > strong {
+    margin-bottom: 0;
+  }
+  .guided-journeys button {
+    margin: 0;
+    font-size: 11px;
+  }
+  .guided-step {
+    margin-top: 4px;
+  }
+  .guided-step > div {
+    margin-top: 6px;
+  }
+}
+.live-loading {
+  padding-top: 18px;
+}
+.live-loading i {
+  display: block;
+  height: 12px;
+  width: 88%;
+  border-radius: 5px;
+  background: #e8f0f0;
+  margin-bottom: 10px;
+  animation: loading-pulse 1200ms ease-in-out infinite alternate;
+}
+.live-loading i:last-child {
+  width: 62%;
+}
+@keyframes loading-pulse {
+  to {
+    opacity: 0.45;
+  }
+}
+
+.hero-greeting h1,
+.section-title h2,
+.detail-scroll > h2,
+.row-copy strong,
+.sheet-situation strong,
+.pass-name,
+.sheet-summary-main strong {
+  font-weight: 500;
+}
+
+.route-line.has-connection small:last-child {
+  display: block;
+  font-size: 10px;
+  color: #005e63;
+}
+
+/* Consistent module palette and readable supporting copy across the secondary screens. */
+.sheet-situation .situation-full {
+  width: 327px;
+  right: auto;
+}
+.recovery-content > h2 {
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: 0;
+  margin: 0 0 20px;
+  outline: none;
+}
+.entertainment-hero,
+.rest-hero,
+.shared-preview {
+  background: #e8f3f3;
+  border-color: #cce1e3;
+}
+.entertainment-hero h2,
+.rest-hero h2,
+.directory-note strong {
+  color: #333;
+}
+.entertainment-hero p,
+.rest-hero p,
+.priority-options small,
+.media-info p,
+.media-info > small {
+  color: #666;
+}
+.entertainment-hero > svg,
+.rest-hero > svg,
+.directory-note > svg {
+  color: #367f83;
+}
+.priority-options > label:has(input:checked),
+.lounge-row.selected {
+  background: #e8f3f3;
+  border-color: #367f83;
+}
+.priority-options strong,
+.directory-note strong {
+  font-size: 14px;
+}
+.priority-options small,
+.directory-note p {
+  font-size: 12px;
+}
+.best-option {
+  border-color: #367f83;
+  background: white;
+}
+.best-label,
+.option-route strong {
+  color: #005e63;
+}
+.success-circle {
+  background: #e8f3f3;
+  color: #367f83;
+}
+.save-button {
+  border-color: #bdd7d8;
+  color: #005e63;
+}
+.save-button.saved {
+  background: #e8f3f3;
+  border-color: #367f83;
+  color: #005e63;
+}
+
+/* Exact artwork regions supplied in screens.zip; no recreated wordmark or tiles. */
+.pass-brand .pass-reference-lockup {
+  display: block;
+  width: 168px;
+  height: auto;
+  overflow: hidden;
+}
+.pass-perks > .pass-reference-benefits {
+  display: block;
+  width: 172px;
+  height: 22px;
+  background: none;
+  padding: 0;
+  border-radius: 0;
+}
+.pass-cabin > span {
+  display: none;
+}
+.detail-pass .pass-cabin > span {
+  display: block;
+  font-size: 11px;
+  line-height: 23px;
+  color: white;
+  text-align: center;
+}
+.detail-pass .boarding-pass {
+  border-radius: 8px;
+}
+.reference-photo.lifestyle-photo {
+  height: auto;
+  aspect-ratio: 327 / 167;
+}
+.reference-photo::after {
+  display: none;
+}
+.reference-lounge-artwork {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.reference-activity {
+  background: #f3f1ee;
+  border: 0;
+  border-radius: 22px;
+  padding: 0;
+  overflow: hidden;
+  box-shadow: none;
+  color: #333;
+}
+.reference-activity-top {
+  display: flex;
+  align-items: center;
+  padding: 12px 13px 5px;
+  gap: 2px;
+  font-size: 11px;
+}
+.reference-activity-top .brand-wing {
+  width: 17px;
+  height: 16px;
+}
+.reference-activity-route {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 12px 14px;
+  gap: 8px;
+}
+.reference-activity-route > div > span {
+  font-size: 17px;
+  white-space: nowrap;
+  letter-spacing: -0.5px;
+}
+.reference-activity-route b {
+  color: #2d443a;
+  font-size: 18px;
+}
+.reference-activity-route small {
+  display: block;
+  color: #666;
+  font-size: 10px;
+  margin-top: 3px;
+}
+.reference-activity-route > div:last-child {
+  text-align: right;
+}
+.activity-route-track {
+  flex: 1;
+  align-self: flex-start;
+  text-align: center;
+  padding-top: 3px;
+  min-width: 45px;
+}
+.activity-route-track strong {
+  display: block;
+  font-size: 10px;
+  color: #367f83;
+}
+.activity-route-track > span {
+  display: block;
+  height: 3px;
+  background: #e0e1df;
+  margin-top: 7px;
+  position: relative;
+}
+.activity-route-track svg {
+  position: absolute;
+  left: 0;
+  top: -8px;
+  fill: #2d443a;
+  stroke-width: 0.5;
+}
+.reference-activity-action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 8px;
+  text-align: left;
+  background: #f1ebdf;
+  padding: 12px;
+  min-height: 52px;
+  font-size: 12px;
+}
+.reference-activity-action small {
+  display: block;
+  font-size: 10px;
+  margin-top: 3px;
+  color: #666;
+}
+.activity-action-badge {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 6px 7px;
+  background: #2d443a;
+  color: white;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.reference-pass-code {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}

@@ -1,0 +1,37 @@
+{
+  "regular.woff2": "https://assets.cathaypacific.com/fonts/en/CathayPacific/CathaySans_WCorp_Rg.woff2",
+  "light.woff2": "https://assets.cathaypacific.com/fonts/en/CathayPacific/CathaySans_WCorp_Lt.woff2",
+  "bold.woff2": "https://assets.cathaypacific.com/fonts/en/CathayPacific/CathaySans_WCorp_Bd.woff2",
+  "pier-first.jpg": "https://www.cathaypacific.com/content/dam/focal-point/digital-library/cathay-pacific/lounges/the-pier/first-class/lounge-pier-first-hsb-006.renditionimage.1700.850.jpg",
+  "oneworld.svg": "https://www.cathaypacific.com/content/dam/header-footer-lrp/Oneworld.originalimage.svg",
+  "app-icon.png": "https://www.cathaypacific.com/content/dam/header-footer-lrp/cx-web-clip-icon.png",
+  "brushwing.png": "https://www.cathaypacific.com/content/dam/header-footer/cx_brushwing_logo.originalimage.png",
+  "hong-kong.jpg": "https://www.cathaypacific.com/content/dam/focal-point/cx/city-offer-thumbnail/HKG.renditionimage.900.900.jpg",
+  "cathay-pacific.png": "https://images.ctfassets.net/m9ph4qvas97u/7avNUq12reeaRvVIoqtxrH/843538d3c06f966e630ec45c684319ec/oneworld-alliance-cathay-pacific-logo.png",
+  "gt-walsheim-regular.woff2": "https://assets.cathaypacific.com/fonts/en/GTWalshiem/GT-Walsheim-Regular.woff2",
+  "gt-walsheim-bold.woff2": "https://assets.cathaypacific.com/fonts/en/GTWalshiem/GT-Walsheim-Bold.woff2",
+  "GTWalsheim-Medium.otf": {
+    "source": "User attachment GTWalsheim-Medium.otf",
+    "sha256": "21b180c5c80f83290f696447cc5c342e2c253678d3758fe9160db6665a3c53c0"
+  },
+  "reference-boarding-pass.png": {
+    "source": "User attachment screens.zip: screens/screens for DOT/ref-02-bp-app.png",
+    "sha256": "3d25e65574e286e6db7922f6484577ed7798fadb03922fbf2ab0ec5b372dfc65",
+    "unaltered": true
+  },
+  "reference-sheet.png": {
+    "source": "User attachment screens.zip: screens/CDOT/Contextual sheet.png",
+    "sha256": "05604803a393657af1c5ca9539c69b4e24f387a70ee0f6c1880814dc06e4c792",
+    "unaltered": true
+  },
+  "reference-sheet-amber.png": {
+    "source": "User attachment screens.zip: screens/CDOT/Contextual sheet_amber.png",
+    "sha256": "f7ec8445d3d13b369abbe66f6634aaf4127d0b803e05caa27af0b91f5315a19f",
+    "unaltered": true
+  },
+  "brand-logo.png": {
+    "source": "User attachment screens.zip: screens/screens for DOT/brand-logo.png",
+    "sha256": "02017e3b7a4a5c6461aa5889b898fbe130af93a01d09e7e5e100a61b801caa76",
+    "unaltered": true
+  }
+}
