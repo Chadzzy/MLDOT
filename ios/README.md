@@ -1,5 +1,7 @@
 # Journey for iPhone
 
+Read the [working agreement](../WORKING_AGREEMENT.md) before making changes.
+
 This is the Xcode starting point for the contextual journey prototype. It hosts the existing reviewed passenger UI in a local WKWebView, with SwiftUI demonstration controls and an optional Apple Foundation Models recovery-preference sheet. It is a hybrid app, not a complete SwiftUI rewrite.
 
 ## Open it

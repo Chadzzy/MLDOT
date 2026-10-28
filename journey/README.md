@@ -1,5 +1,7 @@
 # Day-of-travel scenario walkthrough
 
+Read the [working agreement](../WORKING_AGREEMENT.md) before making changes.
+
 A website for clicking through journey triggers, with a fixed **375 × 812 CSS-pixel iPhone screen**. The screen is framed as an iPhone and scales proportionally on narrow browsers; it never changes its internal viewport to fit the page. Scenario navigation sits outside the traveller UI.
 
 ## Design contract
@@ -8,9 +10,9 @@ The user's latest **homepage, persistent journey sheet, expanded boarding pass a
 
 The other supplied screens provide flow/content requirements. They inherit the core surfaces, type hierarchy and teal/amber/orange state colours. Their layout can adapt within that system.
 
-**Brand and UI pass (27 October):** GT Walsheim fonts (including the user-supplied Medium OTF), the actual Cathay Pacific wordmark, official brushwing and oneworld mark are embedded in the build. The Pier, First card uses official Cathay photography. Sources are recorded in `src/assets/sources.json` and `ASSETS.md`. No logo is drawn or typeset by the prototype. Standby is removed; the member header, recent searches and bottom navigation are static. The flight card and journey sheet remain interactive.
+**Brand and UI pass (27 October):** GT Walsheim fonts (including the user-supplied Medium OTF), the actual Cathay Pacific wordmark, official brushwing and oneworld mark are embedded in the build. The delayed-journey Pier, First panel uses the exact supplied screenshot artwork; the lounge detail uses official Cathay photography. Sources are recorded in `src/assets/sources.json` and `ASSETS.md`. No logo is drawn or typeset by the prototype. Standby is removed; the member header, recent searches and bottom navigation are static. The flight card and journey sheet remain interactive.
 
-**Remaining visual gap:** the exact night-time Hong Kong photograph shown in the supplied screenshot was not found in the attached workspace or any repository branch. A different official Cathay Hong Kong photograph is used provisionally. The original local asset folder has been requested. General UI icons still use the existing outline set; exact production icon exports are not mounted. Do not claim pixel-perfect fidelity.
+**Remaining visual gap:** the exact night-time Hong Kong photograph shown in the supplied screenshot was not found in the attached workspace or any repository branch. A different official Cathay Hong Kong photograph is used provisionally. The original screens folder has now been received as `screens.zip`, but it does not include the clean night-time header photograph or production icon exports. General UI icons still use the existing outline set. Do not claim pixel-perfect fidelity.
 
 The journey sheet follows mouse/touch movement continuously and snaps to collapsed, partial or full height. Pointer distances account for the scaled phone. Header controls also support arrow keys, Home and End. Dialogs animate in and out, controls give press feedback, and reduced-motion preferences are respected. Recovery comparison has a deliberate 500 ms _simulated interaction_ state; this is not an AI call or a live availability search. Real requests display loading placeholders only while those requests run.
 
