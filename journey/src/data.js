@@ -31,6 +31,29 @@ export const BASE_JOURNEY = {
     cabin: "Business",
     duration: "13h 05m",
   },
+  demoDisruptionCause: "weather",
+  weatherTimeline: [
+    {
+      at: "2026-10-27T14:10:00Z",
+      stage: "clear",
+      title: "Weather outlook is settled",
+      detail: "No weather concern in this demonstration yet.",
+    },
+    {
+      at: "2026-10-27T14:55:00Z",
+      stage: "watch",
+      title: "Weather warning · flight unchanged",
+      detail:
+        "A thunderstorm warning has been issued in this scenario. Your flight is still on schedule; keep your boarding time in view.",
+    },
+    {
+      at: "2026-10-27T15:15:00Z",
+      stage: "worsening",
+      title: "Conditions are worsening",
+      detail:
+        "Thunderstorms are moving closer in this scenario. Stay near your gate. No delay to your flight has been confirmed.",
+    },
+  ],
   weather: [
     {
       airport: "HKG",

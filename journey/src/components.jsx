@@ -1,3 +1,4 @@
+import { boardingContext, weatherContext } from "./journey-context.js";
 import {
   PassLockup,
   PassBenefits,
@@ -190,10 +191,83 @@ export function PassCard() {
   );
 }
 
+export function TimingNote({ activity = false }) {
+  const { journey } = useJourney();
+  const timing = boardingContext(journey);
+  if (timing.kind === "finished") return null;
+  return (
+    <div className={`timing-note timing-${timing.kind}`}>
+      <Icon name="clock" size={18} />
+      <div>
+        <strong>{timing.label}</strong>
+        {activity && timing.availableMinutes > 0 && (
+          <p>
+            Up to {timing.availableMinutes} min for a flexible stop · leave by{" "}
+            {time(timing.leaveBy)} HKT.
+          </p>
+        )}
+        <small>{timing.detail}</small>
+      </div>
+    </div>
+  );
+}
+
+export function WeatherWatch({ full = false }) {
+  const { journey, open } = useJourney();
+  const weather = weatherContext(journey);
+  if (
+    !weather ||
+    journey.recovery ||
+    journey.isDisrupted ||
+    ["inflight", "arrived"].includes(journey.phase)
+  )
+    return null;
+  return (
+    <div className={`weather-watch weather-${weather.stage}`}>
+      <button onClick={() => open("weather")} disabled={full}>
+        <Icon name="cloud" size={20} />
+        <span>
+          <strong>{weather.title}</strong>
+          <small>{weather.detail}</small>
+        </span>
+        {!full && <Icon name="chevron" size={17} />}
+      </button>
+      <small>
+        {weather.source} · update {time(weather.at)} HKT
+      </small>
+      {full && (
+        <ol className="weather-progression" aria-label="Weather escalation">
+          {[
+            ["watch", "Warning issued", "Flight unchanged"],
+            ["worsening", "Conditions worsen", "Stay near the gate"],
+            ["impact", "Flight impact confirmed", "Revised times pending"],
+          ].map(([stage, title, detail]) => (
+            <li
+              key={stage}
+              aria-current={weather.stage === stage ? "step" : undefined}
+            >
+              <strong>{title}</strong>
+              <small>{detail}</small>
+            </li>
+          ))}
+        </ol>
+      )}
+    </div>
+  );
+}
+
 export function NextAction() {
   const { journey, open } = useJourney();
+  const timing = boardingContext(journey);
+  const airport =
+    journey.activeScenario === "airport" &&
+    !["inflight", "arrived"].includes(journey.phase);
+  const urgent = airport && timing.kind === "due";
   return (
-    <button className="next-action" onClick={() => open(journey.nextModal)}>
+    <button
+      className="next-action"
+      onClick={() => open(urgent ? "pass" : journey.nextModal)}
+    >
       <span className="action-round">
         <Icon name={journey.nextIcon} />
       </span>
@@ -210,8 +284,14 @@ export function NextAction() {
           </b>{" "}
           · now
         </small>
-        <strong>{journey.nextTitle}</strong>
-        <p>{journey.nextDetail}</p>
+        <strong>
+          {urgent ? `Head to Gate ${journey.flight.gate}` : journey.nextTitle}
+        </strong>
+        <p>
+          {airport
+            ? `${timing.label}. ${timing.availableMinutes > 0 ? `Up to ${timing.availableMinutes} min for a flexible lounge stop; leave by ${time(timing.leaveBy)} HKT (demo allowance).` : timing.detail}`
+            : journey.nextDetail}
+        </p>
       </span>
       <Icon name="chevron" size={17} />
     </button>

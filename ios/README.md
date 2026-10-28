@@ -19,6 +19,8 @@ The app targets iOS 17+. Apple model interpretation requires iOS 26, supported h
 - Choose **Guided**, **10-minute playback** or **Real time**. In timed modes, press Play.
 - Jump between before departure, HKIA, boarding, in flight and arrival.
 - Inject a gate change, delay or cancellation before departure. Injection pauses playback; jumping clears the injected event.
+- Under **Weather demonstration**, step through a warning, worsening conditions and an injected weather delay. These are separate from live HKO data.
+- In the passenger Weather view, choose **Follow live HKO warnings** to check every minute while the app is active; stopping/backgrounding pauses checks.
 - Cancellation opens the existing recovery experience. Enter a request and choose **Understand my priorities on this iPhone**. The model can suggest a priority; the user must confirm it. Only the explicit priority controls deterministic option ranking. No model output creates bookings or entitlements.
 
 The demonstration replays the dated 28 Oct 2026 CX383 fixture. “Real time” means one simulated second per elapsed second, not a live flight. Progress is saved in Supabase using a server clock anchor and recalculated on return; iOS does not need to keep a background timer running. New simulation sessions clear recovery choices but retain saved entertainment. Recovery preferences save to Supabase; drafts, selected itineraries and entertainment remain in local web storage.
@@ -43,7 +45,7 @@ walkthrough. Native changes on `codex/iphone-journey` now trigger the Xcode work
 
 Scheduled flight monitoring, push notifications, native Live Activities, real
 bookings and live flight inventory remain unconnected. Weather/train calls remain
-manual. Selected recovery itineraries and entertainment are local; the server saves
+manual except opt-in foreground HKO warning checks. Selected recovery itineraries and entertainment are local; the server saves
 the recovery preference, not a ticket.
 
 ## Updating from the first Supabase-connected download
@@ -83,3 +85,12 @@ Recovery priorities and text save when you request comparisons or confirm the
 native preference sheet. A failed save retains the draft and reports the failure.
 See [backend setup](../backend/README.md) and [the service boundary](BACKEND-CONTRACT.md).
 Never bundle a secret/service-role key or expose the bridge to remotely loaded HTML.
+
+## Timing and sheet refinement
+
+The sheet now stays above the navigation bar at each snap position. Boarding time,
+activity allowance and leave-by time share the current journey clock; unknown delays
+show timing as unconfirmed. See [weather and timing rules](../journey/WEATHER-AND-TIMING.md).
+
+For an existing Mac checkout, update with `git -C "$HOME/Developer/MLDOT" pull --ff-only`,
+then Run the same Xcode project. Do not replace your working folder with another ZIP.

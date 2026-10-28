@@ -227,6 +227,10 @@ export function deriveJourney(state, snapshot = BASE_JOURNEY) {
     isDisrupted: state.scenario === "cancelled",
     isUncertain: state.scenario === "delay",
     activeScenario: state.scenario,
+    disruptionCause:
+      state.scenario === "delay"
+        ? snapshot.demoDisruptionCause || "unknown"
+        : null,
   };
   if (recovery)
     return {
@@ -292,7 +296,9 @@ export function deriveJourney(state, snapshot = BASE_JOURNEY) {
         status: "Flight delayed",
         message: "Your flight to Zurich is delayed.",
         detail:
-          "The new departure time is being confirmed. We’ll keep your next steps together.",
+          snapshot.demoDisruptionCause === "weather"
+            ? "Weather at Hong Kong is holding departure. Revised boarding time is unconfirmed."
+            : "The new departure time and cause are being confirmed.",
         nextTitle: "Stay nearby while we update you",
         nextDetail:
           "Choose something flexible. Your usable time is not yet confirmed.",

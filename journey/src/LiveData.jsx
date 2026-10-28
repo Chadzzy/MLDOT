@@ -4,12 +4,78 @@ import { Icon } from "./icons.jsx";
 import {
   LIVE_SOURCES,
   fetchLiveSources,
+  fetchLiveSource,
   freshness,
   liveTime,
   activeWarnings,
 } from "./live-data.js";
 
 export function useLiveData() {
+  const [weatherMonitoring, setWeatherMonitoring] = useState(() => {
+    try {
+      return localStorage.getItem("journey-weather-monitoring") === "true";
+    } catch {
+      return false;
+    }
+  });
+  const [weatherCheck, setWeatherCheck] = useState({
+    loading: false,
+    result: null,
+    checkedAt: null,
+    count: 0,
+  });
+  const weatherPending = useRef(false);
+  const hostActive = useRef(true);
+  const lastWeatherCheck = useRef(0);
+  useEffect(() => {
+    try {
+      localStorage.setItem(
+        "journey-weather-monitoring",
+        String(weatherMonitoring),
+      );
+    } catch {
+      /* session only */
+    }
+    if (!weatherMonitoring) return;
+    let active = true;
+    const check = async () => {
+      if (
+        !active ||
+        !hostActive.current ||
+        document.hidden ||
+        weatherPending.current ||
+        Date.now() - lastWeatherCheck.current < 55000
+      )
+        return;
+      weatherPending.current = true;
+      lastWeatherCheck.current = Date.now();
+      setWeatherCheck((s) => ({ ...s, loading: true }));
+      const result = await fetchLiveSource(
+        LIVE_SOURCES.find((source) => source.id === "warnings"),
+      );
+      weatherPending.current = false;
+      setWeatherCheck((s) => ({
+        loading: false,
+        result,
+        checkedAt: result.receivedAt,
+        count: s.count + 1,
+      }));
+    };
+    const hostChanged = (event) => {
+      hostActive.current = event.detail === true;
+      if (hostActive.current) check();
+    };
+    const timer = setInterval(check, 60000);
+    document.addEventListener("visibilitychange", check);
+    window.addEventListener("journey-host-active", hostChanged);
+    check();
+    return () => {
+      active = false;
+      clearInterval(timer);
+      document.removeEventListener("visibilitychange", check);
+      window.removeEventListener("journey-host-active", hostChanged);
+    };
+  }, [weatherMonitoring]);
   const [live, setLive] = useState({
     attempted: false,
     loading: false,
@@ -37,7 +103,13 @@ export function useLiveData() {
       });
     return pending.current;
   }, []);
-  return { live, refreshLive };
+  return {
+    live,
+    refreshLive,
+    weatherMonitoring,
+    setWeatherMonitoring,
+    weatherCheck,
+  };
 }
 export function useLiveClock() {
   const [now, setNow] = useState(Date.now);
@@ -64,6 +136,59 @@ function Evidence({ result }) {
     </small>
   );
 }
+export function LiveWarningWatch({ controls = false }) {
+  const { weatherMonitoring, setWeatherMonitoring, weatherCheck } =
+    useJourney();
+  const now = useLiveClock();
+  if (!weatherMonitoring)
+    return controls ? (
+      <button
+        className="live-weather-connect"
+        onClick={() => setWeatherMonitoring(true)}
+      >
+        <Icon name="cloud" size={18} />
+        Follow live HKO warnings
+      </button>
+    ) : null;
+  const result = weatherCheck.result;
+  const current = freshness(result, now) === "current";
+  const warnings = current ? activeWarnings(result.data, now) : [];
+  return (
+    <section
+      className="weather-watch live-warning-watch"
+      aria-label="Live weather monitoring"
+    >
+      <strong>Hong Kong Observatory · live warnings</strong>
+      <p>
+        {weatherCheck.loading && !result
+          ? "Checking official warnings…"
+          : !current
+            ? "The weather check is unavailable or out of date. We’ll try again; no all-clear is assumed."
+            : warnings.length
+              ? warnings.map((warning) => warning.name).join(" · ")
+              : "No active warnings in the latest response."}
+      </p>
+      <small>
+        {weatherCheck.checkedAt
+          ? `Last check ${liveTime(weatherCheck.checkedAt)} · ${weatherCheck.count} ${weatherCheck.count === 1 ? "check" : "checks"}`
+          : "First check in progress"}
+      </small>
+      <small>
+        Checks every minute while the app is open. These regional warnings do
+        not establish an impact on your demonstration flight.
+      </small>
+      {controls && (
+        <button
+          className="text-button"
+          onClick={() => setWeatherMonitoring(false)}
+        >
+          Stop live warning checks
+        </button>
+      )}
+    </section>
+  );
+}
+
 export function LiveWeatherCard() {
   const { live, refreshLive } = useJourney();
   const now = useLiveClock();
@@ -168,8 +293,8 @@ export function LiveSources() {
             : "Refresh live sources"}
       </button>
       <p className="live-request-count">
-        {live.requests} outbound requests attempted this visit · no automatic
-        polling
+        {live.requests} outbound requests attempted through these cards. Live
+        warning monitoring has its own check counter.
       </p>
       {LIVE_SOURCES.map((source) => {
         const result = live.results[source.id];

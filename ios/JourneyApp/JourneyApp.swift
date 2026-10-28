@@ -57,6 +57,9 @@ struct JourneyRootView: View {
                 return saved
             }
         }
-        .onChange(of: scenePhase) { _, phase in if phase == .active { store.resume() } else { store.suspend() } }
+        .onChange(of: scenePhase) { _, phase in
+            bridge.setActive(phase == .active)
+            if phase == .active { store.resume() } else { store.suspend() }
+        }
     }
 }

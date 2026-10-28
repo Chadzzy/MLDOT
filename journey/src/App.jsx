@@ -1,3 +1,4 @@
+import { boardingContext, readinessContext } from "./journey-context.js";
 import {
   NATIVE_MODE,
   validateNativeSnapshot,
@@ -30,8 +31,19 @@ import {
   date,
 } from "./model.js";
 import { demoProvider } from "./providers.js";
-import { useLiveData, LiveSourcesPanel } from "./LiveData.jsx";
-import { FlightCard, PassCard, ModuleRow, NextAction } from "./components.jsx";
+import {
+  useLiveData,
+  LiveSourcesPanel,
+  LiveWarningWatch,
+} from "./LiveData.jsx";
+import {
+  FlightCard,
+  PassCard,
+  ModuleRow,
+  NextAction,
+  TimingNote,
+  WeatherWatch,
+} from "./components.jsx";
 import { ModalContents, MODAL_TITLES } from "./modals.jsx";
 
 function readState() {
@@ -234,6 +246,8 @@ function JourneySheet({ expanded, setExpanded }) {
     scrollRef.current?.scrollTo({ top: 0 });
   }, [journey.activeScenario]);
   const normal = journey.tone === "normal";
+  const timing = boardingContext(journey);
+  const readiness = readinessContext(journey);
   return (
     <section
       ref={sheet.ref}
@@ -255,7 +269,7 @@ function JourneySheet({ expanded, setExpanded }) {
         <span className="situation-full">
           <small>{journey.passenger.greeting}</small>
           <strong>{journey.message}</strong>
-          {!normal && <p>{journey.detail}</p>}
+          <p>{normal ? timing.label : journey.detail}</p>
           <Icon name="down" size={23} />
         </span>
       </button>
@@ -310,7 +324,10 @@ function JourneySheet({ expanded, setExpanded }) {
         inert={sheet.reveal === 0 ? true : undefined}
         aria-hidden={sheet.reveal === 0}
       >
+        <WeatherWatch />
+        <LiveWarningWatch />
         {normal && <NextAction />}
+        {!normal && <TimingNote />}
         {journey.isDisrupted ? (
           <div className="disruption-card">
             <h2>
@@ -365,14 +382,14 @@ function JourneySheet({ expanded, setExpanded }) {
               </div>
               <p className="flight-update">
                 <Icon name="clock" size={17} />
-                Your new departure estimate will be confirmed shortly.
+                {readiness.summary} New departure time unconfirmed.
               </p>
             </div>
             <div className="readiness-card">
               <ModuleRow
                 icon="plane"
                 title="Aircraft readiness"
-                subtitle="Your aircraft is getting ready for boarding"
+                subtitle={readiness.title}
                 onClick={() => open("readiness")}
               />
               <button
@@ -380,17 +397,17 @@ function JourneySheet({ expanded, setExpanded }) {
                 className="readiness-strip"
               >
                 <Icon name="info" size={17} />
-                Departure time is being confirmed.
+                {readiness.summary}
               </button>
             </div>
             <div className="lifestyle-card">
               <div className="lifestyle-heading">
                 <Icon name="chevron" />
                 <div>
-                  <strong>Head to the Pier First</strong>
+                  <strong>Your included Cathay lounge</strong>
                   <p>
-                    While we prepare for your journey, explore your lounge
-                    experience.
+                    Stay nearby. Your revised boarding time is not yet
+                    confirmed.
                   </p>
                 </div>
               </div>
@@ -400,8 +417,9 @@ function JourneySheet({ expanded, setExpanded }) {
               <div className="lifestyle-actions">
                 <strong>Take a moment for yourself</strong>
                 <p>
-                  Unwind at The Pier, First. Your Diamond membership includes
-                  access.
+                  Access to The Pier, First is included. Check with the gate
+                  team before leaving; we cannot yet confirm time for a lounge
+                  visit.
                 </p>
                 <div>
                   <button
@@ -439,7 +457,7 @@ function JourneySheet({ expanded, setExpanded }) {
                 <ModuleRow
                   icon="coffee"
                   title="Lounge"
-                  subtitle="The Pier, First · Access included"
+                  subtitle={`The Pier, First · ${timing.label}`}
                   onClick={() => open("lounge")}
                 />
               </div>
@@ -453,7 +471,7 @@ function JourneySheet({ expanded, setExpanded }) {
               subtitle={
                 state.saved.length
                   ? `${state.saved.length} saved for your flight`
-                  : "Plan your time on board"
+                  : "About 5 min to choose · enjoy on board"
               }
               onClick={() => open("entertainment")}
             />
@@ -465,6 +483,7 @@ function JourneySheet({ expanded, setExpanded }) {
             <ModuleRow
               icon="moon"
               title="Jet lag & rest"
+              subtitle={`Arrive ${time(journey.recovery?.arrival || journey.flight.arrival, "Europe/Zurich")} Zurich time`}
               onClick={() => open("rest")}
             />
             <ModuleRow

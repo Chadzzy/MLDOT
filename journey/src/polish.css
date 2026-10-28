@@ -126,11 +126,11 @@
 /* One continuous surface: no mounting/unmounting content during the drag. */
 .journey-sheet,
 .journey-sheet.expanded {
-  bottom: 0;
+  bottom: var(--sheet-bottom);
   left: var(--sheet-inset);
   right: var(--sheet-inset);
   height: var(--sheet-height);
-  padding-bottom: var(--sheet-footer);
+  padding-bottom: 0;
   border-radius: 24px 24px 0 0;
   z-index: 35;
   transition:
@@ -721,4 +721,112 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
+}
+
+/* Journey panels remain above the measured tab bar at every snap position. */
+.journey-sheet .sheet-scroll {
+  background: white;
+}
+.journey-sheet[data-snap="0"] .sheet-scroll {
+  padding: 0;
+}
+.timing-note {
+  display: flex;
+  gap: 10px;
+  padding: 13px 14px;
+  margin: 0 0 20px;
+  background: #e7f2f2;
+  color: #245f62;
+  border-radius: 12px;
+}
+.timing-note > svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.timing-note strong {
+  display: block;
+  font-size: 13px;
+  line-height: 1.4;
+}
+.timing-note p {
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 5px 0;
+}
+.timing-note small {
+  display: block;
+  font-size: 11px;
+  line-height: 1.5;
+  margin-top: 5px;
+  color: #596b6c;
+}
+.timing-unconfirmed,
+.timing-due {
+  background: #faf1e5;
+  color: #8c4f14;
+}
+.weather-watch {
+  margin-bottom: 20px;
+  border: 1px solid #d4e4e4;
+  border-radius: 12px;
+  padding: 12px;
+  background: #f4f8f8;
+}
+.weather-watch > button {
+  display: flex;
+  width: 100%;
+  gap: 10px;
+  text-align: left;
+  align-items: flex-start;
+  color: #326e71;
+}
+.weather-watch > button:disabled {
+  opacity: 1;
+  cursor: default;
+}
+.weather-watch button > svg {
+  flex-shrink: 0;
+}
+.weather-watch strong {
+  display: block;
+  font-size: 13px;
+  line-height: 1.4;
+}
+.weather-watch small {
+  display: block;
+  font-size: 11px;
+  line-height: 1.5;
+  margin-top: 5px;
+  color: #5c7072;
+}
+.weather-watch > small {
+  margin-top: 9px;
+}
+.weather-worsening {
+  border-color: #dbbd73;
+  background: #fff9ed;
+}
+.weather-impact {
+  border-color: #d6a170;
+  background: #fff3e8;
+}
+.weather-progression {
+  padding-left: 18px;
+  margin: 16px 0 0;
+}
+.weather-progression li {
+  padding: 5px 0;
+  color: #697575;
+}
+.weather-progression li[aria-current="step"] {
+  color: #005e63;
+}
+.live-warning-watch p {
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 8px 0;
+}
+.live-warning-watch .text-button {
+  margin-top: 8px;
+  font-size: 12px;
 }

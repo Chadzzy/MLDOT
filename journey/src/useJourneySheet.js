@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
-export const SHEET_HEIGHTS = [183, 470, 748];
+export const SHEET_HEIGHTS = [88, 375, 653];
 
 // All distances use the 375 × 812 design canvas, including on scaled phones.
 export function useJourneySheet(snap, setSnap) {
@@ -9,6 +9,21 @@ export function useJourneySheet(snap, setSnap) {
   const suppressClick = useRef(false);
   const [dragHeight, setDragHeight] = useState(null);
   const [headerHeight, setHeaderHeight] = useState(122);
+  const [geometry, setGeometry] = useState({ nav: 95, height: 812 });
+  useLayoutEffect(() => {
+    const device = ref.current?.closest(".device");
+    const nav = device?.querySelector(".bottom-nav");
+    if (!device || !nav) return;
+    const measure = () =>
+      setGeometry({ nav: nav.offsetHeight, height: device.clientHeight });
+    const observer = new ResizeObserver(measure);
+    observer.observe(device);
+    observer.observe(nav);
+    measure();
+    return () => observer.disconnect();
+  }, []);
+  const maximum = Math.max(300, geometry.height - geometry.nav - 64);
+  const heights = [88, Math.min(375, maximum * 0.64), maximum];
   useLayoutEffect(() => {
     const content = ref.current?.querySelector(".situation-full");
     if (!content) return;
@@ -23,9 +38,9 @@ export function useJourneySheet(snap, setSnap) {
     gesture.current = null;
     setDragHeight(null);
   }, [snap]);
-  const height = dragHeight ?? SHEET_HEIGHTS[snap];
-  const reveal = Math.max(0, Math.min(1, (height - SHEET_HEIGHTS[0]) / 150));
-  const clamp = (n) => Math.max(183, Math.min(748, n));
+  const height = dragHeight ?? heights[snap];
+  const reveal = Math.max(0, Math.min(1, (height - heights[0]) / 150));
+  const clamp = (n) => Math.max(heights[0], Math.min(maximum, n));
   const events = {
     onPointerDown(event) {
       if (!event.isPrimary || event.button !== 0) return;
@@ -67,9 +82,9 @@ export function useJourneySheet(snap, setSnap) {
         const projected = clamp(
           current + Math.max(-180, Math.min(180, velocity * 120)),
         );
-        const nearest = SHEET_HEIGHTS.reduce(
+        const nearest = heights.reduce(
           (best, h, i) =>
-            Math.abs(h - projected) < Math.abs(SHEET_HEIGHTS[best] - projected)
+            Math.abs(h - projected) < Math.abs(heights[best] - projected)
               ? i
               : best,
           0,
@@ -119,7 +134,7 @@ export function useJourneySheet(snap, setSnap) {
       "--sheet-height": `${height}px`,
       "--reveal": reveal,
       "--sheet-inset": `${10 * (1 - reveal)}px`,
-      "--sheet-footer": `${95 * (1 - reveal)}px`,
+      "--sheet-bottom": `${geometry.nav}px`,
       "--situation-height": `${28 + (headerHeight - 28) * reveal}px`,
       "--summary-height": `${60 * (1 - reveal)}px`,
     },

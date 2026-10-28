@@ -34,6 +34,13 @@ struct SimulationControls: View {
                         Text("Demonstration time: \(clockText)")
                             .font(.footnote).foregroundStyle(.secondary)
                     }
+                    Section("Weather demonstration") {
+                        Button("1 · Warning issued — flight unchanged") { Task { if await store.change("jump", args: ["phase": "airport"]) { dismiss() } } }
+                        Button("2 · Conditions worsen — head to gate") { Task { if await store.change("jump", args: ["phase": "boarding"]) { dismiss() } } }
+                        Button("3 · Weather delays departure") { inject(.delay) }
+                            .disabled(store.simulation.progress(at: store.now) >= 8100)
+                        Text("These are scenario conditions. Only the injected flight event confirms a delay. Actual HKO warnings are shown separately.").font(.footnote)
+                    }
                     Section("Jump to a moment") {
                         ForEach(JourneySimulation.Phase.allCases, id: \.self) { phase in
                             Button(phase.title) { Task { if await store.change("jump", args: ["phase": phase.rawValue]) { dismiss() } } }
@@ -42,7 +49,7 @@ struct SimulationControls: View {
                     if [.pretravel, .airport, .boarding].contains(store.simulation.phase(at: store.now)) {
                         Section("Introduce a change") {
                             Button("Gate changes to 62") { inject(.gate) }
-                            Button("Departure delayed") { inject(.delay) }
+                            Button("Weather delays departure") { inject(.delay) }
                             Button("Flight cancelled") { inject(.cancelled) }
                             if store.simulation.event != nil { Button("Clear injected change") { inject(nil) } }
                             Text("Injecting a change pauses playback. Clear it or jump to another moment before playing again.").font(.footnote)

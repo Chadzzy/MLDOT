@@ -15,7 +15,14 @@ information and honest state handling are part of that quality.
 - Preserve the existing Cathay module patterns, typography, spacing, colour,
   imagery and hierarchy. Secondary screens may adapt within that system.
 - Keep the persistent journey sheet central: collapsed, partially open and fully
-  open, with boarding-pass access throughout the journey.
+  open, with boarding-pass access throughout the journey. Measure the actual tab
+  bar and keep the sheet above it at every snap; do not leave a coloured footer gap.
+- Put boarding countdowns and leave-by context beside activity recommendations.
+  Reserve walking time and a buffer; label demo estimates. Unknown revised boarding
+  times must not create extra lounge or treatment time.
+- Readiness messages must follow a known disruption cause. Separate weather warnings,
+  worsening conditions and confirmed flight impact; never infer a maintenance fault
+  or flight delay from weather alone.
 - Match the original boarding-pass layout and actual brand artwork. Keep flight,
   passenger, seat, gate and time values consistent across every surface.
 - Keep the homepage mostly static. Recent searches and decorative header elements
@@ -181,6 +188,8 @@ and one demonstration journey; no real booking was made. No project authenticati
 setting was changed from this workspace.
 
 Scheduled flight monitoring, APNs and native Live Activities remain unconnected.
-HKO/MTR calls are manual integrations. Selected recovery itineraries and entertainment
+HKO warning monitoring is opt-in and checks every minute while foregrounded; it
+pauses while inactive. Airport-temperature and MTR cards remain manual integrations.
+See [weather and timing behaviour](journey/WEATHER-AND-TIMING.md). Selected recovery itineraries and entertainment
 remain local; saving a preference is not ticketing. The clean night-time homepage
 photograph and production icon exports were not in the received ZIP.

@@ -3,6 +3,9 @@ import WebKit
 
 @MainActor final class JourneyWebBridge: ObservableObject {
     weak var webView: WKWebView?
+    func setActive(_ active: Bool) {
+        webView?.callAsyncJavaScript("window.dispatchEvent(new CustomEvent('journey-host-active', {detail: active}))", arguments: ["active": active], in: nil, in: .page) { _ in }
+    }
     func preferenceResult(requestID: String, ok: Bool, message: String) {
         webView?.callAsyncJavaScript("window.__journeyPreferenceResult?.(result)", arguments: ["result": ["requestID": requestID, "ok": ok, "message": message]], in: nil, in: .page) { _ in }
     }

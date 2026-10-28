@@ -54,3 +54,12 @@ Dining/shop listings, personalised jet-lag triggers, Timatic-like checks, real f
 Inspected all 31 uploaded PNG references. Replaced the pass logo, contextual benefit icons and boarding-code pattern with exact regions of the supplied artwork, retaining live model text and invalidation behaviour. The delay sheet now shows the original lounge panel. Live Activity uses the supplied compact flight/terminal/status layout and a contextual action strip. The original master-brand logo is retained separately from the boarding-pass lockup.
 
 Rechecked all 20 triggers and scroll positions, connected journey transitions, touch/mouse sheet gestures, keyboard controls, reduced motion and model tests. Manually inspected the pass, delayed lounge and Activity renders. The clean homepage night-time photograph and production icon library are not in this archive; those remain the documented visual gaps. Standby functionality remains excluded.
+
+## 28 October — timing, weather and sheet navigation
+
+The sheet now measures the tab bar (including the shorter native bar), stops directly
+above it at each snap, and scales its maximum height to the screen. Browser geometry
+and mouse/touch checks pass. Boarding countdowns and demo activity budgets update
+from the journey clock; unconfirmed delays stop promising spare time. Weather demo
+stages are separate from opt-in real HKO warning checks. The latter run only while
+foregrounded, with explicit error/stale states. See WEATHER-AND-TIMING.md.

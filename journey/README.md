@@ -49,7 +49,7 @@ Selecting a trigger clears the previous detail stack and establishes that scenar
 
 ## Data boundaries
 
-Traveller, flight and operational information remains **scenario data**. Three public APIs can now be called from **Call live integrations**: HKO airport temperature, HKO warnings and MTR Airport Express. Live observations carry source/time evidence and remain separate from the sample flight forecast. See [INTEGRATIONS.md](INTEGRATIONS.md). The home scenario starts at **27 October 2026, 22:10 HKT**. Airport, delay, gate and connection triggers advance the scenario clock. The principal sample flight is HKG–ZRH; the connection branch adds a delayed BKK–HKG arrival at 23:15 and uses the same outbound flight, gate and 00:05 cutoff. Its 50-minute interval is not a feasibility guarantee. Weather follows the selected itinerary, including recovery route changes.
+Traveller, flight and operational information remains **scenario data**. Weather also offers opt-in, once-per-minute foreground HKO warning checks with last-check time and explicit errors. Three public APIs can be called manually from **Call live integrations**: HKO airport temperature, HKO warnings and MTR Airport Express. Live observations carry source/time evidence and remain separate from the sample flight forecast. See [INTEGRATIONS.md](INTEGRATIONS.md). The home scenario starts at **27 October 2026, 22:10 HKT**. Airport, delay, gate and connection triggers advance the scenario clock. The principal sample flight is HKG–ZRH; the connection branch adds a delayed BKK–HKG arrival at 23:15 and uses the same outbound flight, gate and 00:05 cutoff. Its 50-minute interval is not a feasibility guarantee. Weather follows the selected itinerary, including recovery route changes.
 
 `src/providers.js` defines `{ data, evidence }`, a local sample provider and a tested future HTTP adapter. The HTTP adapter is not enabled. Connecting a live flight provider still requires field mapping, freshness behaviour and review of sample-derived copy. Public weather/transit observations have a separate implementation in `src/live-data.js` and `src/LiveData.jsx`. Credentials belong on the server.
 
@@ -76,3 +76,5 @@ The standalone HTML is tested over loopback HTTP and then with the browser offli
 `src/polish.css` provides the embedded fonts, gesture geometry and motion. `src/reference.css` defines the reference layout and fixed phone geometry. `src/scenarios.js` defines the website's trigger navigation. Build outputs and local packages are ignored by Git.
 
 See [EXPERIENCE-REVIEW.md](EXPERIENCE-REVIEW.md) for the complete screen and transition review, fixes and remaining prototype gaps.
+
+See [weather and timing behaviour](WEATHER-AND-TIMING.md) for boarding budgets, cause-aware readiness and escalation.

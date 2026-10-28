@@ -36,3 +36,11 @@ This is a curated directory, not a live lounge API. Real-time opening, queues, o
 Chromium's local trust store lacks the managed proxy CA. Browser verification therefore obtains real HTTPS responses using urllib's configured platform CA/proxy path and renders those responses in Chromium; response CORS headers are retained. TLS verification is never disabled. The test records this transport limitation explicitly and does not claim an unmodified browser networking test inside the managed environment.
 
 Raw source-check evidence stays in `/workspace/research/day-of-travel/integration-probes/` and `verified-venues-2026-10-26.*`. No denied endpoint was bypassed.
+
+## Foreground warning monitoring
+
+The Weather modal now offers **Follow live HKO warnings**. It calls HKO warnsum
+every minute while active, displays the last check, and pauses on browser visibility
+or native scene changes. Failure/staleness does not become an all-clear. It is
+separate from scripted weather and cannot change the demo flight's status. No
+background scheduler has been deployed; see [the monitoring boundary](WEATHER-AND-TIMING.md).

@@ -24,7 +24,7 @@ with sync_playwright() as p:
    page.wait_for_timeout(22)
    if i==5:
     height=sheet.evaluate('(e)=>e.getBoundingClientRect().height')/scale
-    assert 183 < height < 748, height
+    assert 88 < height < 653, height
   page.wait_for_timeout(120);page.mouse.up()
   expect(sheet).to_have_attribute('data-snap',str(target))
   page.wait_for_timeout(480)

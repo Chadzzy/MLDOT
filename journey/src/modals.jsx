@@ -1,4 +1,9 @@
 import {
+  boardingContext,
+  readinessContext,
+  weatherContext,
+} from "./journey-context.js";
+import {
   NATIVE_MODE,
   requestNativePriorities,
   saveNativePreferences,
@@ -8,6 +13,8 @@ import { useJourney } from "./context.js";
 import { Icon } from "./icons.jsx";
 import {
   SourceLabel,
+  TimingNote,
+  WeatherWatch,
   PassCard,
   ModuleRow,
   FlightRoute,
@@ -25,7 +32,7 @@ import {
   displayFlight,
 } from "./model.js";
 import directory from "./venue-directory.json";
-import { LiveSources, LiveWeatherCard } from "./LiveData.jsx";
+import { LiveSources, LiveWeatherCard, LiveWarningWatch } from "./LiveData.jsx";
 import { loungeAccess } from "./lounge-rules.js";
 
 export const MODAL_TITLES = {
@@ -57,6 +64,7 @@ export const MODAL_TITLES = {
 function Weather() {
   const { journey } = useJourney();
   const flight = displayFlight(journey);
+  const weather = weatherContext(journey);
   const segments = [
     ...(journey.connection
       ? [
@@ -77,7 +85,12 @@ function Weather() {
               {
                 code: "HKG",
                 icon: "cloud",
-                description: "Partly cloudy",
+                description:
+                  weather?.stage === "impact" || weather?.stage === "worsening"
+                    ? "Thunderstorms"
+                    : weather?.stage === "watch"
+                      ? "Thunderstorm warning"
+                      : "Partly cloudy",
                 high: 29,
                 low: 26,
               },
@@ -94,7 +107,12 @@ function Weather() {
         {
           code: "HKG",
           icon: "cloud",
-          description: "Partly cloudy",
+          description:
+            weather?.stage === "impact" || weather?.stage === "worsening"
+              ? "Thunderstorms"
+              : weather?.stage === "watch"
+                ? "Thunderstorm warning"
+                : "Partly cloudy",
           high: 29,
           low: 26,
         },
@@ -117,6 +135,8 @@ function Weather() {
           </p>
         </div>
       )}
+      <WeatherWatch full />
+      <LiveWarningWatch controls />
       <LiveWeatherCard />
       {segments.map((segment) => (
         <div className="weather-segment" key={segment.number}>
@@ -281,8 +301,9 @@ function Entertainment() {
         <span className="mini-eyebrow">Before you board</span>
         <Icon name="headphones" size={42} />
         <h2>Choose your music & movies</h2>
-        <p>Make your next few hours your own.</p>
+        <p>About 5 minutes to choose. Enjoy your selections on board.</p>
       </div>
+      <TimingNote />
       <div className="field-label">What are you in the mood for?</div>
       <div className="chip-group">
         {moods.map(([id, label]) => (
@@ -413,6 +434,7 @@ function Places() {
         of your airport time
       </h2>
       <p className="intro">A space to unwind. A moment for yourself.</p>
+      <TimingNote activity />
       {journey.isUncertain && (
         <div className="inline-warning">
           <Icon name="clock" />
@@ -487,6 +509,7 @@ function Lounges() {
       </>
     );
   const pierFirst = venue.id === "cathay-pier-first";
+  const timing = boardingContext(journey);
   return (
     <>
       {pierFirst && (
@@ -498,6 +521,7 @@ function Lounges() {
       )}
       <h2>{venue.name}</h2>
       <p className="intro">{venue.locationText}</p>
+      <TimingNote activity />
       <div className="included-note">
         <Icon name="circleCheck" size={20} />
         Access included with your{" "}
@@ -506,8 +530,9 @@ function Lounges() {
       {pierFirst && (
         <>
           <p>
-            Settle into a quiet space before your flight. Enjoy a meal, unwind
-            at the bar, or take a moment to rest.
+            {timing.availableMinutes > 0
+              ? "Choose a short meal or a moment to rest within your available time. Treatment duration and availability need confirmation at the lounge."
+              : "Keep close to your gate for now. Your included lounge facilities are listed below for reference."}
           </p>
           <div className="lounge-highlights">
             <div>
@@ -592,6 +617,7 @@ function LoungeDirections() {
         The Pier, First
       </h2>
       <p className="intro">Terminal 1 · Level 6 · Near Gate 63</p>
+      <TimingNote activity />
       <div className="included-note">
         <Icon name="pin" />
         <span>
@@ -742,52 +768,48 @@ function Directions() {
 
 function Readiness() {
   const { journey } = useJourney();
-  const delayed = journey.isUncertain;
+  const readiness = readinessContext(journey);
+  const timing = boardingContext(journey);
   return (
     <>
       <h2>Is my aircraft ready?</h2>
-      <p className="readiness-progress">1 of 5 done</p>
+      <p className="readiness-progress">
+        Latest scenario update · {time(journey.clock)} HKT
+      </p>
+      <TimingNote />
       <div className="readiness-list">
         {[
+          { title: readiness.title, sub: readiness.detail, active: true },
           {
-            title: "Aircraft at the gate",
-            sub: "Arrived and parked · 18:48",
-            done: true,
+            title: "Aircraft preparation",
+            sub:
+              journey.disruptionCause === "weather"
+                ? "Preparation updates will appear here as they are confirmed."
+                : "We’ll show confirmed preparation updates here.",
           },
           {
-            title: delayed
-              ? "Safety & maintenance check"
-              : "Preparing for your journey",
-            sub: delayed
-              ? "Our engineers are completing the aircraft checks. We’ll update you here when the next departure estimate is confirmed."
-              : "Sample preparations are underway. Your boarding time remains 23:45.",
-            active: true,
+            title: "Bags & cargo",
+            sub: "Completion time not confirmed. Ground tasks depend on conditions and operational clearance.",
           },
-          { title: "Bags & cargo", sub: "Bags to be loaded and balanced" },
           {
             title: "Crew & final checks",
-            sub: "Ready once maintenance clears",
+            sub: "Ready-to-depart clearance and timing are not yet confirmed.",
           },
-          {
-            title: "Ready to board",
-            sub: delayed ? "Time unconfirmed" : "Planned boarding · 23:45",
-          },
-        ].map((s) => (
+          { title: "Boarding", sub: timing.label + ". " + timing.detail },
+        ].map((step) => (
           <div
-            key={s.title}
-            className={`readiness-item ${s.active ? "active" : ""} ${s.done ? "done" : ""}`}
+            key={step.title}
+            className={`readiness-item ${step.active ? "active" : ""}`}
           >
-            <span className="milestone">
-              {s.done && <Icon name="check" size={16} />}
-            </span>
+            <span className="milestone" />
             <div>
-              <h3>{s.title}</h3>
-              {s.active && (
+              <h3>{step.title}</h3>
+              {step.active && (
                 <span className="outline-tag">
-                  {delayed ? "Updating" : "In progress · demo"}
+                  {journey.isUncertain ? "Awaiting update" : "Monitoring"}
                 </span>
               )}
-              <p>{s.sub}</p>
+              <p>{step.sub}</p>
             </div>
           </div>
         ))}
@@ -795,8 +817,8 @@ function Readiness() {
       <div className="gentle-note">
         <Icon name="info" />
         <p>
-          Simulated operational events. These tasks can overlap; progress is not
-          a countdown to departure.
+          Simulated operational updates. Weather observations alone do not
+          confirm an aircraft fault, flight delay or completion time.
         </p>
       </div>
     </>
@@ -1113,6 +1135,7 @@ function Rest() {
   return (
     <>
       <SourceLabel>Exploratory rest concept</SourceLabel>
+      <TimingNote />
       <div className="rest-hero">
         <Icon name="moon" size={42} />
         <h2>A gentler arrival.</h2>

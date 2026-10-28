@@ -49,7 +49,13 @@ try:
   page.locator('.trigger-navigation a[href="#weather"]').click()
   expect(page.get_by_role('dialog').locator('.live-weather-card')).to_contain_text('Chek Lap Kok')
   expect(page.get_by_role('dialog').locator('.weather-segment')).to_have_count(1)
+  page.get_by_role('button',name='Follow live HKO warnings').click()
+  expect(page.get_by_role('dialog').locator('.live-warning-watch')).to_contain_text('1 check',timeout=20000)
+  expect(page.get_by_role('dialog').locator('.live-warning-watch')).not_to_contain_text('unavailable or out of date')
+  assert len([r for r in requests if 'dataType=warnsum' in r['url']])==2
+  print('PASS: Opt-in monitoring makes an additional real HKO warning call.',flush=True)
   page.locator('.device').screenshot(path=str(ROOT/'test-results/live-weather.png'))
+  page.get_by_role('button',name='Stop live warning checks').click()
   page.locator('.trigger-navigation a[href="#lounge"]').click()
   expect(page.get_by_role('dialog').locator('.included-note')).to_contain_text('Diamond membership')
   page.get_by_text('Your other Cathay lounges',exact=True).click()
