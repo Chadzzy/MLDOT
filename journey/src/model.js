@@ -5,6 +5,7 @@ import {
   CATALOGUE,
   SCENARIOS,
 } from "./data.js";
+import { preparationState } from "./preparation-model.js";
 
 export const STORAGE_KEY = "cathay-journey-demo-v1";
 export const time = (iso, zone = "Asia/Hong_Kong") =>
@@ -52,6 +53,7 @@ export function initialState(raw) {
         }
       : null;
   return {
+    preparation: preparationState(parsed.preparation),
     nativeServerPreferences,
     nativeJourneyID:
       typeof parsed.nativeJourneyID === "string"
@@ -95,6 +97,14 @@ export function initialState(raw) {
 
 export function reducer(state, action) {
   switch (action.type) {
+    case "PREPARATION":
+      return {
+        ...state,
+        preparation: preparationState({
+          ...state.preparation,
+          ...action.values,
+        }),
+      };
     case "SERVER_PREFERENCES": {
       const next = action.preferences;
       if (
@@ -138,6 +148,10 @@ export function reducer(state, action) {
         ...state,
         scenario: action.value,
         nativeJourneyID: action.journeyID,
+        preparation:
+          state.nativeJourneyID !== action.journeyID
+            ? preparationState()
+            : state.preparation,
         nativeServerPreferences:
           state.nativeJourneyID === action.journeyID
             ? state.nativeServerPreferences

@@ -35,8 +35,10 @@ import directory from "./venue-directory.json";
 import { LiveSources, LiveWeatherCard, LiveWarningWatch } from "./LiveData.jsx";
 import { loungeAccess } from "./lounge-rules.js";
 import { InspectorControls } from "./DecisionInspector.jsx";
+import { PreparationScreen, PREP_TITLES } from "./Preparation.jsx";
 
 export const MODAL_TITLES = {
+  ...PREP_TITLES,
   inspector: "Decision inspector",
   live: "Live data connections",
   transport: "Getting to the airport",
@@ -1355,6 +1357,7 @@ function SharePreview() {
 
 export function ModalContents({ type }) {
   const { journey, state, open, dispatch } = useJourney();
+  if (PREP_TITLES[type]) return <PreparationScreen type={type} />;
   switch (type) {
     case "transport":
       return <Transport />;

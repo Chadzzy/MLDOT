@@ -1,6 +1,7 @@
 import { useFlightLookup } from "./LiveFlights.jsx";
 import { planJourney, applyPlan } from "./journey-planner.js";
 import { useDecisionSharing } from "./DecisionInspector.jsx";
+import { PreparationEntry } from "./Preparation.jsx";
 import { boardingContext, readinessContext } from "./journey-context.js";
 import {
   NATIVE_MODE,
@@ -124,6 +125,7 @@ function HomeContent({ tab }) {
             <span className="section-link">View all</span>
           </div>
           <FlightCard />
+          <PreparationEntry />
           <p className="update-line">
             Last updated: {date(journey.clock)}, {time(journey.clock)} (GMT +8)
           </p>
@@ -467,6 +469,7 @@ function JourneySheet({ expanded, setExpanded }) {
             </div>
           )}
         <div className="sheet-more">
+          <PreparationEntry />
           <div className="module-group">
             <ModuleRow
               icon="headphones"
@@ -476,7 +479,7 @@ function JourneySheet({ expanded, setExpanded }) {
                   ? `${state.saved.length} saved for your flight`
                   : "About 5 min to choose · enjoy on board"
               }
-              onClick={() => open("entertainment")}
+              onClick={() => open("prep-media")}
             />
             <ModuleRow
               icon="cloud"
@@ -1035,7 +1038,7 @@ export default function App() {
     deriveJourney(plannerState, snapshot),
     NATIVE_MODE ? nativeSnapshot : null,
   );
-  const plan = planJourney(baseJourney, state.preferences);
+  const plan = planJourney(baseJourney, state.preferences, state.preparation);
   const journey = applyPlan(baseJourney, plan);
   const inspector = useDecisionSharing(plan, flightApi.lookup);
   return (

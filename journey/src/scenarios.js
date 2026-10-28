@@ -1,6 +1,77 @@
 // The website selects moments; the iPhone renders the traveller UI.
 export const TRIGGER_GROUPS = [
   {
+    label: "New · Your journey, your way",
+    items: [
+      {
+        id: "prep-ready",
+        label: "Your journey at a glance",
+        scenario: "normal",
+        modal: "prep-ready",
+      },
+      {
+        id: "prepare",
+        label: "Get ready for your journey",
+        scenario: "normal",
+        modal: "prepare",
+      },
+      {
+        id: "prep-intent",
+        label: "What matters today",
+        scenario: "normal",
+        modal: "prep-intent",
+      },
+      {
+        id: "prep-transport",
+        label: "Plan airport transport",
+        scenario: "normal",
+        modal: "prep-transport",
+      },
+      {
+        id: "prep-family",
+        label: "Family & support",
+        scenario: "normal",
+        modal: "prep-family",
+      },
+      {
+        id: "prep-food",
+        label: "Food along the way",
+        scenario: "airport",
+        modal: "prep-food",
+      },
+      {
+        id: "prep-rest",
+        label: "Rest around your arrival",
+        scenario: "normal",
+        modal: "prep-rest",
+      },
+      {
+        id: "prep-media",
+        label: "Your personal flight playlist",
+        scenario: "airport",
+        modal: "prep-media",
+      },
+      {
+        id: "prep-onboard",
+        label: "Preview onboard pairing",
+        scenario: "airport",
+        modal: "prep-onboard",
+      },
+      {
+        id: "prep-arrival",
+        label: "Preview arrival & pickup",
+        scenario: "airport",
+        modal: "prep-arrival",
+      },
+      {
+        id: "prep-feedback",
+        label: "End-of-journey feedback",
+        scenario: "airport",
+        modal: "prep-feedback",
+      },
+    ],
+  },
+  {
     label: "Real data",
     items: [
       {

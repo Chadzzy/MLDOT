@@ -3,6 +3,21 @@ import { TRIGGERS } from "./scenarios.js";
 
 const JOURNEYS = [
   {
+    name: "New · Make the journey yours",
+    moments: [
+      "prepare",
+      "prep-intent",
+      "prep-transport",
+      "prep-family",
+      "prep-food",
+      "prep-rest",
+      "prep-media",
+      "prep-onboard",
+      "prep-arrival",
+      "prep-feedback",
+    ],
+  },
+  {
     name: "1. From home to boarding",
     moments: [
       "home",

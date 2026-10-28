@@ -1,9 +1,10 @@
 # Get ready for your journey
 
 Working product specification, 28 October 2026 (Hong Kong). This records the next
-iteration discussed with Lee. These preparation, recommendation, IFE-pairing and
-feedback features are not yet implemented. The shared planner and inspector are
-already implemented; this extends their inputs and journey narrative.
+iteration discussed with Lee. The first clickable design iteration is now implemented; see
+[the design review and exact boundaries](PREPARATION-DESIGN.md). Preferences and
+media selections work locally; IFE pairing, rides and fulfilment remain visual
+mockups. This specification also describes further capabilities not yet built.
 
 ## Direction agreed in discussion
 

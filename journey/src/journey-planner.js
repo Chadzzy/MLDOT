@@ -2,10 +2,11 @@ import { boardingContext, weatherContext } from "./journey-context.js";
 import { rankRecovery, time } from "./model.js";
 import { loungeAccess } from "./lounge-rules.js";
 import directory from "./venue-directory.json" with { type: "json" };
+import { transportLabel, transportAllowance } from "./preparation-model.js";
 
 // The passenger recommendation and inspector consume this one result.
 // These are explicit product rules over the demonstration, not model reasoning.
-export function planJourney(journey, preferences) {
+export function planJourney(journey, preferences, preparation = {}) {
   const timing = boardingContext(journey);
   const weather = weatherContext(journey);
   const airport =
@@ -110,6 +111,18 @@ export function planJourney(journey, preferences) {
           : "AIRPORT_TRANSFER_FIRST",
     );
 
+  if (action.id === "lounge" && ["easy", "rest"].includes(preparation.intent)) {
+    action.title =
+      preparation.intent === "easy"
+        ? "Take a quiet moment at The Pier"
+        : "A quiet stop before your flight";
+    reasons.push("CHOSEN_JOURNEY_PRIORITY");
+  }
+  if (action.id === "transport" && transportAllowance(preparation.transport)) {
+    action.detail = `You’re planning ${transportLabel(preparation.transport).toLowerCase()}. Allow around ${transportAllowance(preparation.transport)} min from Central (demo estimate); check current conditions before leaving.`;
+    action.modal = "prep-transport";
+    reasons.push(`CHOSEN_TRANSPORT_${preparation.transport.toUpperCase()}`);
+  }
   if (!journey.isDisrupted && !journey.recovery) {
     const blocks = [];
     if (!airport) blocks.push("NOT_FREE_AIRPORT_TIME");

@@ -1,0 +1,67 @@
+# Preparation design review
+
+28 October 2026, Hong Kong. Eleven clickable screens have been added to the existing
+journey implementation using its fixed iPhone frame, modal shell, GT Walsheim
+fonts, colours, original brand assets and official Pier lounge photograph. This is
+a design prototype; partner integrations are not represented as connected.
+
+## Open and review
+
+Open the current published walkthrough at `#prepare`. In the sidebar, choose
+**New · Make the journey yours** to step through the design story, or select any
+screen under **New · Your journey, your way**. The homepage and expanded journey
+sheet also contain **Get ready for your journey**. The same entry is bundled for
+the iPhone host; a new ZIP is not needed when using the existing Mac checkout.
+
+Screens: preparation overview; journey priority; transport; family/support; meals;
+rest intention; entertainment; onboard pairing preview; arrival/pickup preview;
+feedback; and a combined readiness view.
+
+A four-screen board is available at `public/reviews/preparation-design-board.png`.
+It is composed of screenshots of the actual implementation, using its original
+font/assets. Entertainment thumbnails are abstract category artwork, not fabricated
+film posters. The exact night-time homepage photograph remains the previously
+recorded asset gap; no replacement was introduced in this work.
+
+## Working interactions
+
+- Optional choices are saved locally in the existing journey state. Back, skip,
+  edit and reload work. Family questions reveal the buggy detail when relevant.
+- Transport changes the existing next-action text. Easy/rest intent changes the
+  airport lounge suggestion when time and scenario conditions permit. Weather,
+  cancellation and boarding urgency still take precedence.
+- The new entertainment presentation reuses the existing saved IDs and example
+  catalogue. Mood changes order; selections survive disruptions and appear in the
+  paired-screen mockup. It is not the flight-specific real Cathay catalogue.
+- A replacement itinerary updates displayed arrival times. Lounge access is flagged
+  for review after cancellation/recovery. New native journey identities clear
+  trip-specific preparation/support/feedback; saved entertainment is retained.
+- Feedback is editable and stored locally. No analytics submission occurs.
+- The boarding-pass shortcut, current modal focus handling, transitions and reduced
+  motion support are retained. No stand-by or concierge feature was added.
+
+## Explicit mockup boundaries
+
+The IFE code and paired-screen state are visual examples. No camera scan, backend
+pairing, real screen acknowledgement, aircraft seat binding or content transfer
+occurs. The UI labels the action **Show paired-screen mockup**.
+
+Letterboxd account access, Uber booking, meal orders and assistance requests are
+not connected. Family/support and meal selections are preferences, not confirmed
+requests. Journey times from Central are illustrative transport allowances. Rest
+choices are editable intentions; no medical or jet-lag model is implied. The
+arrival preview does not advance the actual simulation clock.
+
+Only intent and transport currently affect the shared planner. Additional family
+transfer allowances, meal scheduling and validated sleep windows need their own
+rules and source work. The inspector excludes support details and feedback text.
+
+## Verification
+
+43 JavaScript tests cover the existing model and new preparation validation,
+persistence, new-trip reset, urgency precedence and trace privacy. Browser checks
+exercise all new screens, optional branches, saved media, local pairing/ride
+mockups, feedback, reload, cancellation, original font, pass access and overflow.
+Existing native-host and sheet geometry checks are also run against the new bundle.
+Native CI status is recorded separately in the delivery record and iOS guide;
+physical-device verification is not inferred from Chromium or simulator unit tests.

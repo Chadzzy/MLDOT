@@ -230,3 +230,10 @@ flight observations through Supabase Broadcast while the app is active; it is no
 a background planning service. Two independent browser contexts were verified
 against the hosted relay. See [the inspector guide](journey/DECISION-INSPECTOR.md)
 and [flight-intelligence next steps](journey/FLIGHT-INTELLIGENCE-PLAN.md).
+
+The progressive preparation design now has eleven clickable screens in the
+existing Cathay UI. Intent and transport affect the shared planner; family/support,
+meal/rest preferences and feedback are local prototype state. Entertainment uses
+the existing saved catalogue. IFE pairing and arrival rides are explicitly visual
+mockups, with no partner connection or fulfilment. See
+[the preparation design review](journey/PREPARATION-DESIGN.md).
