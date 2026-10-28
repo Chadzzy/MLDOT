@@ -1,6 +1,6 @@
 # Journey-service boundary — Supabase selected, app not connected
 
-The selected prototype backend is Supabase project `mekjqboywhbtbbabxela`. The first database/API slice is implemented under `supabase/` and `backend/`, tested locally, and awaiting hosted setup. See [backend instructions](../backend/README.md). Scheduled provider monitoring, subscriptions and push delivery below remain future work.
+The selected prototype backend is Supabase project `mekjqboywhbtbbabxela`. The first database/API slice is implemented under `supabase/` and `backend/`, tested locally, with the hosted journey RPC now visible but authenticated verification pending. See [backend instructions](../backend/README.md). Scheduled provider monitoring, subscriptions and push delivery below remain future work.
 
 ## Ownership
 
@@ -26,4 +26,4 @@ Persist provider name, source observation timestamp, retrieval timestamp, raw st
 
 ## Current blockers
 
-The project URL is available; the migration has not been applied remotely, and no publishable key or authenticated app session is configured. The native app still uses local simulation. No flight-status provider has been integrated. The existing HKO/MTR integrations are manual and do not supply a flight's status. APNs credentials, signing team and native Live Activity extension remain future work. On-device AI only proposes a passenger preference and cannot grant eligibility, promise a connection or select nonexistent inventory.
+The project URL and publishable key are configured and Auth health is verified. The journey RPC exists and denies unsigned access. Anonymous sign-in is disabled; a user session and authenticated verification are still needed. The native app still uses local simulation. No flight-status provider has been integrated. The existing HKO/MTR integrations are manual and do not supply a flight's status. APNs credentials, signing team and native Live Activity extension remain future work. On-device AI only proposes a passenger preference and cannot grant eligibility, promise a connection or select nonexistent inventory.

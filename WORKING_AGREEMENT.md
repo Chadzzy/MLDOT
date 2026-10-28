@@ -169,9 +169,11 @@ local simulation controls and an optional Foundation Models preference flow.
 JavaScript/model and browser-host checks have passed. The Swift app has **not**
 been compiled or exercised on an iPhone in this cloud environment.
 
-The Supabase project URL is supplied and reachable. The journey database/API
-setup is prepared and locally tested, but not deployed or connected to the app.
-The publishable key and signed-in app session are still required. Live flight
+The Supabase project URL and publishable key are supplied and verified. The
+journey RPC is present and correctly denies unsigned access. Full authenticated
+verification and the native adapter remain pending. Anonymous sign-in is disabled;
+enabling it is recommended for a login-free demonstration with per-user journeys.
+No project authentication setting has been changed from this workspace. Live flight
 status, scheduled monitoring, APNs and native Live Activities remain unconnected.
 HKO/MTR calls are manual integrations.
 The clean night-time homepage photograph and production icon exports were not in

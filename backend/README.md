@@ -6,7 +6,9 @@ Project: **mekjqboywhbtbbabxela** — https://mekjqboywhbtbbabxela.supabase.co
 
 ## Current status
 
-The supplied project responds over HTTPS. Unauthenticated REST/Auth requests return `401 No API key found in request`, which is expected. No hosted database changes have been made. The publishable key is not yet supplied, and no app user session is configured.
+The supplied publishable key is configured in `project.json` and verified against the hosted Auth service (HTTP 200). The `journey_demo_list` RPC is present and rejects the unsigned caller with `401 / 42501 permission denied`, as intended. This confirms the endpoint exists, not that all authenticated operations have passed. No administrative changes were made from this workspace.
+
+Email sign-in is enabled; anonymous sign-in is currently disabled. For the demonstration, the recommended next setting is **Enable Anonymous Sign-Ins** in [Authentication → Providers](https://supabase.com/dashboard/project/mekjqboywhbtbbabxela/auth/providers). This creates a distinct authenticated user per installation without collecting an email/password. The same owner-isolation policies apply. Hosted authenticated verification and the native service adapter remain outstanding.
 
 Prepared and tested locally:
 
@@ -20,15 +22,17 @@ The iPhone currently remains in local mode. This commit does not enable schedule
 
 ## One-time hosted setup
 
-1. Open the project's [SQL Editor](https://supabase.com/dashboard/project/mekjqboywhbtbbabxela/sql/new).
+1. For a fresh installation only (the supplied project already exposes the journey RPC), open the project's [SQL Editor](https://supabase.com/dashboard/project/mekjqboywhbtbbabxela/sql/new).
 2. Paste and run the entire [journey migration](../supabase/migrations/20261028010000_journey_demo.sql). It creates only the named `journey_demo_*` tables/functions and private helper schema. It does not delete existing business tables or alter global default permissions. The script is transactional and can be reapplied without dropping saved journeys.
-3. Supply the app's **publishable** key (`sb_publishable_…`) from project Settings → API Keys. This public key identifies the project; it does not grant deployment access or sign a user in. Never use a secret or service-role key in the app.
+3. The app's **publishable** key is now supplied and configured. It identifies the project; it does not grant deployment access or sign a user in. Never use a secret or service-role key in the app.
 
 No Edge Function deployment is required for this first slice: Supabase exposes the database functions through its built-in REST API after the migration. Alternatively, an authorized developer can apply the migration using the Supabase CLI with the project linked. Do not commit administrative tokens or database passwords.
 
 ### Authentication boundary
 
-Every operation requires a normal Supabase Auth access token for a signed-in user. A publishable key alone is deliberately insufficient. This setup does not enable anonymous sign-in or change the project's existing authentication settings. A user sign-in flow and secure session storage must be connected to the app before it can call these operations. The backend derives ownership from `auth.uid()`; clients cannot submit an owner ID.
+Every operation requires a Supabase Auth access token for a signed-in user. A publishable key alone is deliberately insufficient. An anonymous Auth session still uses the `authenticated` database role and an individual `auth.uid()`; it is different from an unsigned API request. Clients cannot submit an owner ID.
+
+Enabling anonymous sign-in is a project setting; neither this configuration file nor the SQL migration changes it. After it is enabled, the native adapter will need anonymous sign-in, refresh-token handling and Keychain session storage. Losing that session (for example after an app reset) can lose access to that anonymous journey; cross-device recovery requires linking a permanent identity. No email or account-creation requests have been sent from this workspace.
 
 ## API
 
@@ -75,4 +79,4 @@ python backend/tests/postgres.py
 
 The PostgreSQL test uses a disposable `postgres:16-alpine` container, no network, no published port and synthetic users. It tests migration/RPC behaviour, owner isolation, anonymous and direct-write denials, failed-command rollback, clock calculations, persisted state, migration reapplication and eight concurrent retries. Its small local `auth.uid()` fixture is **not** a test of Supabase's hosted JWT validation or Auth configuration.
 
-Client tests check request credentials, missing sessions, errors/conflicts, timeout cancellation and malformed JSON. Hosted REST/Auth, iOS integration and device behaviour remain unverified until connected.
+Client tests check request credentials, missing sessions, errors/conflicts, timeout cancellation and malformed JSON. Hosted Auth health/settings and the unsigned RPC denial are verified. Authenticated REST operations, iOS integration and device behaviour remain unverified until connected.

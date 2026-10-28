@@ -1,6 +1,11 @@
 {
   "projectRef": "mekjqboywhbtbbabxela",
   "url": "https://mekjqboywhbtbbabxela.supabase.co",
-  "publishableKey": null,
-  "deploymentStatus": "prepared-not-deployed"
+  "publishableKey": "sb_publishable_MFfhDnZEapS5Q2SQ-oTnuA_1rcozoBd",
+  "deploymentStatus": "journey-rpc-present-authenticated-verification-pending",
+  "authentication": {
+    "recommended": "anonymous-device-session",
+    "anonymousSignInEnabled": false,
+    "emailSignInEnabled": true
+  }
 }
