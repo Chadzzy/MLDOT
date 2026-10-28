@@ -138,9 +138,20 @@ review. If a required check cannot run, record it as unverified rather than pass
   boarding times, or assume an unknown delay creates more activity time.
 - Build our own small HKIA-only venue database from official airport/operator
   information. Queues and walking allowances may be simulated independently.
-- Movies and music are pre-flight selections. Use sourced titles/metadata;
-  seatback playback and streaming are not required.
+- Movies and music begin as pre-flight selections using sourced titles/metadata.
+  The next narrative should demonstrate an onboard handoff by pairing with an
+  example IFE screen. Actual aircraft hardware, streaming and media downloads
+  remain outside scope; a saved queue must not be labelled transferred until the
+  demonstration screen acknowledges it.
 - Travel-document checklists remain a simulation, not Timatic clearance.
+- Add a resumable “Get ready for your journey” concept before, during or after
+  check-in. Progressively ask only useful optional questions about transport,
+  trip priorities, meals, family needs, assistance, rest and entertainment.
+  Reuse known booking details; preserve requested versus confirmed status.
+- The user wants to explore taste-based entertainment (including Letterboxd),
+  flight/passenger readiness, ride planning and end-of-journey feedback.
+  A dedicated concierge/chat experience is deferred. Detailed integrations and
+  jet-lag rules remain proposals; see [the preparation narrative](journey/PREPARATION-NARRATIVE.md).
 
 ## 7. Keep data, simulation and AI honest
 
