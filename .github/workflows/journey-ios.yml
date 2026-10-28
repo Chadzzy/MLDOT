@@ -1,0 +1,58 @@
+name: Journey iPhone build
+on:
+  push:
+    branches: [codex/iphone-journey]
+    paths:
+      - 'ios/**'
+      - '.github/workflows/journey-ios.yml'
+permissions:
+  contents: read
+jobs:
+  simulator:
+    runs-on: macos-15
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Select Xcode 26
+        run: |
+          python3 - <<'PY'
+          import os, pathlib, re
+          apps = list(pathlib.Path('/Applications').glob('Xcode_26*.app'))
+          if not apps:
+              raise SystemExit('This runner has no Xcode 26 installation.')
+          app = max(apps, key=lambda p: tuple(map(int, re.findall(r'\d+', p.name))))
+          with open(os.environ['GITHUB_ENV'], 'a') as f:
+              f.write(f'DEVELOPER_DIR={app}/Contents/Developer\n')
+          PY
+      - name: Build app and test target for iPhone Simulator
+        run: |
+          xcodebuild -version
+          xcodebuild build-for-testing \
+            -project ios/JourneyApp.xcodeproj \
+            -scheme JourneyApp \
+            -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath "$RUNNER_TEMP/JourneyDerivedData" \
+            CODE_SIGNING_ALLOWED=NO
+      - name: Run journey model tests
+        run: |
+          xcrun simctl list devices available --json > "$RUNNER_TEMP/journey-devices.json"
+          DEVICE_ID=$(python3 - <<'PY'
+          import os, json
+          with open(os.path.join(os.environ['RUNNER_TEMP'], 'journey-devices.json')) as f:
+              devices = json.load(f)['devices']
+          for runtime, entries in sorted(devices.items(), reverse=True):
+              if 'iOS' not in runtime:
+                  continue
+              for device in entries:
+                  if device.get('isAvailable') and device['name'].startswith('iPhone'):
+                      print(device['udid'])
+                      raise SystemExit(0)
+          raise SystemExit('No available iPhone simulator.')
+          PY
+          )
+          xcodebuild test-without-building \
+            -project ios/JourneyApp.xcodeproj \
+            -scheme JourneyApp \
+            -destination "platform=iOS Simulator,id=$DEVICE_ID" \
+            -derivedDataPath "$RUNNER_TEMP/JourneyDerivedData" \
+            CODE_SIGNING_ALLOWED=NO
