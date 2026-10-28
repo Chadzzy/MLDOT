@@ -1,7 +1,8 @@
 import Foundation
 
 // Replay uses the existing demonstration itinerary so all recovery fixtures agree.
-// The backend will eventually own this clock; iOS timers are never a background monitor.
+// Connected playback uses this as a presentation of server snapshots. Local arithmetic
+// only animates between reconciliations; iOS timers are never a background monitor.
 struct JourneySimulation: Codable, Equatable {
     enum Mode: String, Codable, CaseIterable { case guided, accelerated, realtime }
     enum Phase: String, Codable, CaseIterable {

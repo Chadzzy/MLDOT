@@ -15,5 +15,5 @@ major_version = 16
 enabled = true
 site_url = "http://localhost:5174"
 enable_signup = true
-# Use normal Supabase Auth sessions initially. Anonymous sign-in is not required.
-enable_anonymous_sign_ins = false
+# Local development mirrors the user-enabled anonymous demonstration sessions.
+enable_anonymous_sign_ins = true

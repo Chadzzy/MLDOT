@@ -907,6 +907,18 @@ export default function App() {
       journeyID: nativeSnapshot.journeyID,
     });
   }, [nativeScenarioValue, nativeSnapshot?.journeyID]);
+  useEffect(() => {
+    if (!NATIVE_MODE || !nativeSnapshot?.preferences) return;
+    dispatch({
+      type: "SERVER_PREFERENCES",
+      journeyID: nativeSnapshot.journeyID,
+      preferences: nativeSnapshot.preferences,
+    });
+  }, [
+    nativeSnapshot?.journeyID,
+    nativeSnapshot?.preferences?.recoveryPriority,
+    nativeSnapshot?.preferences?.recoveryText,
+  ]);
   const [evidence, setEvidence] = useState(null);
   const [refreshing, setRefreshing] = useState(false);
   const [storageWarning, setStorageWarning] = useState(false);

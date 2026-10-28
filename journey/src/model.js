@@ -40,7 +40,19 @@ export function initialState(raw) {
     parsed.preferences && typeof parsed.preferences === "object"
       ? parsed.preferences
       : {};
+  const remote = parsed.nativeServerPreferences;
+  const nativeServerPreferences =
+    remote &&
+    ["business", "earliest"].includes(remote.recoveryPriority) &&
+    typeof remote.recoveryText === "string" &&
+    remote.recoveryText.length <= 500
+      ? {
+          recoveryPriority: remote.recoveryPriority,
+          recoveryText: remote.recoveryText,
+        }
+      : null;
   return {
+    nativeServerPreferences,
     nativeJourneyID:
       typeof parsed.nativeJourneyID === "string"
         ? parsed.nativeJourneyID.slice(0, 64)
@@ -83,6 +95,34 @@ export function initialState(raw) {
 
 export function reducer(state, action) {
   switch (action.type) {
+    case "SERVER_PREFERENCES": {
+      const next = action.preferences;
+      if (
+        action.journeyID !== state.nativeJourneyID ||
+        !next ||
+        !["business", "earliest"].includes(next.recoveryPriority) ||
+        typeof next.recoveryText !== "string" ||
+        next.recoveryText.length > 500
+      )
+        return state;
+      const preferences = { ...state.preferences };
+      for (const key of ["recoveryPriority", "recoveryText"]) {
+        if (
+          !state.nativeServerPreferences ||
+          preferences[key] === state.nativeServerPreferences[key] ||
+          preferences[key] === next[key]
+        )
+          preferences[key] = next[key];
+      }
+      return {
+        ...state,
+        preferences,
+        nativeServerPreferences: {
+          recoveryPriority: next.recoveryPriority,
+          recoveryText: next.recoveryText,
+        },
+      };
+    }
     case "NATIVE_SCENARIO":
       if (
         !SCENARIOS.some((s) => s.id === action.value) ||
@@ -98,6 +138,10 @@ export function reducer(state, action) {
         ...state,
         scenario: action.value,
         nativeJourneyID: action.journeyID,
+        nativeServerPreferences:
+          state.nativeJourneyID === action.journeyID
+            ? state.nativeServerPreferences
+            : null,
         recoveryId: null,
       };
     case "SCENARIO":

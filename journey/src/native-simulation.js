@@ -27,7 +27,23 @@ export function validateNativeSnapshot(value) {
   )
     return null;
   if (["inflight", "arrived"].includes(value.phase) && value.event) return null;
+  const preferences = value.preferences;
+  if (
+    preferences &&
+    (!["business", "earliest"].includes(preferences.recoveryPriority) ||
+      typeof preferences.recoveryText !== "string" ||
+      Array.from(preferences.recoveryText).length > 500)
+  )
+    return null;
   return {
+    ...(preferences
+      ? {
+          preferences: {
+            recoveryPriority: preferences.recoveryPriority,
+            recoveryText: preferences.recoveryText,
+          },
+        }
+      : {}),
     version: 1,
     booked: value.booked,
     journeyID: value.journeyID,
@@ -82,4 +98,56 @@ export function requestNativePriorities(text) {
   if (!handler) return false;
   handler.postMessage({ type: "recoveryRequest", text: text.slice(0, 500) });
   return true;
+}
+
+const preferenceRequests = new Map();
+export function saveNativePreferences(priority, text) {
+  const handler =
+    typeof window !== "undefined" && window.webkit?.messageHandlers?.journey;
+  if (!NATIVE_MODE || !handler)
+    return Promise.resolve({
+      ok: false,
+      message: "The iPhone connection is unavailable.",
+    });
+  if (
+    !["business", "earliest"].includes(priority) ||
+    typeof text !== "string" ||
+    text.length > 500
+  )
+    return Promise.resolve({
+      ok: false,
+      message: "Please check your preferences.",
+    });
+  const requestID = crypto.randomUUID();
+  window.__journeyPreferenceResult = (result) => {
+    const entry = preferenceRequests.get(result?.requestID);
+    if (!entry) return;
+    clearTimeout(entry.timeout);
+    preferenceRequests.delete(result.requestID);
+    entry.resolve({
+      ok: result.ok === true,
+      message:
+        typeof result.message === "string"
+          ? result.message
+          : "The preference could not be saved.",
+    });
+  };
+  return new Promise((resolve) => {
+    const timeout = setTimeout(() => {
+      preferenceRequests.delete(requestID);
+      resolve({
+        ok: false,
+        message:
+          "Saving is taking longer than expected. Check Journey simulation before retrying.",
+      });
+    }, 35000);
+    preferenceRequests.set(requestID, { resolve, timeout });
+    try {
+      handler.postMessage({ type: "preferences", requestID, priority, text });
+    } catch {
+      clearTimeout(timeout);
+      preferenceRequests.delete(requestID);
+      resolve({ ok: false, message: "The iPhone connection is unavailable." });
+    }
+  });
 }

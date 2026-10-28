@@ -6,11 +6,17 @@ Project: **mekjqboywhbtbbabxela** — https://mekjqboywhbtbbabxela.supabase.co
 
 ## Current status
 
-The supplied publishable key is configured in `project.json` and verified against the hosted Auth service (HTTP 200). The `journey_demo_list` RPC is present and rejects the unsigned caller with `401 / 42501 permission denied`, as intended. This confirms the endpoint exists, not that all authenticated operations have passed. No administrative changes were made from this workspace.
+The supplied publishable key is configured in `project.json`. The user enabled
+anonymous sign-in, and hosted authenticated checks passed on 28 October 2026:
+creation/resume, command idempotency, server-clock progression/pause, restoration
+with a refreshed session, preferences, stale-version conflicts and isolation
+between two users through both RPC and table access.
 
-Email sign-in is enabled; anonymous sign-in is currently disabled. For the demonstration, the recommended next setting is **Enable Anonymous Sign-Ins** in [Authentication → Providers](https://supabase.com/dashboard/project/mekjqboywhbtbbabxela/auth/providers). This creates a distinct authenticated user per installation without collecting an email/password. The same owner-isolation policies apply. Hosted authenticated verification and the native service adapter remain outstanding.
+No project authentication setting was changed from this workspace. Verification
+created two anonymous test users and one paused demonstration journey, with no real
+booking or email sent. Tokens were kept in memory and not written to reports.
 
-Prepared and tested locally:
+Implemented and verified:
 
 - Owner-isolated demonstration journeys and command history, protected by row-level security.
 - Server-clock snapshots, guided/accelerated/real-time playback, pause/resume, phase jumps and injected disruptions.
@@ -18,7 +24,7 @@ Prepared and tested locally:
 - Optimistic version checks, command idempotency and atomic updates.
 - A public-key + user-session API client with timeouts and explicit errors.
 
-The iPhone currently remains in local mode. This commit does not enable scheduled checks, native push, Live Activities, live flight status or real bookings. Entertainment saves and selected recovery options also remain local for now; the database persists the recovery _preference_, not a ticket or selected itinerary.
+The iPhone service adapter is now wired in source; Xcode/device execution remains unverified. This does not enable scheduled checks, native push, Live Activities, live flight status or real bookings. Entertainment saves and selected recovery options also remain local for now; the database persists the recovery _preference_, not a ticket or selected itinerary.
 
 ## One-time hosted setup
 
@@ -32,7 +38,11 @@ No Edge Function deployment is required for this first slice: Supabase exposes t
 
 Every operation requires a Supabase Auth access token for a signed-in user. A publishable key alone is deliberately insufficient. An anonymous Auth session still uses the `authenticated` database role and an individual `auth.uid()`; it is different from an unsigned API request. Clients cannot submit an owner ID.
 
-Enabling anonymous sign-in is a project setting; neither this configuration file nor the SQL migration changes it. After it is enabled, the native adapter will need anonymous sign-in, refresh-token handling and Keychain session storage. Losing that session (for example after an app reset) can lose access to that anonymous journey; cross-device recovery requires linking a permanent identity. No email or account-creation requests have been sent from this workspace.
+Anonymous sign-in is enabled for this project. The SQL migration does not alter
+Auth settings. The native adapter handles sign-in, refresh tokens and Keychain
+storage. Resetting the demonstration retains its identity; losing the Keychain
+session loses access to that identity's journeys. Cross-device recovery requires
+linking a permanent identity and is not implemented.
 
 ## API
 
@@ -68,7 +78,11 @@ Persist the journey UUID and any outstanding command UUID on the client. Retry a
 
 A reused command UUID with different arguments or a new command with an old expected version returns HTTP 409. Refresh the snapshot and reconcile the user's intention; do not silently repeat a conflicting action with a new version. Never fall back to fixture data labelled as server state.
 
-When the native adapter is added, the server becomes authoritative for connected journeys. Local interpolation may animate from the returned `serverNow`, elapsed value and rate, then reconcile on foreground/reconnect. Do not also run the independent native simulation clock as a second authority. The current local controls will need to reflect the server rule that injected events remain paused until cleared.
+The native adapter treats the server as authoritative. It interpolates the returned
+elapsed value/rate from monotonic receipt time, reconciles while foregrounded and
+on return, and stops local progression on a failed refresh. Commands save to
+Keychain before submission; retrying after an interruption keeps their original
+ID and version. Injected events remain paused until cleared or a phase is chosen.
 
 ## Verify locally
 
@@ -79,4 +93,10 @@ python backend/tests/postgres.py
 
 The PostgreSQL test uses a disposable `postgres:16-alpine` container, no network, no published port and synthetic users. It tests migration/RPC behaviour, owner isolation, anonymous and direct-write denials, failed-command rollback, clock calculations, persisted state, migration reapplication and eight concurrent retries. Its small local `auth.uid()` fixture is **not** a test of Supabase's hosted JWT validation or Auth configuration.
 
-Client tests check request credentials, missing sessions, errors/conflicts, timeout cancellation and malformed JSON. Hosted Auth health/settings and the unsigned RPC denial are verified. Authenticated REST operations, iOS integration and device behaviour remain unverified until connected.
+Client tests check request credentials, missing sessions, errors/conflicts, timeout
+cancellation and malformed JSON. Hosted authenticated REST operations have passed.
+Native source integration still requires Xcode and device verification.
+
+For an intentional hosted recheck, run `python backend/tests/hosted.py`. Each run
+creates two anonymous identities and one demonstration journey in the configured
+project; it is not part of the default test suite. The report contains no tokens.

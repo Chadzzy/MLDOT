@@ -3,6 +3,9 @@ import WebKit
 
 @MainActor final class JourneyWebBridge: ObservableObject {
     weak var webView: WKWebView?
+    func preferenceResult(requestID: String, ok: Bool, message: String) {
+        webView?.callAsyncJavaScript("window.__journeyPreferenceResult?.(result)", arguments: ["result": ["requestID": requestID, "ok": ok, "message": message]], in: nil, contentWorld: .page) { _ in }
+    }
     func applyPriority(_ priority: String) {
         guard ["business", "earliest"].contains(priority) else { return }
         webView?.callAsyncJavaScript("window.__journeyPriorityReceive?.(priority)", arguments: ["priority": priority], in: nil, contentWorld: .page) { _ in }

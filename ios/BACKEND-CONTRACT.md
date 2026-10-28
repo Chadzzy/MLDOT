@@ -1,16 +1,16 @@
-# Journey-service boundary — Supabase selected, app not connected
+# Journey-service boundary — Supabase adapter implemented
 
-The selected prototype backend is Supabase project `mekjqboywhbtbbabxela`. The first database/API slice is implemented under `supabase/` and `backend/`, tested locally, with the hosted journey RPC now visible but authenticated verification pending. See [backend instructions](../backend/README.md). Scheduled provider monitoring, subscriptions and push delivery below remain future work.
+The selected prototype backend is Supabase project `mekjqboywhbtbbabxela`. The first database/API slice is implemented under `supabase/` and `backend/`, tested locally and through the hosted authenticated REST API. The native adapter is implemented in source but has not been built or exercised on iOS here. See [backend instructions](../backend/README.md). Scheduled provider monitoring, subscriptions and push delivery below remain future work.
 
 ## Ownership
 
-The service owns the journey identity, booked itinerary, traveller entitlements, playback anchor/rate, event history, provider observations and resulting state version. Each command records origin (`demo`, `provider`, `traveller`) and effective time. The app renders a snapshot and submits commands. A scheduled worker checks flight sources according to provider limits even when the app is closed.
+The current demonstration service owns the journey identity, fixed fixture, playback anchor/rate, injected event, preferences, command receipts and state revision. The app renders snapshots and submits commands. Provider observations, live entitlements, scheduled checks and origin-aware event processing are future extensions.
 
-The current Swift simulation is deliberately local. Replacing it with a service adapter should retain its UI and the validated web snapshot bridge, while moving authoritative progression to the service. Do not run native and server clocks as competing authorities.
+The Swift service adapter uses the existing UI and validated web snapshot bridge. Local arithmetic only interpolates the last server snapshot from monotonic receipt time. Foreground refresh runs every 10 seconds, backs off to 30 seconds after errors, and stops when backgrounded. Returning to the app reconciles with the server. Keychain stores the anonymous session and any uncertain command; the web bridge receives no credentials.
 
 ## Commands and responses
 
-Suggested operations:
+Implemented operations are create, snapshot, list and command (see the exact RPC contract in backend/README.md). The following also records planned subscription and push extensions:
 
 - Create a demonstration journey from a supported fixture and traveller profile.
 - Read a journey snapshot, with version/ETag and source freshness.
@@ -24,6 +24,14 @@ A command carries `commandId` (idempotency key), `expectedVersion`, `type` and v
 
 Persist provider name, source observation timestamp, retrieval timestamp, raw status and normalized fields. Use a dated operating-flight identity, not a flight number alone. Compare meaningful changes, deduplicate notifications, and mark stale/missing observations without replacing them with demo values. Weather warnings do not establish a flight cancellation or maintenance cause. Monitoring frequency must match each provider's limits and the journey stage.
 
-## Current blockers
+## Verification and next boundaries
 
-The project URL and publishable key are configured and Auth health is verified. The journey RPC exists and denies unsigned access. Anonymous sign-in is disabled; a user session and authenticated verification are still needed. The native app still uses local simulation. No flight-status provider has been integrated. The existing HKO/MTR integrations are manual and do not supply a flight's status. APNs credentials, signing team and native Live Activity extension remain future work. On-device AI only proposes a passenger preference and cannot grant eligibility, promise a connection or select nonexistent inventory.
+The hosted API passed authenticated create/resume, idempotency, clock, preferences,
+refresh-session, conflict and cross-user isolation checks. Anonymous sign-in was
+enabled by the user. Native source is wired, but Xcode compilation, XCTest execution,
+Keychain behaviour and device UI remain unverified in this Linux environment.
+
+No flight-status provider or scheduled worker is connected. HKO/MTR calls are manual
+and do not supply a flight's status. APNs credentials, signing team and a native
+Live Activity extension remain future work. On-device AI proposes a passenger
+preference; it cannot grant eligibility, promise a connection or invent inventory.

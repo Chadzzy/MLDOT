@@ -1,4 +1,8 @@
-import { NATIVE_MODE, requestNativePriorities } from "./native-simulation.js";
+import {
+  NATIVE_MODE,
+  requestNativePriorities,
+  saveNativePreferences,
+} from "./native-simulation.js";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useJourney } from "./context.js";
 import { Icon } from "./icons.jsx";
@@ -805,9 +809,29 @@ function Recovery() {
   const [choice, setChoice] = useState(null);
   const [comparing, setComparing] = useState(false);
   const comparisonTimer = useRef(null);
-  useEffect(() => () => clearTimeout(comparisonTimer.current), []);
-  const compare = () => {
+  const [compareError, setCompareError] = useState("");
+  const comparisonActive = useRef(true);
+  useEffect(() => {
+    comparisonActive.current = true;
+    return () => {
+      comparisonActive.current = false;
+      clearTimeout(comparisonTimer.current);
+    };
+  }, []);
+  const compare = async () => {
+    setCompareError("");
     setComparing(true);
+    if (NATIVE_MODE) {
+      const result = await saveNativePreferences(
+        state.preferences.recoveryPriority,
+        state.preferences.recoveryText,
+      );
+      if (!comparisonActive.current) return;
+      setComparing(false);
+      if (result.ok) setStep("options");
+      else setCompareError(result.message);
+      return;
+    }
     comparisonTimer.current = setTimeout(() => {
       setComparing(false);
       setStep("options");
@@ -955,6 +979,7 @@ function Recovery() {
             </label>
             <textarea
               id="recovery-request"
+              disabled={comparing}
               maxLength={500}
               rows={5}
               value={state.preferences.recoveryText}
@@ -969,6 +994,7 @@ function Recovery() {
             {NATIVE_MODE && (
               <button
                 className="text-button"
+                disabled={comparing}
                 onClick={() =>
                   requestNativePriorities(state.preferences.recoveryText)
                 }
@@ -999,6 +1025,7 @@ function Recovery() {
                   <input
                     type="radio"
                     name="priority"
+                    disabled={comparing}
                     value={id}
                     checked={state.preferences.recoveryPriority === id}
                     onChange={() =>
@@ -1017,9 +1044,15 @@ function Recovery() {
               ))}
             </div>
             <p className="subtle small">
-              Your note is saved. The selected priority controls ranking in this
-              prototype; no AI interpretation is connected.
+              {NATIVE_MODE
+                ? "Your preferences will be saved with this journey. The confirmed priority controls the comparison of demonstration options."
+                : "Your note is saved. The selected priority controls ranking in this prototype; no AI interpretation is connected."}
             </p>
+            {compareError && (
+              <p role="alert" className="live-error">
+                {compareError}
+              </p>
+            )}
             <button
               className="primary-button"
               onClick={compare}
@@ -1027,7 +1060,9 @@ function Recovery() {
               aria-busy={comparing}
             >
               {comparing
-                ? "Comparing your options…"
+                ? NATIVE_MODE
+                  ? "Saving your priorities…"
+                  : "Comparing your options…"
                 : "Find my recovery options"}
               <Icon
                 name={comparing ? "refresh" : "arrow"}

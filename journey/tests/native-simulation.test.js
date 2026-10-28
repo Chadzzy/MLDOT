@@ -61,3 +61,70 @@ test("repeated native snapshots and app reload preserve the selected recovery; a
   });
   assert.equal(s.recoveryId, null);
 });
+
+test("native preference snapshots validate and preserve confirmed values", () => {
+  const preferences = {
+    recoveryPriority: "earliest",
+    recoveryText: "Arrive early",
+  };
+  assert.deepEqual(
+    validateNativeSnapshot({ ...packet, preferences }).preferences,
+    preferences,
+  );
+  assert.equal(
+    validateNativeSnapshot({
+      ...packet,
+      preferences: { recoveryPriority: "invented", recoveryText: "x" },
+    }),
+    null,
+  );
+  assert.equal(
+    validateNativeSnapshot({
+      ...packet,
+      preferences: {
+        recoveryPriority: "business",
+        recoveryText: "x".repeat(501),
+      },
+    }),
+    null,
+  );
+});
+
+test("server updates preserve a local recovery draft through reload and clear it for a new journey", () => {
+  let s = reducer(initialState(), {
+    type: "NATIVE_SCENARIO",
+    value: "cancelled",
+    journeyID: "a",
+  });
+  s = reducer(s, {
+    type: "SERVER_PREFERENCES",
+    journeyID: "a",
+    preferences: {
+      recoveryPriority: "business",
+      recoveryText: "Original saved note",
+    },
+  });
+  s = reducer(s, {
+    type: "PREFERENCE",
+    key: "recoveryText",
+    value: "My unsaved edit",
+  });
+  s = initialState(JSON.stringify(s));
+  s = reducer(s, {
+    type: "SERVER_PREFERENCES",
+    journeyID: "a",
+    preferences: {
+      recoveryPriority: "earliest",
+      recoveryText: "A late server response",
+    },
+  });
+  assert.equal(s.preferences.recoveryText, "My unsaved edit");
+  assert.equal(s.preferences.recoveryPriority, "earliest");
+  s = reducer(s, { type: "NATIVE_SCENARIO", value: "normal", journeyID: "b" });
+  s = reducer(s, {
+    type: "SERVER_PREFERENCES",
+    journeyID: "b",
+    preferences: { recoveryPriority: "business", recoveryText: "" },
+  });
+  assert.equal(s.preferences.recoveryText, "");
+});

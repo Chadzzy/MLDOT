@@ -2,7 +2,7 @@
 
 Read the [working agreement](../WORKING_AGREEMENT.md) before making changes.
 
-This is the Xcode starting point for the contextual journey prototype. It hosts the existing reviewed passenger UI in a local WKWebView, with SwiftUI demonstration controls and an optional Apple Foundation Models recovery-preference sheet. It is a hybrid app, not a complete SwiftUI rewrite.
+This is the Xcode starting point for the contextual journey prototype. It hosts the existing reviewed passenger UI in a local WKWebView, with SwiftUI demonstration controls and an optional Apple Foundation Models recovery-preference sheet. Its Supabase adapter saves demonstration journeys and recovery preferences; the existing passenger UI remains shared with the browser walkthrough.
 
 ## Open it
 
@@ -21,22 +21,52 @@ The app targets iOS 17+. Apple model interpretation requires iOS 26, supported h
 - Inject a gate change, delay or cancellation before departure. Injection pauses playback; jumping clears the injected event.
 - Cancellation opens the existing recovery experience. Enter a request and choose **Understand my priorities on this iPhone**. The model can suggest a priority; the user must confirm it. Only the explicit priority controls deterministic option ranking. No model output creates bookings or entitlements.
 
-The demonstration replays the dated 28 Oct 2026 CX383 fixture. “Real time” means one simulated second per elapsed second, not a live flight. Progress is saved locally using a clock anchor and is recalculated on return; iOS does not need to keep a background timer running. New simulation sessions clear recovery choices but retain saved entertainment. Preferences/saves live in the app's local web storage; the simulation clock lives in native UserDefaults.
+The demonstration replays the dated 28 Oct 2026 CX383 fixture. “Real time” means one simulated second per elapsed second, not a live flight. Progress is saved in Supabase using a server clock anchor and recalculated on return; iOS does not need to keep a background timer running. New simulation sessions clear recovery choices but retain saved entertainment. Recovery preferences save to Supabase; drafts, selected itineraries and entertainment remain in local web storage.
 
-## Status and verification
+## Verification and limits
 
-Implemented in source: native host, internal controls, local persistence, native/web bridge, guided/timed playback, event injection and optional on-device preference extraction.
+Hosted Supabase checks passed: anonymous sign-in, journey creation/resume, command
+idempotency, server-clock progression and pause, refreshed-session restoration,
+saved preferences, stale-version conflicts and isolation between users. The latest
+web model tests and Chromium native-host bridge checks also pass, including failed
+preference saves preserving the entered text.
 
-Verified in the Linux cloud workspace: 25 JavaScript/model tests; bundled-HTML browser checks over localhost for native layout, booking, phase/event changes, boarding-pass state and priority bridge. Browser checks use Chromium and do not establish WKWebView compatibility. This managed browser blocks file URLs, so the bundled HTML is served over localhost for those checks.
+**The Swift source has not been compiled here.** This Linux workspace has no Xcode
+or iOS SDK. Swift syntax parsing and project resource checks passed, but they do not
+establish SDK compatibility. Eight XCTest cases are included; run Product → Test
+on your Mac, then verify the actual device UI, Keychain restoration and Apple model
+availability.
 
-**Not yet compiled or run with Xcode.** This environment has neither macOS/Xcode nor the iOS SDK. The project includes four XCTest cases for playback, pause/resume, restoration and event handling; run Product → Test on the Mac. Apple Foundation Models behaviour and the actual iPhone UI require device verification.
-
-Not connected: the Supabase journey backend, scheduled flight monitoring, push notifications, native Live Activities, actual bookings or live flight inventory. The three existing weather/train calls remain manual browser integrations. No server or credentials have been invented.
+Scheduled flight monitoring, push notifications, native Live Activities, real
+bookings and live flight inventory remain unconnected. Weather/train calls remain
+manual. Selected recovery itineraries and entertainment are local; the server saves
+the recovery preference, not a ticket.
 
 ## Update the passenger UI bundle
 
 After changing `journey/src`, run `./ios/bundle-web.sh` from the repository. This installs the pinned Node dependencies, builds the existing UI and copies the self-contained result into the app resources. Rebuild in Xcode. The browser walkthrough remains available separately; native host mode removes the simulated phone frame and external trigger navigation.
 
-## Backend connection next
+## Supabase connection
 
-Supabase project `mekjqboywhbtbbabxela` is selected. The migration and API client are prepared under `supabase/` and `backend/`; see [backend setup](../backend/README.md). The publishable key is configured and the hosted journey RPC is present, but this app still uses its local simulation. Anonymous sign-in is currently disabled. A signed-in session, authenticated API verification and the native service adapter are the next connection steps. See `BACKEND-CONTRACT.md` for the integration boundary. Do not put privileged credentials in the app or expose the web bridge to remotely loaded HTML.
+Project `mekjqboywhbtbbabxela` is configured in the included `Resources/supabase.json`.
+Only its public client key is bundled. No further project setup is needed for this
+snapshot. Internet access is required to confirm a demonstration booking or change
+its server state.
+
+The native service creates an anonymous identity, stores and refreshes its session
+in Keychain, and keeps credentials out of the web bridge. Returning to the app loads
+the saved journey. Reset starts a new journey UUID while retaining the identity and
+old server history. Losing the Keychain identity loses access to its journeys;
+cross-device recovery needs a permanent linked account and is not implemented.
+
+The server owns the clock. A foreground timer animates its last snapshot; the app
+reconciles every 10 seconds (30 seconds after errors) and on foreground return.
+This does not monitor flights or run a background phone timer. During a connection
+failure, progression freezes, changes are disabled and the settings show Retry.
+Uncertain commands are retained in Keychain and retried with the same ID; version
+conflicts load the latest state and require reviewing the action again.
+
+Recovery priorities and text save when you request comparisons or confirm the
+native preference sheet. A failed save retains the draft and reports the failure.
+See [backend setup](../backend/README.md) and [the service boundary](BACKEND-CONTRACT.md).
+Never bundle a secret/service-role key or expose the bridge to remotely loaded HTML.

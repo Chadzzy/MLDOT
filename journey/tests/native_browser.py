@@ -35,6 +35,20 @@ with sync_playwright() as p:
  assert page.evaluate('window.nativeMessages.at(-1).type')=='recoveryRequest'
  page.evaluate('window.__journeyPriorityReceive("earliest")')
  expect(page.locator('input[value="earliest"]')).to_be_checked()
+ page.locator('#recovery-request').fill('Please get me there early')
+ page.get_by_role('dialog').get_by_role('button',name='Find my recovery options',exact=True).click()
+ page.wait_for_function('window.nativeMessages.at(-1)?.type === "preferences"')
+ page.evaluate('window.__journeyPreferenceResult({requestID:window.nativeMessages.at(-1).requestID,ok:false,message:"Connection unavailable"})')
+ expect(page.get_by_role('dialog').get_by_role('alert')).to_contain_text('Connection unavailable')
+ expect(page.locator('#recovery-request')).to_have_value('Please get me there early')
+ page.screenshot(path=str(ROOT/'test-results/native-preference-error.png'))
+ page.get_by_role('dialog').get_by_role('button',name='Find my recovery options',exact=True).click()
+ page.wait_for_timeout(50)
+ page.evaluate('window.__journeyPreferenceResult({requestID:window.nativeMessages.at(-1).requestID,ok:true,message:"Saved"})')
+ expect(page.get_by_role('dialog').get_by_role('heading',name='Our best match for you')).to_be_visible()
+
+ page.wait_for_timeout(300);page.screenshot(path=str(ROOT/'test-results/native-preference-saved.png'))
+ page.get_by_role('button',name='Close dialog').click();page.wait_for_timeout(240)
  send('boarding',clock='2026-10-27T15:45:00Z')
  expect(page.locator('.sheet-situation')).to_contain_text('boarding at Gate 68')
  send('inflight',clock='2026-10-27T16:25:00Z')
@@ -48,6 +62,6 @@ with sync_playwright() as p:
  assert page.evaluate('document.documentElement.scrollWidth <= window.innerWidth')
  page.wait_for_timeout(500);page.screenshot(path=str(ROOT/'test-results/native-arrival.png'))
  assert not errors,errors
- (ROOT/'test-results/native-browser-results.json').write_text(json.dumps({'bundledHTMLServedLocally':True,'booking':True,'phaseAndEventBridge':True,'priorityConfirmationBridge':True,'fullWidthDeviceLayout':True,'boardingPassInvalidatedAfterDeparture':True,'errors':errors,'limitation':'Chromium host-mode test; native Xcode build and device execution not available here'},indent=2))
+ (ROOT/'test-results/native-browser-results.json').write_text(json.dumps({'bundledHTMLServedLocally':True,'booking':True,'phaseAndEventBridge':True,'priorityConfirmationBridge':True,'failedSavePreservesDraft':True,'retryAcknowledgementOpensOptions':True,'fullWidthDeviceLayout':True,'boardingPassInvalidatedAfterDeparture':True,'errors':errors,'limitation':'Chromium host-mode test; native Xcode build and device execution not available here'},indent=2))
  b.close()
 print('PASS: native host layout, booking, phases, event injection, pass state and preference bridge in Chromium')

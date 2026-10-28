@@ -2,10 +2,10 @@
   "projectRef": "mekjqboywhbtbbabxela",
   "url": "https://mekjqboywhbtbbabxela.supabase.co",
   "publishableKey": "sb_publishable_MFfhDnZEapS5Q2SQ-oTnuA_1rcozoBd",
-  "deploymentStatus": "journey-rpc-present-authenticated-verification-pending",
+  "deploymentStatus": "hosted-journey-api-verified",
   "authentication": {
     "recommended": "anonymous-device-session",
-    "anonymousSignInEnabled": false,
+    "anonymousSignInEnabled": true,
     "emailSignInEnabled": true
   }
 }

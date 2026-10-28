@@ -164,17 +164,20 @@ review. If a required check cannot run, record it as unverified rather than pass
 
 ## Current implementation boundary
 
-As of 28 October 2026, the Xcode source project hosts the reviewed web UI and adds
-local simulation controls and an optional Foundation Models preference flow.
-JavaScript/model and browser-host checks have passed. The Swift app has **not**
-been compiled or exercised on an iPhone in this cloud environment.
+As of 28 October 2026, the Xcode source hosts the reviewed web UI, with in-app
+simulation controls, a Supabase service adapter and an optional Foundation Models
+preference flow. The server owns playback and saved recovery preferences. Native
+code stores the anonymous session and uncertain commands in Keychain, refreshes
+snapshots while foregrounded and reconnects on return. Browser/model checks pass;
+the Swift app has **not** been compiled or exercised on an iPhone here.
 
-The Supabase project URL and publishable key are supplied and verified. The
-journey RPC is present and correctly denies unsigned access. Full authenticated
-verification and the native adapter remain pending. Anonymous sign-in is disabled;
-enabling it is recommended for a login-free demonstration with per-user journeys.
-No project authentication setting has been changed from this workspace. Live flight
-status, scheduled monitoring, APNs and native Live Activities remain unconnected.
-HKO/MTR calls are manual integrations.
-The clean night-time homepage photograph and production icon exports were not in
-the received ZIP. Keep these limitations current as work progresses.
+The user enabled anonymous sign-in. Hosted authenticated tests passed for creation,
+resume, idempotent commands, clock progression, preference persistence, version
+conflicts and isolation between users. The tests created two anonymous identities
+and one demonstration journey; no real booking was made. No project authentication
+setting was changed from this workspace.
+
+Scheduled flight monitoring, APNs and native Live Activities remain unconnected.
+HKO/MTR calls are manual integrations. Selected recovery itineraries and entertainment
+remain local; saving a preference is not ticketing. The clean night-time homepage
+photograph and production icon exports were not in the received ZIP.
