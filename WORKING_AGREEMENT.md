@@ -210,7 +210,7 @@ preference flow. The server owns playback and saved recovery preferences. Native
 code stores the anonymous session and uncertain commands in Keychain, refreshes
 snapshots while foregrounded and reconnects on return. Browser/model checks pass;
 the app and test target now compile with Xcode 26.3 on a GitHub-hosted Mac. All
-eight simulator XCTest cases pass ([run](https://github.com/Chadzzy/MLDOT/actions/runs/40684493346)), including the preparation design bundle;
+eight simulator XCTest cases pass ([run](https://github.com/Chadzzy/MLDOT/actions/runs/40687206162)), including the passenger-copy update;
 the complete run succeeded with eight tests and zero failures. Physical-device
 UI, Keychain/session restoration and Apple model behaviour still need verification.
 

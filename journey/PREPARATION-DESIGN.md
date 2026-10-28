@@ -7,7 +7,7 @@ a design prototype; partner integrations are not represented as connected.
 
 ## Open and review
 
-Open the [published preparation walkthrough](https://htmlpreview.github.io/?https://raw.githubusercontent.com/Chadzzy/MLDOT/a526b0d8c7fbb2327b2bd05d4c6741c560c43c11/ios/JourneyApp/Resources/journey.html#prepare). In the sidebar, choose
+Open the [published preparation walkthrough](https://htmlpreview.github.io/?https://raw.githubusercontent.com/Chadzzy/MLDOT/12951637c746aff5bc67a1ae50deaaba5616f55d/ios/JourneyApp/Resources/journey.html#prepare). In the sidebar, choose
 **New · Make the journey yours** to step through the design story, or select any
 screen under **New · Your journey, your way**. The homepage and expanded journey
 sheet also contain **Get ready for your journey**. The same entry is bundled for
@@ -17,7 +17,7 @@ Screens: preparation overview; journey priority; transport; family/support; meal
 rest intention; entertainment; onboard pairing preview; arrival/pickup preview;
 feedback; and a combined readiness view.
 
-A [four-screen design board](https://raw.githubusercontent.com/Chadzzy/MLDOT/a526b0d8c7fbb2327b2bd05d4c6741c560c43c11/journey/public/reviews/preparation-design-board.png) is also published.
+A [four-screen design board](https://raw.githubusercontent.com/Chadzzy/MLDOT/12951637c746aff5bc67a1ae50deaaba5616f55d/journey/public/reviews/preparation-design-board.png) is also published.
 It is composed of screenshots of the actual implementation, using its original
 font/assets. Entertainment thumbnails are abstract category artwork, not fabricated
 film posters. The exact night-time homepage photograph remains the previously
@@ -66,7 +66,7 @@ exercise all new screens, optional branches, saved media, local pairing/ride
 mockups, feedback, reload, cancellation, original font, pass access and overflow.
 Existing native-host and sheet geometry checks are also run against the new bundle.
 The updated bundle compiled with Xcode 26.3 and all eight simulator tests passed
-for source `a526b0d` ([CI evidence](https://github.com/Chadzzy/MLDOT/actions/runs/40684493346)).
+for source `1295163` ([CI evidence](https://github.com/Chadzzy/MLDOT/actions/runs/40687206162)).
 The published HTML Preview page opened, rendered the new flow and saved a choice
 without page errors; the published design-board image matches the reviewed file.
 Physical-device verification is not inferred from Chromium or simulator unit tests.

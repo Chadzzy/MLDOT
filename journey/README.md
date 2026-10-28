@@ -20,7 +20,7 @@ Three guided sequences sit outside the phone: **Make the journey yours**, **From
 
 ## Open the preview
 
-[Open the interactive scenario walkthrough](https://htmlpreview.github.io/?https://raw.githubusercontent.com/Chadzzy/MLDOT/a526b0d8c7fbb2327b2bd05d4c6741c560c43c11/ios/JourneyApp/Resources/journey.html). This uses HTML Preview to render the same standalone build bundled with the iPhone source on `codex/iphone-journey`. GitHub Pages itself is not enabled.
+[Open the interactive scenario walkthrough](https://htmlpreview.github.io/?https://raw.githubusercontent.com/Chadzzy/MLDOT/12951637c746aff5bc67a1ae50deaaba5616f55d/ios/JourneyApp/Resources/journey.html). This uses HTML Preview to render the same standalone build bundled with the iPhone source on `codex/iphone-journey`. GitHub Pages itself is not enabled.
 
 The **Decision inspector** button opens sharing controls for a read-only second screen. See [how to use it](DECISION-INSPECTOR.md) and [the flight-intelligence plan](FLIGHT-INTELLIGENCE-PLAN.md).
 

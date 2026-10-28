@@ -39,7 +39,7 @@ preference saves preserving the entered text.
 
 **Verified with Xcode 26.3 on a GitHub-hosted Mac runner:** the app and test target
 compiled, and all eight XCTest cases passed in an iPhone simulator.
-[Build and test evidence](https://github.com/Chadzzy/MLDOT/actions/runs/40684493346) covers source commit `a526b0d`, including the preparation design bundle. The run completed successfully with eight tests and zero failures.
+[Build and test evidence](https://github.com/Chadzzy/MLDOT/actions/runs/40687206162) covers source commit `1295163`, including the passenger-copy update. The run completed successfully with eight tests and zero failures.
 
 The CI tests cover journey playback, snapshot validation and command persistence
 encoding. They do not verify physical-device UI, end-to-end Keychain/session
