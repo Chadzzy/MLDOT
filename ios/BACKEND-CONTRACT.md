@@ -1,6 +1,6 @@
-# Proposed journey-service boundary — not connected
+# Journey-service boundary — Supabase selected, app not connected
 
-Use the existing company backend when its repository and authentication are identified. These are proposed responsibilities and payloads, not claims about deployed endpoints.
+The selected prototype backend is Supabase project `mekjqboywhbtbbabxela`. The first database/API slice is implemented under `supabase/` and `backend/`, tested locally, and awaiting hosted setup. See [backend instructions](../backend/README.md). Scheduled provider monitoring, subscriptions and push delivery below remain future work.
 
 ## Ownership
 
@@ -26,4 +26,4 @@ Persist provider name, source observation timestamp, retrieval timestamp, raw st
 
 ## Current blockers
 
-Backend repository/API and authentication are not available in this workspace. No flight-status provider has been integrated. The existing HKO/MTR integrations are manual and do not supply a flight's status. APNs credentials, signing team and native Live Activity extension remain future work. On-device AI only proposes a passenger preference and cannot grant eligibility, promise a connection or select nonexistent inventory.
+The project URL is available; the migration has not been applied remotely, and no publishable key or authenticated app session is configured. The native app still uses local simulation. No flight-status provider has been integrated. The existing HKO/MTR integrations are manual and do not supply a flight's status. APNs credentials, signing team and native Live Activity extension remain future work. On-device AI only proposes a passenger preference and cannot grant eligibility, promise a connection or select nonexistent inventory.

@@ -124,9 +124,11 @@ review. If a required check cannot run, record it as unverified rather than pass
 
 ## 7. Keep data, simulation and AI honest
 
-- Use the existing company backend once its location and authentication are known.
-  Do not invent its endpoints, credentials or deployed capabilities. Proposed
-  interfaces are documented in [the backend boundary](ios/BACKEND-CONTRACT.md).
+- Use Supabase for this prototype backend, with its migrations and client code
+  in this repository. The selected project is `mekjqboywhbtbbabxela`. This is our
+  prototype service, not an existing airline/company backend. Do not invent
+  deployed capabilities or credentials. See [backend setup](backend/README.md)
+  and [the integration boundary](ios/BACKEND-CONTRACT.md).
 - Persistent monitoring belongs on the backend. Local playback can resume from
   a saved clock; that does not mean iOS kept checking flights while closed.
 - Track source, observation time, retrieval time and freshness. Handle partial
@@ -167,7 +169,10 @@ local simulation controls and an optional Foundation Models preference flow.
 JavaScript/model and browser-host checks have passed. The Swift app has **not**
 been compiled or exercised on an iPhone in this cloud environment.
 
-The company backend, live flight-status feed, background monitoring, APNs and
-native Live Activities remain unconnected. HKO/MTR calls are manual integrations.
+The Supabase project URL is supplied and reachable. The journey database/API
+setup is prepared and locally tested, but not deployed or connected to the app.
+The publishable key and signed-in app session are still required. Live flight
+status, scheduled monitoring, APNs and native Live Activities remain unconnected.
+HKO/MTR calls are manual integrations.
 The clean night-time homepage photograph and production icon exports were not in
 the received ZIP. Keep these limitations current as work progresses.

@@ -31,7 +31,7 @@ Verified in the Linux cloud workspace: 25 JavaScript/model tests; bundled-HTML b
 
 **Not yet compiled or run with Xcode.** This environment has neither macOS/Xcode nor the iOS SDK. The project includes four XCTest cases for playback, pause/resume, restoration and event handling; run Product → Test on the Mac. Apple Foundation Models behaviour and the actual iPhone UI require device verification.
 
-Not connected: the company's backend, scheduled flight monitoring, push notifications, native Live Activities, actual bookings or live flight inventory. The three existing weather/train calls remain manual browser integrations. No server or credentials have been invented.
+Not connected: the Supabase journey backend, scheduled flight monitoring, push notifications, native Live Activities, actual bookings or live flight inventory. The three existing weather/train calls remain manual browser integrations. No server or credentials have been invented.
 
 ## Update the passenger UI bundle
 
@@ -39,4 +39,4 @@ After changing `journey/src`, run `./ios/bundle-web.sh` from the repository. Thi
 
 ## Backend connection next
 
-We need the actual backend repository/service and its existing authentication conventions. See `BACKEND-CONTRACT.md` for the proposed integration boundary. Do not put privileged credentials in the app or expose the web bridge to remotely loaded HTML.
+Supabase project `mekjqboywhbtbbabxela` is selected. The migration and API client are prepared under `supabase/` and `backend/`; see [backend setup](../backend/README.md). The migration is not deployed and this app still uses its local simulation. Hosted setup, the publishable key, user sign-in and the native service adapter are the next connection steps. See `BACKEND-CONTRACT.md` for the integration boundary. Do not put privileged credentials in the app or expose the web bridge to remotely loaded HTML.

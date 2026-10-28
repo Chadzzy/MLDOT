@@ -1,6 +1,6 @@
 # Contextual journey project instructions
 
-For work on `journey/`, `ios/`, or the contextual day-of-travel experience, read
+For work on `journey/`, `ios/`, `backend/`, `supabase/`, or the contextual day-of-travel experience, read
 [WORKING_AGREEMENT.md](WORKING_AGREEMENT.md) before making changes. It records the
 user's design requirements, development loop, asset rules and delivery standards.
 

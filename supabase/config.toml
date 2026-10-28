@@ -1,0 +1,19 @@
+project_id = "cathay-journey-demo"
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 100
+
+[db]
+port = 54322
+major_version = 16
+
+[auth]
+enabled = true
+site_url = "http://localhost:5174"
+enable_signup = true
+# Use normal Supabase Auth sessions initially. Anonymous sign-in is not required.
+enable_anonymous_sign_ins = false
