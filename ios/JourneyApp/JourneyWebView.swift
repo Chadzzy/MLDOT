@@ -4,11 +4,11 @@ import WebKit
 @MainActor final class JourneyWebBridge: ObservableObject {
     weak var webView: WKWebView?
     func preferenceResult(requestID: String, ok: Bool, message: String) {
-        webView?.callAsyncJavaScript("window.__journeyPreferenceResult?.(result)", arguments: ["result": ["requestID": requestID, "ok": ok, "message": message]], in: nil, contentWorld: .page) { _ in }
+        webView?.callAsyncJavaScript("window.__journeyPreferenceResult?.(result)", arguments: ["result": ["requestID": requestID, "ok": ok, "message": message]], in: nil, in: .page) { _ in }
     }
     func applyPriority(_ priority: String) {
         guard ["business", "earliest"].contains(priority) else { return }
-        webView?.callAsyncJavaScript("window.__journeyPriorityReceive?.(priority)", arguments: ["priority": priority], in: nil, contentWorld: .page) { _ in }
+        webView?.callAsyncJavaScript("window.__journeyPriorityReceive?.(priority)", arguments: ["priority": priority], in: nil, in: .page) { _ in }
     }
 }
 
@@ -51,7 +51,7 @@ struct JourneyWebView: UIViewRepresentable {
         init(onMessage: @escaping ([String: Any]) -> Void) { self.onMessage = onMessage }
         func send(to view: WKWebView) {
             guard loaded else { return }
-            view.callAsyncJavaScript("window.__journeyNativeReceive?.(snapshot)", arguments: ["snapshot": payload], in: nil, contentWorld: .page) { _ in }
+            view.callAsyncJavaScript("window.__journeyNativeReceive?.(snapshot)", arguments: ["snapshot": payload], in: nil, in: .page) { _ in }
         }
         func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) { loaded = true; send(to: webView) }
         func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {

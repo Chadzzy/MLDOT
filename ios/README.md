@@ -42,6 +42,14 @@ bookings and live flight inventory remain unconnected. Weather/train calls remai
 manual. Selected recovery itineraries and entertainment are local; the server saves
 the recovery preference, not a ticket.
 
+## Updating from the first Supabase-connected download
+
+The `856909b` snapshot used the async/await `contentWorld:` label on three WebKit
+calls that supplied completion handlers. This causes “Extra trailing closure
+passed in call” in `JourneyWebView.swift`. All three now use the callback overload's
+`in: .page` label, checked against Apple's documented signature. This corrects the
+reported compiler errors; the full app still needs an Xcode build.
+
 ## Update the passenger UI bundle
 
 After changing `journey/src`, run `./ios/bundle-web.sh` from the repository. This installs the pinned Node dependencies, builds the existing UI and copies the self-contained result into the app resources. Rebuild in Xcode. The browser walkthrough remains available separately; native host mode removes the simulated phone frame and external trigger navigation.
