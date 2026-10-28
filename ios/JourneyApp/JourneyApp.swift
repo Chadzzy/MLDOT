@@ -49,7 +49,7 @@ struct JourneyRootView: View {
         }
         .background(Color(red: 0.97, green: 0.97, blue: 0.96))
         .preferredColorScheme(.light)
-        .sheet(isPresented: $controls) { SimulationControls(store: store, onOpenLiveFlights: { controls = false; bridge.showLiveFlights() }) }
+        .sheet(isPresented: $controls) { SimulationControls(store: store, onOpenLiveFlights: { controls = false; bridge.showLiveFlights() }, onOpenInspector: { controls = false; bridge.showInspector() }) }
         .sheet(item: $recoveryRequest) { request in
             RecoveryPriorityView(request: request.text) { priority in
                 let saved = await store.change("preferences", args: ["priority": priority, "text": request.text])

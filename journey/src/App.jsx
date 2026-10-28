@@ -1,4 +1,6 @@
 import { useFlightLookup } from "./LiveFlights.jsx";
+import { planJourney, applyPlan } from "./journey-planner.js";
+import { useDecisionSharing } from "./DecisionInspector.jsx";
 import { boardingContext, readinessContext } from "./journey-context.js";
 import {
   NATIVE_MODE,
@@ -780,6 +782,12 @@ function AppView() {
             ))}
           </nav>
           <LiveSourcesPanel onOpen={() => choose("live")} />
+          <button
+            className="secondary-button"
+            onClick={() => open("inspector")}
+          >
+            Decision inspector
+          </button>
           <div className="site-data-note">
             Interactive prototype · flight events and boarding codes are
             illustrative. Live weather and trains are available under Real data
@@ -966,8 +974,13 @@ export default function App() {
   );
   useEffect(() => {
     const show = () => open("live");
+    const inspect = () => open("inspector");
     window.addEventListener("journey-open-live-flights", show);
-    return () => window.removeEventListener("journey-open-live-flights", show);
+    window.addEventListener("journey-open-inspector", inspect);
+    return () => {
+      window.removeEventListener("journey-open-live-flights", show);
+      window.removeEventListener("journey-open-inspector", inspect);
+    };
   }, [open]);
   const close = useCallback(() => {
     setStack((s) =>
@@ -1008,15 +1021,30 @@ export default function App() {
       setStorageWarning(true);
     }
   }, [state]);
-  const journey = applyNativeClock(
-    deriveJourney(state, snapshot),
+  // A native snapshot and its derived scenario must be interpreted atomically.
+  // The reducer effect persists it afterwards; don't trace a mixed old scenario
+  // with the new clock for one render.
+  const plannerState =
+    NATIVE_MODE &&
+    nativeSnapshot &&
+    (state.scenario !== nativeScenarioValue ||
+      state.nativeJourneyID !== nativeSnapshot.journeyID)
+      ? { ...state, scenario: nativeScenarioValue, recoveryId: null }
+      : state;
+  const baseJourney = applyNativeClock(
+    deriveJourney(plannerState, snapshot),
     NATIVE_MODE ? nativeSnapshot : null,
   );
+  const plan = planJourney(baseJourney, state.preferences);
+  const journey = applyPlan(baseJourney, plan);
+  const inspector = useDecisionSharing(plan, flightApi.lookup);
   return (
     <JourneyContext.Provider
       value={{
         ...liveApi,
         ...flightApi,
+        ...inspector,
+        plan,
         state,
         nativeSnapshot,
         assets,

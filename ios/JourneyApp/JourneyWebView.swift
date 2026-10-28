@@ -3,6 +3,9 @@ import WebKit
 
 @MainActor final class JourneyWebBridge: ObservableObject {
     weak var webView: WKWebView?
+    func showInspector() {
+        webView?.callAsyncJavaScript("window.dispatchEvent(new Event('journey-open-inspector'))", arguments: [:], in: nil, in: .page) { _ in }
+    }
     func showLiveFlights() {
         webView?.callAsyncJavaScript("window.dispatchEvent(new Event('journey-open-live-flights'))", arguments: [:], in: nil, in: .page) { _ in }
     }
@@ -120,6 +123,12 @@ struct JourneyWebView: UIViewRepresentable {
                   let body = message.body as? [String: Any] else { return }
             if body["type"] as? String == "flightLookup" {
                 lookupFlight(body, in: message.webView)
+                return
+            }
+            if body["type"] as? String == "copyInspectorLink",
+               let room = body["room"] as? String,
+               room.range(of: "^[a-f0-9]{48}$", options: .regularExpression) != nil {
+                UIPasteboard.general.string = "https://htmlpreview.github.io/?https://raw.githubusercontent.com/Chadzzy/MLDOT/codex/iphone-journey/ios/JourneyApp/Resources/journey.html#inspector/\(room)"
                 return
             }
             onMessage(body)

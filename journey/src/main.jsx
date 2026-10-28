@@ -1,6 +1,7 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.jsx";
+import DecisionInspector from "./DecisionInspector.jsx";
 import "./styles.css";
 import "./reference.css";
 import "./polish.css";
@@ -21,6 +22,10 @@ if (NATIVE_MODE) {
 }
 createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <App />
+    {window.location.hash.startsWith("#inspector/") ? (
+      <DecisionInspector />
+    ) : (
+      <App />
+    )}
   </React.StrictMode>,
 );

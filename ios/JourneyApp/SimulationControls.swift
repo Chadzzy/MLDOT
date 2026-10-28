@@ -3,6 +3,7 @@ import SwiftUI
 struct SimulationControls: View {
     @ObservedObject var store: SimulationStore
     let onOpenLiveFlights: () -> Void
+    let onOpenInspector: () -> Void
     @Environment(\.dismiss) private var dismiss
     @State private var confirmReset = false
     var body: some View {
@@ -61,6 +62,10 @@ struct SimulationControls: View {
                 Section("Real flight data") {
                     Button("Check a real flight", systemImage: "airplane") { onOpenLiveFlights() }
                     Text("Search Cathay flight status by number and departure date. Your demonstration stays separate.").font(.footnote).foregroundStyle(.secondary)
+                }
+                Section("Decision inspector") {
+                    Button("Watch decisions on another screen", systemImage: "rectangle.on.rectangle") { onOpenInspector() }
+                    Text("See the inputs, time budget and rules behind the passenger’s next action. Read-only; simulation controls stay here.").font(.footnote).foregroundStyle(.secondary)
                 }
                 Section("Connection") {
                     if store.busy { ProgressView("Syncing journey…") }

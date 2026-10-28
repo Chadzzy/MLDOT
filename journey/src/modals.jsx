@@ -34,8 +34,10 @@ import {
 import directory from "./venue-directory.json";
 import { LiveSources, LiveWeatherCard, LiveWarningWatch } from "./LiveData.jsx";
 import { loungeAccess } from "./lounge-rules.js";
+import { InspectorControls } from "./DecisionInspector.jsx";
 
 export const MODAL_TITLES = {
+  inspector: "Decision inspector",
   live: "Live data connections",
   transport: "Getting to the airport",
   connection: "Your connection",
@@ -1356,6 +1358,8 @@ export function ModalContents({ type }) {
   switch (type) {
     case "transport":
       return <Transport />;
+    case "inspector":
+      return <InspectorControls />;
     case "live":
       return <LiveSources />;
     case "connection":

@@ -258,16 +258,8 @@ export function WeatherWatch({ full = false }) {
 
 export function NextAction() {
   const { journey, open } = useJourney();
-  const timing = boardingContext(journey);
-  const airport =
-    journey.activeScenario === "airport" &&
-    !["inflight", "arrived"].includes(journey.phase);
-  const urgent = airport && timing.kind === "due";
   return (
-    <button
-      className="next-action"
-      onClick={() => open(urgent ? "pass" : journey.nextModal)}
-    >
+    <button className="next-action" onClick={() => open(journey.nextModal)}>
       <span className="action-round">
         <Icon name={journey.nextIcon} />
       </span>
@@ -284,14 +276,8 @@ export function NextAction() {
           </b>{" "}
           · now
         </small>
-        <strong>
-          {urgent ? `Head to Gate ${journey.flight.gate}` : journey.nextTitle}
-        </strong>
-        <p>
-          {airport
-            ? `${timing.label}. ${timing.availableMinutes > 0 ? `Up to ${timing.availableMinutes} min for a flexible lounge stop; leave by ${time(timing.leaveBy)} HKT (demo allowance).` : timing.detail}`
-            : journey.nextDetail}
-        </p>
+        <strong>{journey.nextTitle}</strong>
+        <p>{journey.nextDetail}</p>
       </span>
       <Icon name="chevron" size={17} />
     </button>

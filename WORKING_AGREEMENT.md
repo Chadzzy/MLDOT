@@ -116,8 +116,10 @@ review. If a required check cannot run, record it as unverified rather than pass
   the HKG–Zurich demonstration. Support normal travel and recovery coherently.
 - Start with a demonstration booking. Provide guided, accelerated and real-time
   playback, phase jumps and injected changes inside the app's menu/settings.
-  A separate presenter panel is deferred. Keep the existing browser walkthrough
-  available for review without making it the passenger's control surface.
+  A separate presenter control panel is deferred. A read-only decision inspector
+  on a second screen is now agreed: show recorded inputs, applied rules, evaluated
+  options and recommendation changes from the same planner as the passenger UI.
+  Keep controls in the app and the existing browser walkthrough available for review.
 - Real-time **simulation** is not a live flight. Real-flight following requires a
   dated flight identity and an actual provider connection.
 - Cathay lounges only. Show included experiences because the traveller is
@@ -154,6 +156,9 @@ review. If a required check cannot run, record it as unverified rather than pass
   failed live response and label them live.
 - Keep injected events separate from provider records and real bookings. Recovery
   choices must not falsely retain a cancelled flight's seat, gate or boarding code.
+- Decision traces must expose application evidence and explicit rule outcomes, not
+  fabricated background thinking or private model reasoning. Separate historical
+  delay frequency from a calibrated prediction for today; neither may be invented.
 - On-device AI can interpret a request and explain known facts. Deterministic
   rules and authoritative data govern eligibility, deadlines and available options.
 - Check Apple's model availability and keep manual controls usable. Show proposed
