@@ -11,11 +11,13 @@ def run(args, data=None, check=True):
  if check and p.returncode:raise RuntimeError(p.stderr or p.stdout)
  return p
 
-def sql(text):return run(['exec','-i',name,'psql','-U','postgres','-v','ON_ERROR_STOP=1','-At'],text).stdout
+def sql(text):return run(['exec','-i',name,'psql','-h','127.0.0.1','-U','postgres','-v','ON_ERROR_STOP=1','-At'],text).stdout
 try:
  run(['run','--detach','--rm','--network=none','--name',name,'--tmpfs','/var/lib/postgresql/data:rw','-e','POSTGRES_HOST_AUTH_METHOD=trust','postgres:16-alpine'])
+ # The image starts a temporary Unix-socket server during initialization.
+ # Wait for TCP on loopback so tests only reach the final server.
  for _ in range(100):
-  if run(['exec',name,'pg_isready','-U','postgres'],check=False).returncode==0:break
+  if run(['exec',name,'pg_isready','-h','127.0.0.1','-U','postgres'],check=False).returncode==0:break
   time.sleep(.2)
  else:raise RuntimeError('PostgreSQL did not become ready')
  sql((ROOT/'supabase/tests/bootstrap.sql').read_text())
