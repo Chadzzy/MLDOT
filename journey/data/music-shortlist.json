@@ -1,0 +1,24 @@
+{
+  "source": "Apple iTunes Search API",
+  "sourceUrl": "https://itunes.apple.com/search?term=Joe%20Hisaishi&country=HK&entity=song&limit=5",
+  "verifiedDate": "2026-10-28",
+  "scope": "Pre-flight shortlist metadata; not Cathay onboard availability",
+  "tracks": [
+    {
+      "id": "itunes-1680459417",
+      "title": "Merry-Go-Round of Life (From \"Howl’s Moving Castle\")",
+      "artist": "久石讓 & Royal Philharmonic Orchestra",
+      "durationMs": 169773,
+      "sourceUrl": "https://music.apple.com/hk/album/merry-go-round-of-life-from-howls-moving-castle/1680459073?i=1680459417&uo=4",
+      "onboardAvailability": "unverified"
+    },
+    {
+      "id": "itunes-1485854955",
+      "title": "One Summer's Day (from \"Spirited Away\")",
+      "artist": "Joe Hisaishi",
+      "durationMs": 242560,
+      "sourceUrl": "https://music.apple.com/hk/album/one-summers-day-from-spirited-away/1485854555?i=1485854955&uo=4",
+      "onboardAvailability": "unverified"
+    }
+  ]
+}

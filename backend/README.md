@@ -101,3 +101,7 @@ End-to-end native authentication, Keychain restoration and device UI still need 
 For an intentional hosted recheck, run `python backend/tests/hosted.py`. Each run
 creates two anonymous identities and one demonstration journey in the configured
 project; it is not part of the default test suite. The report contains no tokens.
+
+## Read-only flight-source experiment
+
+`flight_lookup.py` performs a bounded public Cathay flight-number/date lookup with no account or key. The development server calls it; the iPhone uses a fixed URLSession adapter. It does not deploy a Supabase worker, store observations in the hosted database or service tickets. See [the working integration](../journey/LIVE-FLIGHTS.md).

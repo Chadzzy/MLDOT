@@ -207,5 +207,32 @@
       "eligibilitySourceUrl": "https://www.cathaypacific.com/cx/en_HK/destinations/lounges/all-lounges-admittance.html"
     }
   ],
-  "restaurantShopStatus": "official_pages_http_403"
+  "restaurantShopStatus": "hkia_operator_directory_started",
+  "restaurants": [
+    {
+      "id": "hkia-duddells",
+      "name": "Duddell’s",
+      "airport": "HKG",
+      "category": "restaurant",
+      "cuisine": "Cantonese",
+      "terminal": "1",
+      "level": "7",
+      "unit": "7E161",
+      "zone": "airside",
+      "locationText": "Departure East Hall, Terminal 1, Level 7, restricted area",
+      "nearestGate": null,
+      "coordinates": null,
+      "hours": null,
+      "openStatus": "unknown_live_status",
+      "officialSourceUrl": "https://duddells.co/pages/hong-kong-airport",
+      "verifiedAt": "2026-10-28",
+      "verificationKind": "curated_operator_page",
+      "note": "The page footer lists Central restaurant hours; those do not apply to this airport branch. Product-specific roast-goose sales hours are not full venue opening hours.",
+      "simulation": {
+        "queueMinutes": 8,
+        "diningMinutes": 30,
+        "kind": "demo_estimates"
+      }
+    }
+  ]
 }

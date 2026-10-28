@@ -1,8 +1,21 @@
 # Flight, airport and entertainment data review
 
-Reviewed 28 October 2026. This is a source assessment, not a claim that the providers below are integrated. Existing app connections are HKO temperature, HKO warnings and MTR Airport Express. Warning monitoring runs in the foreground only. Supabase persists demonstration journeys; no scheduled flight-monitoring worker is deployed.
+Reviewed 28 October 2026. This is a source assessment, not a claim that the providers below are integrated. Existing app connections include HKO temperature, HKO warnings and MTR Airport Express. A subsequent successful Cathay public-site flight lookup is now implemented; see the update below. Warning monitoring runs in the foreground only. Supabase persists demonstration journeys; no scheduled flight-monitoring worker is deployed.
 
-## What is missing
+## Resolved since the initial review
+
+The user's clarified scope is simulation: ticket servicing and real queues are not
+requirements. The normal Cathay passenger flight search returned real HKG flight
+status, times, terminal and gate without a third-party account or key. A working
+lookup, fixed native adapter and foreground monitoring are now implemented.
+See [the flight integration and test evidence](LIVE-FLIGHTS.md). AeroDataBox/Cirium
+remain fallback candidates, not prerequisites. Provider trials and comparison use
+must follow their actual terms; FlightStats' free website is not a reusable data feed.
+
+The initial gap assessment below describes production evidence needs, not blockers
+for the simulation. Boarding may be derived from STD using the agreed demo rules.
+
+## Initial source assessment
 
 | Passenger feature | Missing evidence | Practical route |
 | --- | --- | --- |
@@ -29,9 +42,9 @@ Reviewed 28 October 2026. This is a source assessment, not a claim that the prov
 
 **OpenSky is a supplement, not the flight-status authority.** [API documentation](https://openskynetwork.github.io/opensky-api/rest.html) exposes ADS-B positions/state vectors and flight-history information. Useful for an aircraft map; not a replacement for gates, boarding deadlines, cancellations, tickets or operational reasons.
 
-### A useful provider benchmark
+### If a licensed provider trial becomes necessary
 
-Use a small dated sample: a Cathay HKG departure, an arrival connecting through HKG, and an alternative itinerary. Record provider, operating/marketing flight, airport, local service date, UTC and local times, gate/terminal, status, source update time and retrieval time. Preserve unknown fields. Compare with an official flight display where accessible. Measure missing fields, actual update latency, request cost and codeshare matching before selecting a provider. Do not wait for a real cancellation: replay a recorded provider-shaped fixture as a separate simulation, without changing live observations.
+Use a small dated sample: a Cathay HKG departure, an arrival connecting through HKG, and an alternative itinerary. Record provider, operating/marketing flight, airport, local service date, UTC and local times, gate/terminal, status, source update time and retrieval time. Preserve unknown fields. Validate against official flight information where the relevant terms permit; the free FlightStats terms restrict benchmarking and redistribution. Measure missing fields, actual update latency, request cost and codeshare matching before selecting a provider. Do not wait for a real cancellation: replay a recorded provider-shaped fixture as a separate simulation, without changing live observations.
 
 Poll centrally per flight, not per user; share cached observations. Adjust intervals to flight phase and provider limits. Deduplicate changes and separate provider updates from injected scenarios. Background checks, APNs and ActivityKit are implementation work in addition to acquiring the data.
 
@@ -53,7 +66,7 @@ A useful experience: browse Cathay picks, save a shortlist, later filter by veri
 
 [TMDB](https://developer.themoviedb.org/docs/faq) can enrich verified title matches with metadata and images. Its free API is for noncommercial use with attribution; commercial licensing is separate. It cannot confirm Cathay availability or supply full-film playback rights. No TMDB key was configured. No posters or protected editorial copy were copied into the curated dataset.
 
-## Recommended order
+## Initial recommendations, superseded by the working Cathay lookup
 
 1. Test AeroDataBox and, if trial access is available, Cirium against the same HKG flights; choose based on returned fields and freshness.
 2. Add the already verified METAR/TAF data to the existing weather context, keeping flight impact separately sourced.

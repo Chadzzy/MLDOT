@@ -1,3 +1,4 @@
+import { useFlightLookup } from "./LiveFlights.jsx";
 import { boardingContext, readinessContext } from "./journey-context.js";
 import {
   NATIVE_MODE,
@@ -893,6 +894,7 @@ function AppView() {
 
 export default function App() {
   const liveApi = useLiveData();
+  const flightApi = useFlightLookup();
   const [state, dispatch] = useReducer(reducer, null, readState);
   const [snapshot, setSnapshot] = useState(BASE_JOURNEY);
   const [nativeSnapshot, setNativeSnapshot] = useState(null);
@@ -962,6 +964,11 @@ export default function App() {
       ),
     [],
   );
+  useEffect(() => {
+    const show = () => open("live");
+    window.addEventListener("journey-open-live-flights", show);
+    return () => window.removeEventListener("journey-open-live-flights", show);
+  }, [open]);
   const close = useCallback(() => {
     setStack((s) =>
       s.length ? [...s.slice(0, -1), { ...s.at(-1), closing: true }] : s,
@@ -1009,6 +1016,7 @@ export default function App() {
     <JourneyContext.Provider
       value={{
         ...liveApi,
+        ...flightApi,
         state,
         nativeSnapshot,
         assets,

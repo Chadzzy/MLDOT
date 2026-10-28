@@ -96,3 +96,7 @@ show timing as unconfirmed. See [weather and timing rules](../journey/WEATHER-AN
 
 For an existing Mac checkout, update with `git -C "$HOME/Developer/MLDOT" pull --ff-only`,
 then Run the same Xcode project. Do not replace your working folder with another ZIP.
+
+## Real flight lookup
+
+After updating this checkout and running the app, open ••• → Check a real flight. Enter a Cathay flight number and local departure date, then Check flight. Keep checking this flight refreshes while the app is active. No provider key is required for the experimental public-site source. The static HTML preview cannot make this native request. See [scope and verification](../journey/LIVE-FLIGHTS.md).

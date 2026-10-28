@@ -127,8 +127,18 @@ review. If a required check cannot run, record it as unverified rather than pass
   claim that streaming, downloading or aircraft playback is integrated.
 - Jet-lag triggers still need product discussion. Do not invent a personalised
   medical/sleep prescription or imply a validated jet-lag algorithm exists.
-- Travel-document checklists are not Timatic clearance. Booking, ticketing, hotel,
-  bag handling, treatment availability and navigation require their own evidence.
+- This is a simulation. Real ticket servicing, real recovery bookings, hotel
+  purchases, queues and operational fulfilment are outside scope; simulate these.
+  Do not make access to airline servicing systems a blocker for this demonstration.
+- Prioritise real flight observations. Boarding and gate-close countdowns may be
+  derived from scheduled departure using explicit demo planning rules (currently
+  STD minus 40 minutes and STD minus 20 minutes). Do not label estimates as reported
+  boarding times, or assume an unknown delay creates more activity time.
+- Build our own small HKIA-only venue database from official airport/operator
+  information. Queues and walking allowances may be simulated independently.
+- Movies and music are pre-flight selections. Use sourced titles/metadata;
+  seatback playback and streaming are not required.
+- Travel-document checklists remain a simulation, not Timatic clearance.
 
 ## 7. Keep data, simulation and AI honest
 
@@ -188,7 +198,10 @@ conflicts and isolation between users. The tests created two anonymous identitie
 and one demonstration journey; no real booking was made. No project authentication
 setting was changed from this workspace.
 
-Scheduled flight monitoring, APNs and native Live Activities remain unconnected.
+Scheduled backend flight monitoring, APNs and native Live Activities remain unconnected.
+An experimental Cathay public-site lookup and fixed native HTTP adapter now provide
+real flight observations, with opt-in foreground monitoring; see
+[the flight boundary](journey/LIVE-FLIGHTS.md). It stays separate from demo events.
 HKO warning monitoring is opt-in and checks every minute while foregrounded; it
 pauses while inactive. Airport-temperature and MTR cards remain manual integrations.
 See [weather and timing behaviour](journey/WEATHER-AND-TIMING.md). Selected recovery itineraries and entertainment

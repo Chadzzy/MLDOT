@@ -1,3 +1,4 @@
+import { LiveFlightLookup } from "./LiveFlights.jsx";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useJourney } from "./context.js";
 import { Icon } from "./icons.jsx";
@@ -271,9 +272,10 @@ export function LiveSources() {
   return (
     <>
       <h2>Hong Kong, right now</h2>
+      <LiveFlightLookup />
       <p className="intro">
-        These cards call official public APIs from your browser. No account or
-        API key is used.
+        The cards below call official public APIs. No account or API key is
+        used.
       </p>
       <button
         className="primary-button"

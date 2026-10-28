@@ -48,3 +48,7 @@ background scheduler has been deployed; see [the monitoring boundary](WEATHER-AN
 ## Expanded source review
 
 See [flight, airport and entertainment data assessment](DATA-SOURCES.md) for the 28 October provider comparison, verified METAR/TAF probes and sourced Cathay movie shortlist. These research additions are not new app integrations.
+
+## Real Cathay flight lookup
+
+The public Cathay flight search has now returned real flight status, schedule/estimate/actual times, terminal and gate without an account or key. The app includes a fixed-source native adapter, a dated flight lookup and opt-in foreground checks that continue after closing the panel. It is an experimental website service, not a contracted developer API. Live observations stay separate from the simulated booking. See [implementation and evidence](LIVE-FLIGHTS.md).

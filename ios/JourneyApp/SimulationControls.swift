@@ -2,6 +2,7 @@ import SwiftUI
 
 struct SimulationControls: View {
     @ObservedObject var store: SimulationStore
+    let onOpenLiveFlights: () -> Void
     @Environment(\.dismiss) private var dismiss
     @State private var confirmReset = false
     var body: some View {
@@ -57,6 +58,10 @@ struct SimulationControls: View {
                     }
                   }.disabled(!store.canChange)
                 }
+                Section("Real flight data") {
+                    Button("Check a real flight", systemImage: "airplane") { onOpenLiveFlights() }
+                    Text("Search Cathay flight status by number and departure date. Your demonstration stays separate.").font(.footnote).foregroundStyle(.secondary)
+                }
                 Section("Connection") {
                     if store.busy { ProgressView("Syncing journey…") }
                     if let message = store.errorMessage {
@@ -65,7 +70,7 @@ struct SimulationControls: View {
                     } else {
                         Label(store.simulation.booked ? "Journey saved in Supabase" : "Ready to save your demonstration", systemImage: "checkmark.icloud")
                     }
-                    Text("The server keeps your journey clock. The app checks for changes while open and reconnects when you return. Live flight monitoring and push notifications are not connected.").font(.footnote).foregroundStyle(.secondary)
+                    Text("The server keeps your journey clock. The app checks for changes while open and reconnects when you return. Real flight checks run separately while active. Background checks and push notifications are not connected.").font(.footnote).foregroundStyle(.secondary)
                 }
                 Button("Reset demonstration", role: .destructive) { confirmReset = true }.disabled(store.busy || store.hasPendingChange)
             }

@@ -830,3 +830,95 @@
   margin-top: 8px;
   font-size: 12px;
 }
+
+/* Existing card and form patterns for the experimental live-flight connection. */
+.live-flight-lookup {
+  padding: 20px 0;
+  border-bottom: 1px solid #dde5e3;
+  margin-bottom: 24px;
+}
+.live-flight-lookup .section-title h3 {
+  margin: 0;
+  font-size: 20px;
+  color: var(--teal, #005d63);
+}
+.flight-search-fields {
+  display: grid;
+  grid-template-columns: 1fr 1.35fr;
+  gap: 12px;
+  margin: 18px 0;
+}
+.flight-search-fields label {
+  font-size: 13px;
+  min-width: 0;
+  color: #4d5e60;
+}
+.flight-search-fields input {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  min-height: 46px;
+  margin-top: 6px;
+  padding: 10px;
+  border: 1px solid #b8cecf;
+  border-radius: 9px;
+  font: inherit;
+  color: #152e31;
+  background: white;
+}
+.live-flight-evidence {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: space-between;
+  margin: 18px 0 10px;
+}
+.live-flight-result {
+  border: 1px solid #c6dfe0;
+  border-radius: 18px;
+  padding: 18px;
+  margin: 12px 0;
+}
+.live-flight-result header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: space-between;
+}
+.live-flight-result header span {
+  text-transform: capitalize;
+  font-size: 12px;
+  color: #526364;
+}
+.live-flight-times {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 18px 0;
+}
+.live-flight-times strong {
+  display: block;
+  font-size: 28px;
+  margin: 6px 0;
+}
+.live-flight-times small,
+.live-flight-result .included-note small {
+  display: block;
+  font-size: 11px;
+  color: #687575;
+}
+.live-flight-lookup .toggle-row small {
+  display: block;
+  font-size: 12px;
+  line-height: 1.4;
+  max-width: 220px;
+}
+
+.live-flight-lookup .toggle-row > span {
+  display: block;
+}
+.live-flight-lookup .toggle-row small {
+  margin-top: 5px;
+  color: #687575;
+}
