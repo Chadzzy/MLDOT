@@ -71,4 +71,8 @@ Run `npm test`, `npm run package`, then
 The browser test requires Playwright, websockets 16 and Chromium. It checks the
 next-action agreement, worsening weather, cancellation, pause/resume, late join,
 stop, mobile overflow and absence of passenger identity in the transmitted packets.
-Native build and simulator test evidence is recorded in the delivery record after CI.
+The native app and test target compiled with Xcode 26.3; all eight simulator
+XCTest cases passed with zero failures for source `2204f24`
+([CI evidence](https://github.com/Chadzzy/MLDOT/actions/runs/40669979982)).
+The published HTML Preview walkthrough and inspector route both rendered without
+page errors. The physical-device WebSocket and clipboard flow still needs checking.

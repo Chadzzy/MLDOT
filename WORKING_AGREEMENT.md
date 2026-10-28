@@ -193,7 +193,7 @@ preference flow. The server owns playback and saved recovery preferences. Native
 code stores the anonymous session and uncertain commands in Keychain, refreshes
 snapshots while foregrounded and reconnects on return. Browser/model checks pass;
 the app and test target now compile with Xcode 26.3 on a GitHub-hosted Mac. All
-eight simulator XCTest cases pass ([run](https://github.com/Chadzzy/MLDOT/actions/runs/40656050392)), including compilation of the new flight adapter;
+eight simulator XCTest cases pass ([run](https://github.com/Chadzzy/MLDOT/actions/runs/40669979982)), including compilation of the decision-inspector controls;
 the complete run succeeded with eight tests and zero failures. Physical-device
 UI, Keychain/session restoration and Apple model behaviour still need verification.
 
@@ -212,3 +212,10 @@ pauses while inactive. Airport-temperature and MTR cards remain manual integrati
 See [weather and timing behaviour](journey/WEATHER-AND-TIMING.md). Selected recovery itineraries and entertainment
 remain local; saving a preference is not ticketing. The clean night-time homepage
 photograph and production icon exports were not in the received ZIP.
+
+The shared deterministic journey planner and read-only decision inspector are now
+implemented. The inspector relays synthetic decisions and separately labelled public
+flight observations through Supabase Broadcast while the app is active; it is not
+a background planning service. Two independent browser contexts were verified
+against the hosted relay. See [the inspector guide](journey/DECISION-INSPECTOR.md)
+and [flight-intelligence next steps](journey/FLIGHT-INTELLIGENCE-PLAN.md).

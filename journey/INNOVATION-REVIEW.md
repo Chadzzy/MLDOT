@@ -3,6 +3,11 @@
 Research review: 28 October 2026. These are recommendations, not newly agreed scope.
 No application code was changed or external notebook executed for this review.
 
+Subsequent implementation: the agreed first increment now includes a
+[shared planner and decision inspector](DECISION-INSPECTOR.md). The sections below
+record research-stage findings; see the [flight-intelligence plan](FLIGHT-INTELLIGENCE-PLAN.md)
+for the remaining aircraft/history/prediction work.
+
 ## What was actually reviewed
 
 GitHub identifies `Chadzzy/MLDOT` as a fork of `frank-morales2020/MLxDL`.

@@ -25,6 +25,10 @@ The app targets iOS 17+. Apple model interpretation requires iOS 26, supported h
 
 The demonstration replays the dated 28 Oct 2026 CX383 fixture. “Real time” means one simulated second per elapsed second, not a live flight. Progress is saved in Supabase using a server clock anchor and recalculated on return; iOS does not need to keep a background timer running. New simulation sessions clear recovery choices but retain saved entertainment. Recovery preferences save to Supabase; drafts, selected itineraries and entertainment remain in local web storage.
 
+## Watch decisions on another screen
+
+In Journey simulation, choose **Watch decisions on another screen → Start decision inspector → Copy inspector link**. Open the link on your laptop, return to the journey on the phone and change the scenario as usual. The inspector follows through Supabase while the app is active. It shows recorded facts and rule outcomes, not private AI reasoning. Stop sharing in the same menu. See [the scope and verification](../journey/DECISION-INSPECTOR.md).
+
 ## Verification and limits
 
 Hosted Supabase checks passed: anonymous sign-in, journey creation/resume, command
@@ -35,7 +39,7 @@ preference saves preserving the entered text.
 
 **Verified with Xcode 26.3 on a GitHub-hosted Mac runner:** the app and test target
 compiled, and all eight XCTest cases passed in an iPhone simulator.
-[Build and test evidence](https://github.com/Chadzzy/MLDOT/actions/runs/40656050392) covers source commit `35e4286`, including the native flight lookup. The run completed successfully with eight tests and zero failures.
+[Build and test evidence](https://github.com/Chadzzy/MLDOT/actions/runs/40669979982) covers source commit `2204f24`, including the decision-inspector controls. The run completed successfully with eight tests and zero failures.
 
 The CI tests cover journey playback, snapshot validation and command persistence
 encoding. They do not verify physical-device UI, end-to-end Keychain/session
