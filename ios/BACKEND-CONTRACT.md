@@ -1,6 +1,6 @@
 # Journey-service boundary — Supabase adapter implemented
 
-The selected prototype backend is Supabase project `mekjqboywhbtbbabxela`. The first database/API slice is implemented under `supabase/` and `backend/`, tested locally and through the hosted authenticated REST API. The native adapter is implemented in source but has not been built or exercised on iOS here. See [backend instructions](../backend/README.md). Scheduled provider monitoring, subscriptions and push delivery below remain future work.
+The selected prototype backend is Supabase project `mekjqboywhbtbbabxela`. The first database/API slice is implemented under `supabase/` and `backend/`, tested locally and through the hosted authenticated REST API. The native adapter compiles with Xcode 26.3 and the eight simulator model tests pass; end-to-end device service testing remains outstanding. See [backend instructions](../backend/README.md). Scheduled provider monitoring, subscriptions and push delivery below remain future work.
 
 ## Ownership
 
@@ -28,8 +28,9 @@ Persist provider name, source observation timestamp, retrieval timestamp, raw st
 
 The hosted API passed authenticated create/resume, idempotency, clock, preferences,
 refresh-session, conflict and cross-user isolation checks. Anonymous sign-in was
-enabled by the user. Native source is wired, but Xcode compilation, XCTest execution,
-Keychain behaviour and device UI remain unverified in this Linux environment.
+enabled by the user. Xcode 26.3 compilation and eight simulator XCTest cases
+[passed on a Mac runner](https://github.com/Chadzzy/MLDOT/actions/runs/40634076274). End-to-end Keychain/session behaviour,
+physical-device UI and Apple model execution remain unverified.
 
 No flight-status provider or scheduled worker is connected. HKO/MTR calls are manual
 and do not supply a flight's status. APNs credentials, signing team and a native

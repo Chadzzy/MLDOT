@@ -59,7 +59,8 @@ information and honest state handling are part of that quality.
    recording; a still screenshot cannot prove that a gesture feels right.
 6. **Refine:** correct observed defects and recheck the affected flow. Stop once
    acceptance criteria pass; do not keep redesigning or retesting without cause.
-7. **Deliver:** package the actual latest build, verify the published link or
+7. **Deliver:** for native source changes, run the GitHub Xcode build and simulator
+   tests before handoff; if unavailable, state the blocker. Then package the actual latest build, verify the published link or
    artifact, and report what was verified and what still needs another device.
 
 For a change to shared modules or journey rules, check both normal travel and the
@@ -169,7 +170,9 @@ simulation controls, a Supabase service adapter and an optional Foundation Model
 preference flow. The server owns playback and saved recovery preferences. Native
 code stores the anonymous session and uncertain commands in Keychain, refreshes
 snapshots while foregrounded and reconnects on return. Browser/model checks pass;
-the Swift app has **not** been compiled or exercised on an iPhone here.
+the app and test target now compile with Xcode 26.3 on a GitHub-hosted Mac. All
+eight simulator XCTest cases pass ([run](https://github.com/Chadzzy/MLDOT/actions/runs/40634076274)). Physical-device
+UI, Keychain/session restoration and Apple model behaviour still need verification.
 
 The user enabled anonymous sign-in. Hosted authenticated tests passed for creation,
 resume, idempotent commands, clock progression, preference persistence, version

@@ -31,11 +31,15 @@ saved preferences, stale-version conflicts and isolation between users. The late
 web model tests and Chromium native-host bridge checks also pass, including failed
 preference saves preserving the entered text.
 
-**The Swift source has not been compiled here.** This Linux workspace has no Xcode
-or iOS SDK. Swift syntax parsing and project resource checks passed, but they do not
-establish SDK compatibility. Eight XCTest cases are included; run Product → Test
-on your Mac, then verify the actual device UI, Keychain restoration and Apple model
-availability.
+**Verified with Xcode 26.3 on a GitHub-hosted Mac runner:** the app and test target
+compiled, and all eight XCTest cases passed in an iPhone simulator.
+[Build and test evidence](https://github.com/Chadzzy/MLDOT/actions/runs/40634076274) covers source commit `3ae2ea4`; subsequent
+documentation changes do not alter that tested native source.
+
+The CI tests cover journey playback, snapshot validation and command persistence
+encoding. They do not verify physical-device UI, end-to-end Keychain/session
+restoration, gesture quality or Apple model availability. Those still need a device
+walkthrough. Native changes on `codex/iphone-journey` now trigger the Xcode workflow.
 
 Scheduled flight monitoring, push notifications, native Live Activities, real
 bookings and live flight inventory remain unconnected. Weather/train calls remain
@@ -48,7 +52,8 @@ The `856909b` snapshot used the async/await `contentWorld:` label on three WebKi
 calls that supplied completion handlers. This causes “Extra trailing closure
 passed in call” in `JourneyWebView.swift`. All three now use the callback overload's
 `in: .page` label, checked against Apple's documented signature. This corrects the
-reported compiler errors; the full app still needs an Xcode build.
+reported WebKit errors. The nested timer task in `SimulationStore.swift` also now
+uses explicit `self` references. Both fixes are included in the passing Xcode build.
 
 ## Update the passenger UI bundle
 

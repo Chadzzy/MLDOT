@@ -24,7 +24,7 @@ Implemented and verified:
 - Optimistic version checks, command idempotency and atomic updates.
 - A public-key + user-session API client with timeouts and explicit errors.
 
-The iPhone service adapter is now wired in source; Xcode/device execution remains unverified. This does not enable scheduled checks, native push, Live Activities, live flight status or real bookings. Entertainment saves and selected recovery options also remain local for now; the database persists the recovery _preference_, not a ticket or selected itinerary.
+The iPhone service adapter is now wired in source; Xcode 26.3 compilation and eight simulator model tests pass; end-to-end device execution remains unverified. This does not enable scheduled checks, native push, Live Activities, live flight status or real bookings. Entertainment saves and selected recovery options also remain local for now; the database persists the recovery _preference_, not a ticket or selected itinerary.
 
 ## One-time hosted setup
 
@@ -95,7 +95,8 @@ The PostgreSQL test uses a disposable `postgres:16-alpine` container, no network
 
 Client tests check request credentials, missing sessions, errors/conflicts, timeout
 cancellation and malformed JSON. Hosted authenticated REST operations have passed.
-Native source integration still requires Xcode and device verification.
+Native source compiles with Xcode 26.3 and all eight simulator model tests pass.
+End-to-end native authentication, Keychain restoration and device UI still need verification.
 
 For an intentional hosted recheck, run `python backend/tests/hosted.py`. Each run
 creates two anonymous identities and one demonstration journey in the configured
