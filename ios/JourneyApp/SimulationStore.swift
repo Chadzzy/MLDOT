@@ -28,15 +28,15 @@ import Combine
     }
     init() {
         timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect().sink { [weak self] _ in
-            guard let self, foreground else { return }
-            now = monotonicNow
+            guard let self, self.foreground else { return }
+            self.now = self.monotonicNow
             // Foreground snapshot reconciliation, not provider/flight monitoring.
-            let interval: TimeInterval = errorMessage == nil ? 10 : 30
-            if currentID != nil && !busy && ProcessInfo.processInfo.systemUptime - lastAttempt > interval {
-                Task { await refresh() }
+            let interval: TimeInterval = self.errorMessage == nil ? 10 : 30
+            if self.currentID != nil && !self.busy && ProcessInfo.processInfo.systemUptime - self.lastAttempt > interval {
+                Task { await self.refresh() }
             }
         }
-        if currentID != nil || creationID != nil { Task { await refresh() } }
+        if currentID != nil || creationID != nil { Task { await self.refresh() } }
     }
     private func accept(_ value: JourneyServerSnapshot) {
         now = monotonicNow
@@ -119,6 +119,6 @@ import Combine
         UserDefaults.standard.removeObject(forKey: creationKey)
         simulation = JourneySimulation(); serverPreferences = nil; errorMessage = nil
     }
-    func resume() { foreground = true; now = monotonicNow; Task { await refresh() } }
+    func resume() { foreground = true; now = monotonicNow; Task { await self.refresh() } }
     func suspend() { foreground = false }
 }
