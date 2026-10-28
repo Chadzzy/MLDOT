@@ -1,4 +1,4 @@
-# Integration verification — 26 October 2026
+# Integration verification — updated 28 October 2026
 
 ## Connected in the browser
 
@@ -8,7 +8,7 @@
 | Hong Kong warnings  | [HKO Weather Warning Summary](https://data.gov.hk/en-data/dataset/hk-hko-rss-weather-warning-summary) | HTTP 200; JSON; CORS `*`; empty warning object in initial response             | Empty is a valid response with no active warnings returned; failures are not treated as an all-clear. Cancelled/expired warnings are excluded.     |
 | Airport Express     | [MTR train information](https://data.gov.hk/en-data/dataset/mtr-data2-nexttrain-data)                 | HTTP 200; JSON; CORS `*`; AEL-HOK schedule returned                            | Up to four valid train predictions at Hong Kong station, direction/destination and platform. No door-to-airport travel-time or ticket integration. |
 
-These are three public read-only GET requests, without an API key, cookies or traveller information. They run when the user opens **Call live integrations** or requests live weather. No background network polling runs. Manual refresh is limited to one batch per 30 seconds. A 10-second UI timer updates freshness labels only.
+These are three public read-only GET requests, without an API key, cookies or traveller information. They run when the user opens **Call live integrations** or requests live weather. HKO warning monitoring can additionally be enabled while foregrounded, as described below. No background worker is deployed. Manual refresh is limited to one batch per 30 seconds. A 10-second UI timer updates freshness labels only.
 
 The source inspector displays URL, HTTP status, duration, retrieval time, observation time and normalized returned fields. A successful HTTP response must also pass schema/station validation. Weather is stale after two hours, train observations after 90 seconds, and the fetched warning summary after five minutes. Clock mismatch is labelled. These are prototype display thresholds, not provider guarantees.
 
@@ -44,3 +44,7 @@ every minute while active, displays the last check, and pauses on browser visibi
 or native scene changes. Failure/staleness does not become an all-clear. It is
 separate from scripted weather and cannot change the demo flight's status. No
 background scheduler has been deployed; see [the monitoring boundary](WEATHER-AND-TIMING.md).
+
+## Expanded source review
+
+See [flight, airport and entertainment data assessment](DATA-SOURCES.md) for the 28 October provider comparison, verified METAR/TAF probes and sourced Cathay movie shortlist. These research additions are not new app integrations.

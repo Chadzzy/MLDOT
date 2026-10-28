@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "scope": "Cathay official monthly editorial picks; not a full or flight-specific catalogue",
+  "sourceUrl": "https://www.cathaypacific.com/cx/en_HK/inspiration/cathay-stories/cathay-pacific-inflight-entertainment-2026.html",
+  "sourcePublishedDate": "2026-09-28",
+  "verifiedDate": "2026-10-28",
+  "catalogueMonth": "2026-10",
+  "items": [
+    {
+      "id": "cathay-editorial-2026-10-1",
+      "title": "The Sheep Detectives",
+      "type": "Movie",
+      "genre": "Comedy",
+      "runtimeMinutes": null,
+      "audioLanguages": null,
+      "subtitleLanguages": null,
+      "imageUrl": null,
+      "flightAvailability": "unverified"
+    },
+    {
+      "id": "cathay-editorial-2026-10-2",
+      "title": "A Man and a Woman",
+      "type": "Movie",
+      "genre": "Drama",
+      "runtimeMinutes": null,
+      "audioLanguages": null,
+      "subtitleLanguages": null,
+      "imageUrl": null,
+      "flightAvailability": "unverified"
+    },
+    {
+      "id": "cathay-editorial-2026-10-3",
+      "title": "Rose of Nevada",
+      "type": "Movie",
+      "genre": "Thriller",
+      "runtimeMinutes": null,
+      "audioLanguages": null,
+      "subtitleLanguages": null,
+      "imageUrl": null,
+      "flightAvailability": "unverified"
+    },
+    {
+      "id": "cathay-editorial-2026-10-4",
+      "title": "Gohan",
+      "type": "Movie",
+      "genre": "Drama",
+      "runtimeMinutes": null,
+      "audioLanguages": null,
+      "subtitleLanguages": null,
+      "imageUrl": null,
+      "flightAvailability": "unverified"
+    },
+    {
+      "id": "cathay-editorial-2026-10-5",
+      "title": "Silent Friend",
+      "type": "Movie",
+      "genre": "Drama",
+      "runtimeMinutes": null,
+      "audioLanguages": null,
+      "subtitleLanguages": null,
+      "imageUrl": null,
+      "flightAvailability": "unverified"
+    },
+    {
+      "id": "cathay-editorial-2026-10-6",
+      "title": "Ghost Elephants",
+      "type": "Movie",
+      "genre": "Documentary",
+      "runtimeMinutes": null,
+      "audioLanguages": null,
+      "subtitleLanguages": null,
+      "imageUrl": null,
+      "flightAvailability": "unverified"
+    }
+  ]
+}
