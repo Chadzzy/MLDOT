@@ -55,8 +55,9 @@ The current airport-temperature and MTR integration cards remain manual.
 This is foreground monitoring, not a deployed background worker. To continue while
 the app is closed, the next backend slice must store provider observations and
 freshness, schedule bounded HKO checks, deduplicate changes and return observation
-snapshots to authenticated journeys. Live flight following separately needs a dated
-flight provider and authoritative status/cause mapping. APNs is a later delivery
+snapshots to authenticated journeys. A dated Cathay public-site flight lookup is now available with foreground following;
+see [the flight connection](LIVE-FLIGHTS.md). Background flight following still needs
+a deployed scheduler and observation storage. Delay causes remain separate simulated inputs unless explicitly sourced. APNs is a later delivery
 channel, not a substitute for that worker. No service-role key belongs in the app.
 
 ## Verification
@@ -70,6 +71,4 @@ request. Xcode CI compiles the bundled native host and runs its eight model test
 physical-device gesture and live-network behaviour still require a walkthrough.
 
 The current native source compiled with Xcode 26.3 and eight simulator tests passed:
-[CI evidence](https://github.com/Chadzzy/MLDOT/actions/runs/40638634012). Slow simulator startup prompted a stop request
-that landed during cleanup; the run is marked cancelled, but both build and test steps
-completed successfully (`TEST EXECUTE SUCCEEDED`, eight tests, zero failures).
+[CI evidence](https://github.com/Chadzzy/MLDOT/actions/runs/40656050392). The complete run succeeded, with eight tests and zero failures.

@@ -24,7 +24,7 @@ Implemented and verified:
 - Optimistic version checks, command idempotency and atomic updates.
 - A public-key + user-session API client with timeouts and explicit errors.
 
-The iPhone service adapter is now wired in source; Xcode 26.3 compilation and eight simulator model tests pass; end-to-end device execution remains unverified. This does not enable scheduled checks, native push, Live Activities, live flight status or real bookings. Entertainment saves and selected recovery options also remain local for now; the database persists the recovery _preference_, not a ticket or selected itinerary.
+The iPhone service adapter is now wired in source; Xcode 26.3 compilation and eight simulator model tests pass; end-to-end device execution remains unverified. This Supabase journey adapter does not enable scheduled checks, native push or Live Activities. The separate public Cathay adapter now supplies live flight lookups; actual bookings remain outside the simulation scope. Entertainment saves and selected recovery options also remain local for now; the database persists the recovery _preference_, not a ticket or selected itinerary.
 
 ## One-time hosted setup
 

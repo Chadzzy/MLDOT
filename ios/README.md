@@ -35,18 +35,16 @@ preference saves preserving the entered text.
 
 **Verified with Xcode 26.3 on a GitHub-hosted Mac runner:** the app and test target
 compiled, and all eight XCTest cases passed in an iPhone simulator.
-[Build and test evidence](https://github.com/Chadzzy/MLDOT/actions/runs/40638634012) covers source commit `c4ac1e8`; subsequent
-documentation changes do not alter that tested native source. The overall run is
-marked cancelled because a stop request landed during cleanup after slow simulator
-startup; the build/test steps succeeded and the log records eight tests with zero failures.
+[Build and test evidence](https://github.com/Chadzzy/MLDOT/actions/runs/40656050392) covers source commit `35e4286`, including the native flight lookup. The run completed successfully with eight tests and zero failures.
 
 The CI tests cover journey playback, snapshot validation and command persistence
 encoding. They do not verify physical-device UI, end-to-end Keychain/session
 restoration, gesture quality or Apple model availability. Those still need a device
 walkthrough. Native changes on `codex/iphone-journey` now trigger the Xcode workflow.
 
-Scheduled flight monitoring, push notifications, native Live Activities, real
-bookings and live flight inventory remain unconnected. Weather/train calls remain
+Scheduled backend flight monitoring, push notifications and native Live Activities
+remain unconnected. Real ticket servicing is outside this simulation; public flight
+status lookup is available separately through the native adapter. Weather/train calls remain
 manual except opt-in foreground HKO warning checks. Selected recovery itineraries and entertainment are local; the server saves
 the recovery preference, not a ticket.
 

@@ -89,3 +89,7 @@ Native changes must pass the existing Xcode CI before handoff.
   it is not connected to the UI. Attribution/licensing: ODbL 1.0.
 
 Source inspection evidence remains in `/workspace/research/day-of-travel/live-flight-discovery/`.
+
+## Delivery verification
+
+Source `35e4286` passed the [Xcode 26.3 build and all eight simulator tests](https://github.com/Chadzzy/MLDOT/actions/runs/40656050392). All 35 JavaScript tests passed. A real CX383 lookup passed through the development server and UI; bridge lifecycle/error tests and the existing timing/sheet checks passed. The bundled HTML matches the reviewed web build. Physical-iPhone URLSession connectivity still needs the normal device check. The subsequent verification commit changes documentation only.
