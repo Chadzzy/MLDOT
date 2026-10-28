@@ -68,3 +68,8 @@ behaviour using explicitly mocked feeds. `tests/live_browser.py` separately call
 actual public APIs through verified TLS transport and exercises the new opt-in HKO
 request. Xcode CI compiles the bundled native host and runs its eight model tests;
 physical-device gesture and live-network behaviour still require a walkthrough.
+
+The current native source compiled with Xcode 26.3 and eight simulator tests passed:
+[CI evidence](https://github.com/Chadzzy/MLDOT/actions/runs/40638634012). Slow simulator startup prompted a stop request
+that landed during cleanup; the run is marked cancelled, but both build and test steps
+completed successfully (`TEST EXECUTE SUCCEEDED`, eight tests, zero failures).

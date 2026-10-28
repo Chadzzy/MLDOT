@@ -178,7 +178,8 @@ preference flow. The server owns playback and saved recovery preferences. Native
 code stores the anonymous session and uncertain commands in Keychain, refreshes
 snapshots while foregrounded and reconnects on return. Browser/model checks pass;
 the app and test target now compile with Xcode 26.3 on a GitHub-hosted Mac. All
-eight simulator XCTest cases pass ([run](https://github.com/Chadzzy/MLDOT/actions/runs/40634076274)). Physical-device
+eight simulator XCTest cases pass ([run](https://github.com/Chadzzy/MLDOT/actions/runs/40638634012)). The run was cancelled during cleanup after the build/test steps succeeded;
+the log confirms eight tests with zero failures. Physical-device
 UI, Keychain/session restoration and Apple model behaviour still need verification.
 
 The user enabled anonymous sign-in. Hosted authenticated tests passed for creation,
