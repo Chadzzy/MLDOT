@@ -16,11 +16,11 @@ The other supplied screens provide flow/content requirements. They inherit the c
 
 The journey sheet follows mouse/touch movement continuously and snaps to collapsed, partial or full height. Pointer distances account for the scaled phone. Header controls also support arrow keys, Home and End. Dialogs animate in and out, controls give press feedback, and reduced-motion preferences are respected. Recovery comparison has a deliberate 500 ms _simulated interaction_ state; this is not an AI call or a live availability search. Real requests display loading placeholders only while those requests run.
 
-Two guided sequences sit outside the phone: **From home to boarding** and **Delay to recovery**. Individual triggers remain available.
+Three guided sequences sit outside the phone: **Make the journey yours**, **From home to boarding** and **Delay to recovery**. Individual triggers remain available. The new preparation screens reuse the existing phone and modal system; see [the design review](PREPARATION-DESIGN.md).
 
 ## Open the preview
 
-[Open the interactive scenario walkthrough](https://htmlpreview.github.io/?https://raw.githubusercontent.com/Chadzzy/MLDOT/2204f2498c11cc5e66f5a5788713d6026c833f15/ios/JourneyApp/Resources/journey.html). This uses HTML Preview to render the same standalone build bundled with the iPhone source on `codex/iphone-journey`. GitHub Pages itself is not enabled.
+[Open the interactive scenario walkthrough](https://htmlpreview.github.io/?https://raw.githubusercontent.com/Chadzzy/MLDOT/a526b0d8c7fbb2327b2bd05d4c6741c560c43c11/ios/JourneyApp/Resources/journey.html). This uses HTML Preview to render the same standalone build bundled with the iPhone source on `codex/iphone-journey`. GitHub Pages itself is not enabled.
 
 The **Decision inspector** button opens sharing controls for a read-only second screen. See [how to use it](DECISION-INSPECTOR.md) and [the flight-intelligence plan](FLIGHT-INTELLIGENCE-PLAN.md).
 
@@ -45,7 +45,7 @@ npm run package
 
 ## Trigger routes
 
-Twenty routes cover live data connections plus the homepage, open sheet, boarding pass, weather, gate change, gate directions, delay, aircraft readiness, tight connection, cancellation, recovery preferences, selected recovery, included Cathay lounges, airport places, entertainment, rest, documents, sharing and Live Activity preview. Links use URL hashes (`#weather`, `#gate`, `#recovery`, etc.) and support browser back/forward and direct loading. On mobile, a grouped selector exposes the same triggers.
+Thirty-one routes cover eleven new preparation/design screens, live data connections and the homepage, open sheet, boarding pass, weather, gate change, gate directions, delay, aircraft readiness, tight connection, cancellation, recovery preferences, selected recovery, included Cathay lounges, airport places, entertainment, rest, documents, sharing and Live Activity preview. Links use URL hashes (`#weather`, `#gate`, `#recovery`, etc.) and support browser back/forward and direct loading. On mobile, a grouped selector exposes the same triggers.
 
 Selecting a trigger clears the previous detail stack and establishes that scenario. Reset restores the homepage while preserving saved entertainment/preferences. The boarding-pass shortcut remains accessible in the persistent sheet and detail modals. Nested modals preserve underlying selections and contain keyboard focus.
 
